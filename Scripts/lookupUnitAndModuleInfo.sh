@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 # Input file:
 #     video_id, video_code, resource_display_name,page 
@@ -20,6 +20,7 @@ fi
 
 pageURLFile=$1
 lookupScript=/home/dataman/Code/json_to_relation/Scripts/lookupOpenEdxHash.py
+declare -a urlArr
 
 # --------------------------- Actual Processing ---------
 
@@ -28,9 +29,27 @@ lookupScript=/home/dataman/Code/json_to_relation/Scripts/lookupOpenEdxHash.py
 # element of the url:
 while read oneVideoInfoLine
 do
-  # Read the URL into a Bash array:
-  IFS='/' read -a urlArr <<< "onePageURL"
-  unitId=${urlArr[-2]}
-  moduleId=${urlArr[-1]}
+  # Read one line into a bash array.
+  # Only first element will be filled:
+  
+  IFS=$'\n' urlArr=($(cat lookupTest.csv))
+  for i in $(seq ${#urlArr[*]}); do
+      [[ ${urlArr[$i-1]} = $name ]] && echo "${urlArr[$i]}"
+  done
+
+  #*********
+  echo "Url array is: "${urlArr[@]}
+  #*********
+
+  IFS=$',' colArr=(${urlArr[0]})
+
+  #*********
+  echo "Col array is: "${colArr[@]}
+  #*********
+
+  # second-to-last, b/c arr[-2] only works in later bash versions:
+  unitId=${urlArr[*]: -2:1}
+  # last, b/c arr[-1] only works in later bash versions:
+  moduleId=${urlArr[*]: -1}
   echo $lookupScript ${unitId},${moduleId}
 done <$pageURLFile
