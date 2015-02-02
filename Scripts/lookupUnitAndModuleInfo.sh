@@ -37,7 +37,9 @@ do
   # Read one line into a bash array.
   # Only first element will be filled:
   
-  IFS=$'\n' lineArr=($(cat ${pageURLFile}))
+  #****IFS=$'\n' lineArr=($(cat ${pageURLFile}))
+  IFS=$'\n' read -a lineArr <<<${oneVideoInfoLine}
+
   # Fill each line into a slot in $lineArr:
   for i in $(seq ${#lineArr[*]}); do
       [[ ${lineArr[$i-1]} = $name ]] && echo "${lineArr[$i]}"
