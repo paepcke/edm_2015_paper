@@ -97,7 +97,22 @@
 
 \maketitle
 \begin{abstract}
-In Massive Open Online Courses (MOOCs), struggling learners often seek help by posting questions in discussion forums. Unfortunately, given the large volume of discussion in MOOCs, instructors may overlook these learners' posts, detrimentally impacting the learning process and exacerbating attrition. In this paper, we present YouEDU, an instructional aid that automatically detects and addresses confusion in forum posts. Leveraging our publicly-available Stanford MOOCPosts corpus, we use ensemble learning to classify forum posts. In particular, classifiers that target sentiment, urgency, and other descriptive variables inform a single classifier that detects confusion. We then employ information retrieval techniques to map confused posts to minute-resolution clips from course videos; the ranking over these clips accounts for textual similarity between posts and closed captions as well as video-clickstream data. We measure the performance of our classification model in multiple educational contexts, exploring the nature of confusion within each; we also evaluate the relevancy of materials returned by our ranking algorithm. Our experiments suggest that YouEDU reasonably achieves its goals, paving the way for intelligent intervention systems.
+In Massive Open Online Courses (MOOCs), struggling learners often seek help by
+posting questions in discussion forums. Unfortunately, given the large volume of
+discussion in MOOCs, instructors may overlook these learners' posts,
+detrimentally impacting the learning process and exacerbating attrition. In this
+paper, we present YouEDU, an instructional aid that automatically detects and
+addresses confusion in forum posts. Leveraging our publicly-available Stanford
+MOOCPosts corpus, we train a heterogeneous set of classifiers to classify forum
+posts across multiple dimensions. In particular, classifiers that target
+sentiment, urgency, and other descriptive variables inform a single classifier
+that detects confusion. We then employ information retrieval techniques to map
+confused posts to minute-resolution clips from course videos; the ranking over
+these clips accounts for both video-clickstream data and textual similarity
+between posts and closed captions. We measure the performance of our
+classification model in multiple educational contexts, exploring the nature of
+confusion within each; we also evaluate the relevancy of materials returned by
+our ranking algorithm.
 \end{abstract}
 
 %% A category with the (minimum) three required fields
