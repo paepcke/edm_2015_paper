@@ -1,0 +1,41 @@
+- Getting all the stats course names, AYs, and quarters:
+
+SELECT course_display_name, 
+       academic_year, 
+       quarter 
+  FROM CourseInfo 
+ WHERE course_display_name LIKE 'medicine/HRP262%' OR 
+       course_display_name LIKE 'medicine/HRP261%' OR 
+       course_display_name LIKE 'medicine/HRP258%';
++----------------------------------------+---------------+---------+
+| course_display_name                    | academic_year | quarter |
++----------------------------------------+---------------+---------+
+| Medicine/HRP258/Statistics_in_Medicine |          2012 | summer  |
+| Medicine/HRP261/Winter2014             |          2013 | winter  |
+| Medicine/HRP262/Spring2014             |          2013 | spring  |
++----------------------------------------+---------------+---------+
+3 rows in set (0.00 sec)
+
+- Get all [video_id, video_code, pageURL] for all videos for all 3
+  stats courses:
+
+SELECT DISTINCT video_id, video_code, page
+  INTO OUTFILE '/tmp/allStatsVideoUrls.csv'
+  FIELDS TERMINATED BY "," OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\n'
+  FROM EdxTrackEvent PARTITION (pAY2012_Summer, pAY2013_Winter, pAY2013_Spring)
+ WHERE course_display_name LIKE 'medicine/HRP262%' OR 
+       course_display_name LIKE 'medicine/HRP261%' OR 
+       course_display_name LIKE 'medicine/HRP258%' AND
+       event_type = 'load_video';
+Query OK, 1254 rows affected (16 min 10.24 sec)
+
+- Remove dangling elements from page URLs (chars after unit and module ids:
+  
+      cat allStatsVideoUrls.csv | sed 's|\(.*\)/[0-9?#]"$|\1|p' | sed 's|/"$||p' | sed 's:/#help-modal"\|?title.*"\|?discussion.*"\|?input.*"\|/$::' > allStatsVideoUrlsTruncated.csv
+
+- Manually remove any few remaining trailing forward slashes in emacs
+    (16 occurrences)
+
+- Run allStatsVideoUrlsTruncated.csv through lookupUnitAndModuleInfo.sh
+    cd ~/EclipseWorkspaces/json_to_relation
+    Scripts/look
