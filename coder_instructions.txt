@@ -1,0 +1,209 @@
+Title: Manually classify 10,000 forum posts from online classes
+
+You will read 10,000 forum posts from students in online classes, and
+will evaluate each along six categories. You will enter your results
+in a spreadsheet.
+
+Background:
+
+We are building computer support to help instructors of very large
+online courses (MOOCs) respond quickly to student concerns or
+frustrations. The courses include tens of thousands of students. Their
+difficulties manifest in the online forum facilities associated with
+the courses. Since instructors cannot read all forum posts, we try to
+build computer software for automatically selecting posts that require
+instructor attention. Each post is one or two short
+paragraphs. Participants of the courses respond to each other’s posts,
+fostering discussion.
+
+'Teaching' a computer to pick the important posts requires a large
+'gold set' of forum posts that are hand classified by reliable human
+evaluators. This job will create such a gold set.
+
+Each post needs to be tagged along six categories:
+
+- Is the post a question?
+- Is it an answer?
+- Is it an opinion?
+- What is the emotional tone of the post? Does the tone mostly convey
+  a negative emotion, such as sadness, anger, or frustration?  Or is
+  the post's tone more positive, such as expressing happiness,
+  delight, relief, etc.?
+- To what extent does the post express confusion, such as an inability
+  to understand some concept that is taught in the class?
+- How urgent is it that the instructor get involved in response to the
+  post? 
+
+Additionally we ask that you flag any posts that reveal the identity
+of the poster. We try to remove such entries from the set.
+
+The posts and a template for the above per-post evaluations are
+contained in an Excel spreadsheet that is to be filled in.
+
+The main prerequisite for this job is that you have enough time to do
+a reliable job. All our subsequent work will depend on your
+information being correct. 
+
+A second requirement is that you are willing to sign a statement
+promising to keep any personally identifiable information you find in
+the posts confidential. We have tried to remove all names, email
+addresses, and phone numbers, but we need to be sure that if something
+slipped through, you don't tell.
+
+
+-----
+
+Instructions:
+
+Open your spreadsheet. You care only about the left most seven
+columns. The left-most cell in each row contains one forum posts. Next
+is a cell with column header 'Opinion(1/0)'. Put a 1 into that cell if
+the post expresses an opinion, else put a 0. The 'Question(1/0)'
+column similarly gets a 1 if the post contains a question, else,
+please enter a 0. The 'Answer(1/0)' should receive a 1 if the post
+contains an answer to what appears to have been a question in a prior
+post. Note that a single post might include both an opinion and an
+answer, or some other mix of question, answer, or opinion. Just place
+1's in all columns that apply.
+
+The next three columns need ratings from 1 to 7. Here are some
+details:
+
+Sentiment indicates the emotional tone of the post -- whether the post
+conveys a negative emotion (sadness, anger, or frustration) or a
+positive one (happiness, delight, relief, etc.). Sentiments are mapped
+to scores as follows:
+
+Sentiment:
+----------
+Extremely negative   → 1
+Very negative        → 2
+Somewhat negative    → 3
+Neutral              → 4
+Somewhat positive    → 5
+Very positive        → 6
+Extremely positive   → 7
+
+
+Confusion indicates the extent to which the post's author is
+expressing an inability to understand some concept that is taught in
+the class. Different degrees of confusion are mapped to scores as
+follows:
+
+Confusion:
+----------
+Extremely knowledgeable → 1
+Very knowledgeable      → 2
+Somewhat knowledgeable  → 3
+Neutral                 → 4
+Somewhat confused       → 5
+Very confused           → 6
+Extremely confused      → 7
+
+Urgency indicates the degree to which the instructor(s) should be
+concerned with the content of the post. If a post is very urgent, then
+the instructor should respond to the post as soon as possible. If a
+post is not urgent, then the instructor might not have to respond to
+the post at all. Different degrees of urgency *to the instructor* are
+mapped to scores as follows:
+
+Urgency:
+--------
+No reason to read the post                   → 1
+Not actionable; read if time                 → 2
+Not actionable; maybe interesting            → 3
+Neutral: respond if spare time               → 4
+Somewhat urgent: good idea to reply          → 5
+     teaching assistant might
+     suffice.
+Very urgent: good idea for instructor     → 6
+         to reply.
+Extremely urgent: instructor definitely 
+      needs to reply                  → 7
+
+
+Poster Identifiable
+-------------------
+
+Please place a 1 in this cell if you see personally identifiable
+information in the row's post. First names are not a problem. Full
+names, email addresses, or phone numbers to warrant a 1.
+
+
+Examples
+--------
+
+Ex. 1: Yay - done! Passed by the skin of my teeth. And thanks
+       everyone!  Many thanks to the Networking course team, as well
+       as fellow learners whose informed posts provided the needed
+       help on some problems!  Thanks also to Stanford and the OpenEdx
+       team for another amazing learning experience through this
+       platform.  Take care all, bye!  Mike
+Sentiment: 7
+Confusion: 1
+Urgency:   4
+
+Ex. 2: I would like to thank you for the class. I learned a lot even
+       though I didn't complete the programming assignment and the
+       final exam.  
+Sentiment: 6
+Confusion: 4
+Urgency:   3
+
+Ex. 3: When will the next quiz be released? I'd like to get a head
+       start on it, since I've got some extra time these days. 
+Sentiment: 4
+Confusion: 4
+Urgency:   5
+
+Ex. 4: Thank you Phil, Nick, Robert, Akshay, Suresh, Vimal, and
+       Antonin, and everyone who has been of great help, and making
+       this so freely available. Would it be possible to have more
+       programming assignments in the next run? It has been greatly
+       beneficial, and looking forward to have tcp/ip, nat or
+       application exercises, or even a separate course such as
+       unix/linux network programming would be great! 
+Sentiment: 7
+Confusion: 4
+Urgency:   4
+
+Ex. 5: Although I didn't pass the course, it was very satisfying for
+       me to learn all the things I did. I'm thinking of taking the
+       course again if I have the chance, the situation in my country
+       (Venezuela) wasn't favorable for me but I did my
+       best. Congratulations to Nick and Phil and the TA's for giving
+       us this oportunity of learning. Keep it up. 
+Sentiment: 5
+Confusion: 5
+Urgency:   3
+
+Ex. 6: Double colons "::"  expand to longest possible 0's  
+       If the longest is 0, will  the address be considered valid ?  (
+       even if it doesn't make sense and there is no room for adding
+       0's) 
+       Can someone please answer ?
+       Thanks in advance
+Sentiment: 4
+Confusion: 6
+Urgency:   5
+
+Ex. 7: The website is down at the moment
+       https://class.stanford.edu/courses/Engineering/Networking/Winter2014/courseware
+       seems down and I'm not able to submit the Midterm. Still have
+       the "Final Submit" button on the page, but it doesn't work. Are
+       the servers congested? 
+       thanks anyway
+Sentiment: 3
+Confusion: 4
+Urgency:   7
+
+Ex. 8: Please vote to request the teachers to kindly extend quiz
+       dates.  For an online self-study class, it makes sense to have
+       an extra week or two to complete each quiz.  
+        () one week extra to complete quizes for credit
+        ()two weeks extra to complele quizes for credit
+        () all quizes can be completed for credit anytime before
+               end date of course  
+Sentiment: 3
+Confusion: 4
+Urgency:   6
