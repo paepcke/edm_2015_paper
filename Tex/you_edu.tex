@@ -125,31 +125,7 @@ our ranking algorithm.
 \keywords{ACM proceedings, \LaTeX, text tagging} % NOT required for Proceedings
 
 \section{Introduction}
-The \textit{proceedings} are the records of a conference.
-ACM seeks to give these conference by-products a uniform,
-high-quality appearance.  To do this, ACM has some rigid
-requirements for the format of the proceedings documents: there
-is a specified format (balanced  double columns), a specified
-set of fonts (Arial or Helvetica and Times Roman) in
-certain specified sizes (for instance, 9 point for body copy),
-a specified live area (18 $\times$ 23.5 cm [7" $\times$ 9.25"]) centered on
-the page, specified size of margins (1.9 cm [0.75"]) top, (2.54 cm [1"]) bottom
-and (1.9 cm [.75"]) left and right; specified column width
-(8.45 cm [3.33"]) and gutter size (.83 cm [.33"]).
-
-The good news is, with only a handful of manual
-settings\footnote{Two of these, the {\texttt{\char'134 numberofauthors}}
-and {\texttt{\char'134 alignauthor}} commands, you have
-already used; another, {\texttt{\char'134 balancecolumns}}, will
-be used in your very last run of \LaTeX\ to ensure
-balanced column heights on the last page.}, the \LaTeX\ document
-class file handles all of this for you.
-
-The remainder of this document is concerned with showing, in
-the context of an ``actual'' document, the \LaTeX\ commands
-specifically available for denoting the structure of a
-proceedings paper, rather than with giving rigorous descriptions
-or explanations of such commands.
+The remainder of this paper examines related work (section two), presents the Stanford MOOCPosts corpus (section three), sketches the architecture of YouEDU(section four), details its constituent classification and recommendation phases, evaluating both and interpreting results (sections five and six), and proposes future work (section seven).
 
 \section{Related Work}
 The remainder of this document is concerned with showing, in
@@ -159,63 +135,62 @@ proceedings paper, rather than with giving rigorous descriptions
 or explanations of such commands.
 
 \section{The Stanford MOOCPosts Corpus}
-The remainder of this document is concerned with showing, in
-the context of an ``actual'' document, the \LaTeX\ commands
-specifically available for denoting the structure of a
-proceedings paper, rather than with giving rigorous descriptions
-or explanations of such commands.
+In order to enable this and similar research, we compiled and curated the Stanford MOOCPosts Dataset ...
+
+\subsection{Methodology: Compiling the Dataset}
+Nine judges from oDesk were hired to ...
+
+\subsection{Insights and Discussion}
+We report insights gleaned into the nature of affect, etc. across these courses.
+
+% TODO: Is this really the right place to present this? Or should this
+% be presented in the Classification Combination Section?
+\subsubsection{Relationship between Variables}
+In this section, we report the pairwise correlations between variables to 1) shed some light into the nature of each and also 2) to motivate a YouEDU design choice.
 
 \section{YouEDU: Intelligent Interventions}
-The remainder of this document is concerned with showing, in
-the context of an ``actual'' document, the \LaTeX\ commands
-specifically available for denoting the structure of a
-proceedings paper, rather than with giving rigorous descriptions
-or explanations of such commands.
+As the name might imply, YouEDU is an intervention system with granularity at the level of the individual ...
 
-\subsection{Predicting Confusion}
+\section{Phase I: Detecting Confusion}
+In this section, we present the model used to classify confusion. At a high-level, we use a coordinated combination of classifiers ...
+
+\subsection{Classifier Design}
 \subsubsection{Feature Space}
+Here's an intuition of what we figured might be helpful across all variables ...
+
 * Bag of Words \\
 (* Specific Bigrams / words / trigrams? Time permitting) \\
 * Pre-processing Steps \\
 * Features Extracted / Generated \\
 
-\subsubsection{An Ensemble of Hypotheses}
-* Ensemble Learning -- Overview \\
+\subsubsection{A Combination of Hypotheses}
+* Classifier Combination -- Overview \\
 * Our particular implementation \\
-* Subclassifiers: Definitions of Predicted Variables and Examples \\
+* Subclassifiers ~ Variable-Specific Features \\
+* Training, use gold values, testing, use predicted values \\
 * Combination Step ~ Logistic Regression Layer \\
-	(Training, use gold values, testing, use predicted values) \\
 
-\subsection{Mapping Confused Posts to Video Clips}
-\subsubsection{Retrieval}
-\subsubsection{Ranking}
+\subsection{Evaluation}
 
-\section{Evaluation and Discussion}
-The remainder of this document is concerned with showing, in
-the context of an ``actual'' document, the \LaTeX\ commands
-specifically available for denoting the structure of a
-proceedings paper, rather than with giving rigorous descriptions
-or explanations of such commands.
-
-\subsection{Classification}
 * educational contexts \\
 * metrics used \\ 
 * results \\
 * implications \\
 
+\section{Phase II: Mapping Confused Posts to Video Clips}
+\subsection{The Recommendation Algorithm}
+\subsubsection{Retrieval}
+\subsubsection{Ranking}
+
+\subsection{Evaluation}
+Two experts were hired ...
+
 \section{Future Work}
-The remainder of this document is concerned with showing, in
-the context of an ``actual'' document, the \LaTeX\ commands
-specifically available for denoting the structure of a
-proceedings paper, rather than with giving rigorous descriptions
-or explanations of such commands.
+Future work might focus on strengthening the link between the classifiers and the reccomendation system; in particular, it would behoove us to devise a way to filter our set of confused posts to a subset for which recommendation makes sense. Additionally, we might want to make our classifiers better and index back into the previous course to retrieve answers for courses. Deploying this system live is another thing that we might do. 
 
 \section{Conclusion}
-The remainder of this document is concerned with showing, in
-the context of an ``actual'' document, the \LaTeX\ commands
-specifically available for denoting the structure of a
-proceedings paper, rather than with giving rigorous descriptions
-or explanations of such commands.
+YouEDU takes an initial step towards building automated confusion intervention ... 
+
 %\end{document}  % This is where a 'short' article might terminate
 
 %ACKNOWLEDGMENTS are optional
