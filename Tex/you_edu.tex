@@ -125,17 +125,15 @@ our ranking algorithm.
 \keywords{ACM proceedings, \LaTeX, text tagging} % NOT required for Proceedings
 
 \section{Introduction}
-The remainder of this paper examines related work (section two), presents the Stanford MOOCPosts corpus (section three), sketches the architecture of YouEDU(section four), details its constituent classification and recommendation phases, evaluating both and interpreting results (sections five and six), and proposes future work (section seven).
+The remainder of this paper examines related work (section two), presents the Stanford MOOCPosts corpus (section three), sketches the architecture of YouEDU (section four), details its constituent classification and recommendation phases, evaluating both and interpreting results (sections five and six), and proposes future work (section seven).
 
 \section{Related Work}
-The remainder of this document is concerned with showing, in
-the context of an ``actual'' document, the \LaTeX\ commands
-specifically available for denoting the structure of a
-proceedings paper, rather than with giving rigorous descriptions
-or explanations of such commands.
 
 \section{The Stanford MOOCPosts Corpus}
-In order to enable this and similar research, we compiled and curated the Stanford MOOCPosts Dataset ...
+A precondition to automatically detecting affect in MOOC discussion forums was manually identifying it; given that no publicly-available corpus of tagged MOOC discussion forum posts existed prior to our research, we set out to create our own. The outcome of our data compilation and curation was the Stanford MOOCPosts dataset: a corpus comprised of 29,604 anonymized learner forum posts from eleven Stanford University public online classes. Freely available to academic researchers, the MOOCPosts dataset was designed to enable computational inquiries into the nature of both affect and content in MOOC discussion forums.
+
+Each post in the MOOCPosts dataset was scored across six dimensions -- confusion, sentiment, urgency, question, answer, and opinion -- and subsequently augmented with additional metadata. In this section, we detail the data collection methodology, defining each of these dimensions along the way, and briefly present some insights gleaned by mining the set.
+
 
 \subsection{Methodology: Compiling the Dataset}
 Nine judges from oDesk were hired to ...
