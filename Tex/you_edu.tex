@@ -98,21 +98,8 @@
 \maketitle
 \begin{abstract}
 In Massive Open Online Courses (MOOCs), struggling learners often seek help by
-posting questions in discussion forums. Unfortunately, given the large volume of
-discussion in MOOCs, instructors may overlook these learners' posts,
-detrimentally impacting the learning process and exacerbating attrition. In this
-paper, we present YouEDU, an instructional aid that automatically detects and
-addresses confusion in forum posts. Leveraging our publicly-available Stanford
-MOOCPosts corpus, we train a heterogeneous set of classifiers to classify forum
-posts across multiple dimensions. In particular, classifiers that target
-sentiment, urgency, and other descriptive variables inform a single classifier
-that detects confusion. We then employ information retrieval techniques to map
-confused posts to minute-resolution clips from course videos; the ranking over
-these clips accounts for both video-clickstream data and textual similarity
-between posts and closed captions. We measure the performance of our
-classification model in multiple educational contexts, exploring the nature of
-confusion within each; we also evaluate the relevancy of materials returned by
-our ranking algorithm.
+posting questions in discussion forums. Unfortunately, given the large volume of discussion in MOOCs, instructors may overlook these learners' posts,
+detrimentally impacting the learning process and exacerbating attrition. In this paper, we present YouEDU, an instructional aid that automatically detects and addresses confusion in forum posts. Leveraging our publicly-available Stanford MOOCPosts corpus, we train a heterogeneous set of classifiers to classify forum posts across multiple dimensions. In particular, classifiers that target sentiment, urgency, and other descriptive variables inform a single classifier that detects confusion. We then employ information retrieval techniques to map confused posts to minute-resolution clips from course videos; the ranking over these clips accounts for both video-clickstream data and textual similarity between posts and closed captions. We measure the performance of our classification model in multiple educational contexts, exploring the nature of confusion within each; we also evaluate the relevancy of materials returned by our ranking algorithm.
 \end{abstract}
 
 %% A category with the (minimum) three required fields
@@ -125,14 +112,25 @@ our ranking algorithm.
 \keywords{ACM proceedings, \LaTeX, text tagging} % NOT required for Proceedings
 
 \section{Introduction}
+* Proliferation of MOOCs\\
+* Volume of posts high\\
+* Difficult to get a birds-eye view of the course, difficult to address it.\\
+
+* Work looking into sentiment thus far is limited by datasets\\
+* Work has been done on confusion, but not so much on MOOCs (save Rosé)\\
+* Work into intelligently intervening + aiding the instructor\\
+* Previous work has found forum to perhaps not be the most useful, even\\
+* We suspect that the forum's perceived lack of usefulness is not instrinsic but rather ~ lack of attention lack of instructor tools + isolation from other parts of the classroom.\\
+* We accordingly set out to adress both of these problems — mining for affect gives instructors a pulse on the state of the course, and linking to videos marries forum and other course resources.\\
+
 The remainder of this paper examines related work (section two), presents the Stanford MOOCPosts corpus (section three), sketches the architecture of YouEDU (section four), details its constituent classification and recommendation phases, evaluating both and interpreting results (sections five and six), and proposes future work (section seven).
 
 \section{Related Work}
 
 \section{The Stanford MOOCPosts Corpus}
-A precondition to automatically detecting affect in MOOC discussion forums was manually identifying it; given that no publicly-available corpus of tagged MOOC discussion forum posts existed prior to our research, we set out to create our own. The outcome of our data compilation and curation was the Stanford MOOCPosts dataset: a corpus comprised of 29,604 anonymized learner forum posts from eleven Stanford University public online classes. Freely available to academic researchers, the MOOCPosts dataset was designed to enable computational inquiries into the nature of both affect and content in MOOC discussion forums.
+A precondition to automatically detecting affect in MOOC discussion forums was manually identifying it; given that no publicly-available corpus of tagged MOOC discussion forum posts existed prior to our research, we set out to create our own. The outcome of our data compilation and curation was the Stanford MOOCPosts dataset: a corpus composed of 29,604 anonymized learner forum posts from eleven Stanford University public online classes. Freely available to academic researchers, the MOOCPosts dataset was designed to enable computational inquiries into the nature of both affect and content in MOOC discussion forums.
 
-Each post in the MOOCPosts dataset was scored across six dimensions -- confusion, sentiment, urgency, question, answer, and opinion -- and subsequently augmented with additional metadata. In this section, we detail the data collection methodology, defining each of these dimensions along the way, and briefly present some insights gleaned by mining the set.
+Each post in the MOOCPosts dataset was scored across six dimensions -- confusion, sentiment, urgency, question, answer, and opinion -- and subsequently augmented with additional metadata. In this section, we detail the data collection methodology, defining each of the six dimensions along the way, and briefly present some insights gleaned by mining the set.
 
 
 \subsection{Methodology: Compiling the Dataset}
@@ -146,6 +144,7 @@ We report insights gleaned into the nature of affect, etc. across these courses.
 \subsubsection{Relationship between Variables}
 In this section, we report the pairwise correlations between variables to 1) shed some light into the nature of each and also 2) to motivate a YouEDU design choice.
 
+% TODO: Perhaps fold this into the introduction.
 \section{YouEDU: Intelligent Interventions}
 As the name might imply, YouEDU is an intervention system with granularity at the level of the individual ...
 
