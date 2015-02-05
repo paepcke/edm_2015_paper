@@ -121,9 +121,10 @@ detrimentally impacting the learning process and exacerbating attrition. In this
 * Work into intelligently intervening + aiding the instructor\\
 * Previous work has found forum to perhaps not be the most useful, even\\
 * We suspect that the forum's perceived lack of usefulness is not instrinsic but rather ~ lack of attention lack of instructor tools + isolation from other parts of the classroom.\\
-* We accordingly set out to adress both of these problems — mining for affect gives instructors a pulse on the state of the course, and linking to videos marries forum and other course resources.\\
+* We accordingly set out to adress both of these problems -- mining for affect gives instructors a pulse on the state of the course, and linking to videos marries forum and other course resources.\\
+* Why video snippets as opposed to videos? \cite{Guo:2014:VPA:2556325.2566239} -- in a retrospective study of four edX courses, the maximum median engagement, regardless of video length, was six minutes.
 
-The remainder of this paper examines related work (section two), presents the Stanford MOOCPosts corpus (section three), sketches the architecture of YouEDU (section four), details its constituent classification and recommendation phases, evaluating both and interpreting results (sections five and six), and proposes future work (section seven).
+The remainder of this paper is organized as follows. We examine related work in section two, present the Stanford MOOCPosts corpus in section three, sketch the architecture of YouEDU in section four, detail YouEDU's constituent classification and recommendation phases, evaluating both and interpreting results in sections five and six, and propose future work in section seven.
 
 \section{Related Work}
 
@@ -145,8 +146,23 @@ We report insights gleaned into the nature of affect, etc. across these courses.
 In this section, we report the pairwise correlations between variables to 1) shed some light into the nature of each and also 2) to motivate a YouEDU design choice.
 
 % TODO: Perhaps fold this into the introduction.
-\section{YouEDU: Intelligent Interventions}
-As the name might imply, YouEDU is an intervention system with granularity at the level of the individual ...
+\section{YouEDU: Detect and Recommend}
+
+%TODO: Display + Caption
+YouEDU is a personalized intervention system that recommends educational video clips to learners. Figure \ref{figure:architecture} illustrates the key steps that comprise YouEDU. YouEDU takes as input a set $P$ of forum posts, processing them in two distinct phases: (I) detection and (II) recommendation. In the first phase, we apply a classifier to each post in $P$, outputting a subset $P_{c}$ consisting of posts in which the classifier detected confusion. The confusion classifier functions as a \emph{combination} classifier in that it combines the predictions from classifiers trained to predict other post-related qualities.
+
+\begin{figure}[ht]
+       \centering
+       \includegraphics[width=0.5\textwidth]{../Figs/youEduArch.png}
+       \caption{\textnormal{YouEDU Architecture. The YouEDU pipeline consists of two phases: post classification and video snippet recommendation.}}
+       \label{figure:architecture}
+\end{figure}
+
+The second phase takes $P_{c}$ as input and, for each confused post in $p \in P_{c}$, outputs a ranked list of educational video snippets that address the object of confusion expressed in $p$. In particular, for a given post, the recommender produces an initial ranking across a number of one-minute video clips by computing a similarity metric between the post and closed caption sections. The ranking of videos in the retrieved set is then further informed by video-clickstream data.
+
+While YouEDU outputs minute-resolution video clips, it does not necessarily guarantee that these clips fully address the exhibited confusion -- indeed, several minutes of instructional content are often required to explain a single concept. Rather, the video snippets collectively form an ad-hoc index. For example, say that for a given post, YouEDU outputs three video snippets with start times $s_{1}, s_{2}, s_{3}$, in order of decreasing relevance, and say that these snippets were contained in videos $v_{1}, v_{2}, v_{3}$, respectively, $v_{1}, v_{2}, v_{3}$ not necessarily unique. In order to clarify his or her confusion, the author of the post should begin watching video $v_{1}$ at $s_{1}$ -- the learner can autonomously set the end time of the snippet, and can move on to the next video, start time pair if any confusion still lingers. 
+
+In the following two sections, we delve further into both phases of YouEDU, describing them in detail and relating the results of empirical evaluations.
 
 \section{Phase I: Detecting Confusion}
 In this section, we present the model used to classify confusion. At a high-level, we use a coordinated combination of classifiers ...
@@ -174,7 +190,7 @@ Here's an intuition of what we figured might be helpful across all variables ...
 * results \\
 * implications \\
 
-\section{Phase II: Mapping Confused Posts to Video Clips}
+\section{Phase II: Recommending Clips}
 \subsection{The Recommendation Algorithm}
 \subsubsection{Retrieval}
 \subsubsection{Ranking}
@@ -184,6 +200,8 @@ Two experts were hired ...
 
 \section{Future Work}
 Future work might focus on strengthening the link between the classifiers and the reccomendation system; in particular, it would behoove us to devise a way to filter our set of confused posts to a subset for which recommendation makes sense. Additionally, we might want to make our classifiers better and index back into the previous course to retrieve answers for courses. Deploying this system live is another thing that we might do. 
+
+YouEDU's two phases need not be packaged together; in an online setting, they could operate as independent, complemetary services. The output of Phase I could be presented directly to instructors, many of whom express interest in understanding activity in discussion forums \cite{Stephens-Martinez:2014:MMI:2556325.2566246}. As for Phase II, the recommendation system might live as a search-box of sorts: learner would type natural language queries in which they voiced their confusion, and our system would serve them relevant resources.
 
 \section{Conclusion}
 YouEDU takes an initial step towards building automated confusion intervention ... 
