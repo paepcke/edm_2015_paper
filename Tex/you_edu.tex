@@ -165,9 +165,12 @@ While YouEDU outputs minute-resolution video clips, it does not necessarily guar
 In the following two sections, we delve further into both phases of YouEDU, describing them in detail and relating the results of empirical evaluations.
 
 \section{Phase I: Detecting Confusion}
-In this section, we present the model used to classify confusion. At a high-level, we use a coordinated combination of classifiers ...
+% TODO: Cite
+We frame the problem of detecting confusion as a binary one: Given a discussion forum post $p$ with a true label $L$ in \{not confused, confused\}, apply some hypothesis $h$ that correctly divines $L$. We decompose posts into a set of constituent \emph{features} and \emph{train} a statistical model by feeding it posts, features, and true labels. The model learns weights for each feature, enabling it to make predictions on a labeled \emph{test} set -- the goal is to fine-tune the model over multiple train-test cycles and make it generalizable to unseen data.
 
-\subsection{Classifier Design}
+We craft a rich feature space that fully utilizes the data available in our MOOCPosts dataset, choosing logistic regression with $l_{2}$ regularization as our statistical model. Results from empirical evaluations demonstrate that our classifier performs reasonably well, while simultaneously providing insight into the nature of confusion across multiple courses.
+
+\subsection{Design: Feature Space and Models}
 \subsubsection{Feature Space}
 Here's an intuition of what we figured might be helpful across all variables ...
 
