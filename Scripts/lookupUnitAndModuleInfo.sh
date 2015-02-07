@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Input file:
-#     video_id, video_code, resource_display_name,page 
+#     course_display_name, video_id, video_code, resource_display_name,page 
 # Page entries:
 #     https://class.stanford.edu/.../coursware/495757ee7b25401599b1ef0495b068e4/4fe1ef4953674903b88a0c9bf344
 # Get 4957... into $unitId, and 4fe1... into $moduleId
@@ -27,7 +27,7 @@ lookupTestFile=/home/paepcke/EclipseWorkspaces/json_to_relation/scripts/lookupTe
 
 # --------------------------- Actual Processing ---------
 
-echo "video_id,unitLabel,moduleLabel"
+echo "course_display_name,video_id,unitLabel,moduleLabel"
 
 # Read one page ID at a time, and
 # extract the second-to-last, and last
@@ -37,6 +37,7 @@ do
   # Read one line into a bash array.
   # Only first element will be filled:
   
+  # Read one line into an array: course_display_name,video_id,video_code,resource_display_name
   #****IFS=$'\n' lineArr=($(cat ${pageURLFile}))
   IFS=$'\n' read -a lineArr <<<${oneVideoInfoLine}
 
@@ -45,8 +46,7 @@ do
       [[ ${lineArr[$i-1]} = $name ]] && echo "${lineArr[$i]}"
   done
 
-  # Get each column of the first (and only) line
-  # into an array:
+  # Get each column of the line into an array:
   IFS=$',' colArr=(${lineArr[0]})
 
   # The video_id:

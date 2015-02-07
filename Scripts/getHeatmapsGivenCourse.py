@@ -3,9 +3,20 @@ import shutil
 import sys
 import tempfile
 
+from video_footprint_index import VideoFootPrintIndex
+
+# Given a course name, generate all that course's video
+# heatmaps either using all learners' events, or only events
+# from selected learners. 
+#
+# Set courseDisplayName to the desired course name triplet.
+# If only use particular learners, fill the specialLearnersList
+# with those learner IDs. Else make that array empty.
+#
+# Script will print the path of the result file when done.
+
 #courseDisplayName = 'Medicine/HRP261/Winter2014'
 courseDisplayName = 'Medicine/HRP262/Spring2014'
-from video_footprint_index import VideoFootPrintIndex
 specialLearnersList = [
 			# 'd9e40e111506cf299441abc35a56fb4bdac0daad', # HRP261
 			# '8811cf97c75bedcdd46357d89a2a27be5ac15547',
