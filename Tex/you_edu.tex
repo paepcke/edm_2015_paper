@@ -27,7 +27,7 @@
 % For tracking purposes - this is V3.1SP - APRIL 2009
 
 \documentclass{edm_template}
-
+\usepackage{multirow}
 \begin{document}
 
 \title{YouEDU: Addressing Confusion in MOOC Discussion Forums by Recommending Instructional Video Clips}
@@ -175,7 +175,9 @@ We craft a rich feature space that fully utilizes the data available in our MOOC
 Our feature space is composed of three types of inputs, those derived from: the post body; post metadata; and other classifiers. The confusion classifer we train functions as a combining layer that folds in the predictions of other classifiers; these classifiers are trained to predict variables correlated with confusion. We expand upon each type of input here.
 
 \subsubsection{Bag-of-Words}
-We take the bag-of-words approach in representing each document (i.e., each forum post). Each document is represented in part as a vector of indicator variables, one for each word that appears in the training data. A word is defined as a sequence of one or more alphanumeric characters, or a single punctuation character (one of \{. , ; ! ?\}). Documents are pre-processed before they are mapped to vectors: Alphabetic case is ignored\footnote{All-caps discussion certainly does communicate affect in some Internet forums -- it is typically associated with aggression and is considered a breach of ``nettiquette'' \cite{hambridge1995netiquette}; however, we assume that MOOC forum-goers are somewhat civil, and so accounting for case would needlessly inflate our feature space.}, while numbers, \LaTeX\ equations, and URLs are lemmatized. Intuitively, the presence of numbers and equations in a forum post might indirectly convey confusion or the lack thereof, in that the learner may be asking a question about some quantity or perhaps providing an answer to a quantitative question; similarly, a knowledgeable learner might answer a question by citing a URL. 
+We take the bag-of-words approach in representing each document (i.e., each forum post). Each document is represented in part as a vector of indicator variables, one for each word that appears in the training data. A word is defined as a sequence of one or more alphanumeric characters, or a single punctuation character (one of \{. , ; ! ?\}).
+
+Documents are pre-processed before they are mapped to vectors. We prune out stop words, using subset of the list published by the Information Retrieval Group at the University of Glasgow \cite{glasgow}. Removed words inlcude but are not limited to iterrogative words (``who'', ``what'', ``where'', ``when'', ``why'', ``how''), words that identified the self (``I'', ``my''), verbs indicating ability or the lack thereof, negative words (``cant'', ``cannot'', ``couldnt''), and certain conjunctions (``yet'', ``but''). Alphabetic case is ignored\footnote{All-caps discussion certainly does communicate affect in some Internet forums -- it is typically associated with aggression and is considered a breach of ``nettiquette'' \cite{hambridge1995netiquette}; however, we assume that MOOC forum-goers are somewhat civil, and so accounting for case would needlessly inflate our feature space.}, while numbers, \LaTeX\ equations, and URLs are lemmatized. Intuitively, the presence of numbers and equations in a forum post might indirectly convey confusion or the lack thereof, in that the learner may be asking a question about some quantity or perhaps providing an answer to a quantitative question; similarly, a knowledgeable learner might answer a question by citing a URL. 
 
 The unigram document representation, while simple, pervades text classification and often achieves high performance \cite{boulis2005text}. We employ $l_{2}$ regularization in order to prevent overfitting, a risk that is aggravated when the dimension of the feature space exceeds the training set size \cite{Ng:2004:FSL:1015330.1015435}.
 
@@ -190,15 +192,70 @@ The feature vector derived from unigrams is augmented with post metadata, includ
 \end{itemize}
 
 \subsubsection{Classifier Combination}
-In section 3.2, we demonstrated that, at least in the humanities and medicine courses, confusion (or the lack thereof) is significantly correlated with questions, answers, urgency, sentiment and opinion (p < 0.001). As such, in predicting confusion, we take into account the predictions of five distinct classifiers, one for each of the aforementioned variables. We use a fine-grained method of combining classifiers in which the outputs of several classifiers are fed as input to a \emph{combination function} \cite{bennett2005combination}. In our case, the combination function is itself a classifier.
+In section 3.2, we demonstrated that, at least in the humanities and medicine courses, confusion (or the lack thereof) is significantly correlated with questions, answers, urgency, sentiment and opinion (p < 0.0
+1). As such, in predicting confusion, we take into account the predictions of five distinct classifiers, one for each of the aforementioned variables. We use a fine-grained method of combining classifiers in which the outputs of several classifiers are fed as input to a \emph{combination function} \cite{bennett2005combination}. In our case, the combination function is itself a classifier.
 
 For a given train-test partition, let $D_{tr}$ be the training set and $D_{tst}$ be the test set. In both sets, each example is tagged along the six variables. Let $H_{q}$, $H_{a}$, $H_{u}$, $H_{s}$, and $H_{o}$ be classifiers for question, answer, urgency, sentiment, and opinion, respectively. Each classifier is trained on $D_{tr}$, taking as input bag-of-words and post metadata features, as described in the previous two subsections. We construct $H_{c}$, a classifier for confusion, as our combination function. Like the other classifiers, $H_{c}$ is trained on $D_{tr}$ and it takes as input bag-of-words and metadata features; however, unlike the other classifiers, $H_{c}$ also treats the labels for question, answer, urgency, sentiment, and opinion as features. 
 
 When testing $H_{c}$ on an example $d \in D_{tr}$, we translate $d$ into a feature vector as follows. First, $H_{q}$, $H_{a}$, $H_{u}$, $H_{s}$, and $H_{o}$ each output a prediction for $d$. These five predictions are then appended to the bag-of-words+metadata feature vector for $d$. Finally, the resulting vector is given as input to $H_{c}$, which then makes a prediction on $d$.
 
-A few subtleties: $H_{s}$ uses an additional metadata feature that the other classifiers do not -- the number of negative words (e.g., ``not'', ``cannot'', ``never'', etc.). $H_{q}$, $H_{a}$, $H_{u}$, and $H_{c}$ treat the number of question marks as an additional feature as well, for reasons similar to those described in \cite{wen2015confusion}.
+A few subtleties: $H_{s}$ uses an additional metadata feature that the other classifiers do not -- the number of negative words (e.g., ``not'', ``cannot'', ``never'', etc.). $H_{q}$, $H_{a}$, $H_{u}$, and $H_{c}$ treat the number of question marks as an additional feature as well, for reasons similar to those described in \cite{wen2015confusion}. And while $H_{q}$, $H_{a}$, and $H_{o}$ are binary classifiers, $H_{s}$ and $H_{u}$ are multi-class. The latter three predict values in $\{ 1 + 0.5x \mid x \le 12 \}$; by preserving the full range, we provide $H_{c}$ with more granular information.
 
 \subsection{Evaluation}
+
+\begin{table*}
+    \centering
+    \begin{tabular}{|c|c c c|c c c|c|}
+    \hline\hline
+    \multirow{2}{*}{Course Set} & \multicolumn{3}{c|}{Not Confused} & \multicolumn{3}{c|}{Confused}  & \multirow{2}{*}{Kappa} \\ \cline{2-7}
+                                &  Precision & Recall & $F_{1}$     &  Precision & Recall & $F_{1}$  &       \\ \hline
+    Humanities                  & 0.925      & 0.930    & 0.927     &  0.666     & 0.638  & 0.648    & 0.578  \\ \hline
+    Medicine                    & 0.958      & 0.950  & 0.953       & 0.615      & 0.599  & 0.586    & 0.542  \\ \hline
+    \end{tabular}
+    \caption{\textnormal{
+       Confusion Classifier Performance. For each course set listed, this table reports the average performance across 10 folds of stratified cross validation. The particular classifier tested here included all features enumerated in section 5.1. 
+    }} % title of Table
+    \label{table:confusion_sets} % is used to refer this table in the text
+\end{table*}
+
+\begin{table*}
+       \centering
+       \begin{tabular}{|c|c|c|c|}
+       \hline
+       Course                         & $F_{1}$: Not Confused & $F_{1}$: Confused & Kappa \\ \hline\hline
+       Economics 1                    & 0.933                 & 0.708             & 0.643 \\ \hline
+       Statistical Learning           & 0.911                 & 0.744             & 0.655 \\ \hline
+       Statistics in Medicine (2014)  & 0.917                 & 0.721             & 0.640 \\ \hline
+       Statistics in Medicine (2013)  & 0.937                 & 0.637             & 0.575 \\ \hline
+       Women's Health                 & 0.969                 & 0.530             & 0.502 \\ \hline
+       Managing Emergencies           & 0.973                 & 0.400             & 0.393 \\ \hline
+       Science Writing                & 0.978                 & 0.407             & 0.388 \\ \hline
+       \end{tabular}
+       \caption{\textnormal{
+       Confusion Classifier Performance, Course Granularity. Our classifier performed best on courses whose discourse was characterized by technical diction, like statistics or economics. In courses that facilitated open-ended and somewhat roaming discussions -- like \emph{Managing Emergencies} or \emph{Science Writing} -- our model found it more difficult to implicitly define confusion. 
+       }} % title of Table
+       \label{table:confusion_courses} % is used to refer this table in the text
+\end{table*}
+
+
+\begin{table}
+       \centering
+       \begin{tabular}{|c|c|c|}
+       \hline
+       Training Course                & Test Course                    & Kappa \\ \hline\hline
+       Economics 1                    & Economics IV                   & 0.814 \\ \hline
+       Statistical Learning           & Statistics 216                 & 0.692 \\ \hline
+       Statistics in Medicine (2013)  & Statistics in Medicine (2014)  & 0.617 \\ \hline
+       Economics 1                    & Statistics in Medicine (2013)  & 0.359 \\ \hline
+       Women's Health                 & Statistics in Medicine (2013)  & 0.311 \\ \hline
+       Statistics in Medicine (2013)  & Women's Health                 & 0.084 \\ \hline
+       \end{tabular}
+       \caption{\textnormal{
+       Nature of Confusion Across Domains. Training and testing on similar courses typically resulted in high performance, especially in the case of technical courses. The low score associated with training on Statistics in Medicine and testing on Women's Health suggests that the nature of confusion in the former is particularly related to domain concepts.
+       }} % title of Table
+       \label{table:across_courses} % is used to refer this table in the text
+\end{table}
+
 
 * educational contexts \\
 * metrics used \\ 
