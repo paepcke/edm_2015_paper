@@ -159,7 +159,7 @@ Our work aims to solve both the described problems in a unified
 approach. We automatically classify forum posts, both in service of
 identifying posts that instructors do need to act on, and to recommend
 relevant sections of course videos. These recommendations are computed
-by using subsets of post contents as queries into close caption
+by using subsets of post contents as queries into closed caption
 files. Such files are transcriptions of speech in the videos, and are
 created for compliance with US legislation that ensures equal access
 to learners with disabilities, such as sight impairments.
@@ -533,9 +533,54 @@ Two experts were hired ...
 \section{Future Work}
 \label{sec:futureWork}
 
-Future work might focus on strengthening the link between the classifiers and the reccomendation system; in particular, it would behoove us to devise a way to filter our set of confused posts to a subset for which recommendation makes sense. Additionally, we might want to make our classifiers better and index back into the previous course to retrieve answers for courses. Deploying this system live is another thing that we might do. 
+The work we presented here is a first step. Many opportunities for
+improvement remain. We are actively investigating whether we can
+strengthen our video snippet ranking further by considering which
+video portions learners re-visited several times. This analysis will
+catalog the number of views that occurred for each second of each
+instructional video in a course. The hope is that re-visit frequency
+could further boost our recommendation ranking algorithm.
 
-YouEDU's two phases need not be packaged together; in an online setting, they could operate as independent, complemetary services. The output of Phase I could be presented directly to instructors, many of whom express interest in understanding activity in discussion forums \cite{Stephens-Martinez:2014:MMI:2556325.2566246}. As for Phase II, the recommendation system might live as a search-box of sorts: learner would type natural language queries in which they voiced their confusion, and our system would serve them relevant resources.
+Another thrust of future work will use the question and answer
+classifiers to actively connect learners to each other. The challenge
+to meet in this work is to identify learner expertise by their answer
+posts, and to encourage their participation in answering questions
+related to their expertise. As in this work, auxiliary data, such as
+successful homework completion, will support this line of
+investigation.
+
+A third ongoing project in our group is the development of user
+interfaces for both instructors and learners. Using our classifiers,
+we have been experimenting with interactive visualizations of our
+classifiers' results. The hope is, for example, to have instructors
+see major forum borne evidence of confusion in a single view, and to
+act in response through that same interface.
+
+Video recommendations are not the only source of help for confused
+learners. Many online courses are repeated during multiple
+quarters. It should therefore be possible for our system to search
+forum posts of past course runs for answers to questions in current
+posts.  Also, not all confusion is resolvable through the videos. For
+example, difficulties in operating the video player is unlikely to
+have been covered in the course videos. Distinguishing such posts is
+an additional challenge.
+
+YouEDU's two phases need not be packaged together; in an online
+setting, they could operate as independent, complemetary services. The
+output of Phase I could be presented directly to instructors, many of
+whom express interest in understanding activity in discussion forums
+\cite{Stephens-Martinez:2014:MMI:2556325.2566246}. As for Phase II,
+the recommendation system might be made accessible through a search
+interface: instead of posting, learners would type natural language
+queries in which they voiced their confusion, and the apparatus
+presented here could serve relevant resources.
+
+As novel online teaching methods are developed, the same underlying
+challenges will need to be met: keeping learners engaged, allowing
+them to feel like members of a community, and maximizing instructor
+effectiveness in the difficult environment of large public classes.
+More questions will therefore arise as online teaching methodologies
+change.
 
 \section{Conclusion}
 \label{sec:conclusion}
