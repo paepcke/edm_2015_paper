@@ -29,6 +29,7 @@
 \documentclass{edm_template}
 \usepackage{multirow}
 \usepackage{csquotes}
+\usepackage{url}
 \begin{document}
 
 \title{YouEDU: Addressing Confusion in MOOC Discussion Forums by Recommending Instructional Video Clips}
@@ -110,8 +111,6 @@ detrimentally impacting the learning process and exacerbating attrition. In this
 %
 %\terms{Theory}
 
-\keywords{ACM proceedings, \LaTeX, text tagging} % NOT required for Proceedings
-
 \section{Introduction}
 * Proliferation of MOOCs\\
 * Volume of posts high\\
@@ -131,21 +130,80 @@ The remainder of this paper is organized as follows. We examine related work in 
 \section{Related Work}
 
 \section{The Stanford MOOCPosts Corpus}
-A precondition to automatically detecting affect in MOOC discussion forums was manually identifying it; given that no publicly-available corpus of tagged MOOC discussion forum posts existed prior to our research, we set out to create our own. The outcome of our data compilation and curation was the Stanford MOOCPosts dataset: a corpus composed of 29,604 anonymized learner forum posts from eleven Stanford University public online classes. Freely available to academic researchers, the MOOCPosts dataset was designed to enable computational inquiries into the nature of both affect and content in MOOC discussion forums.
+Given that no publicly-available corpus of tagged MOOC discussion forum posts existed prior to our research, we set out to create our own. The outcome of our data compilation and curation was the Stanford MOOCPosts dataset: a corpus composed of 29,604 anonymized learner forum posts from eleven Stanford University public online classes. Freely available to academic researchers, the MOOCPosts dataset was designed to enable computational inquiries into the nature of both affect and content in MOOC discussion forums.
 
-Each post in the MOOCPosts dataset was scored across six dimensions -- confusion, sentiment, urgency, question, answer, and opinion -- and subsequently augmented with additional metadata. In this section, we detail the data collection methodology, define each of the six dimensions, and briefly present some insights gleaned by mining the set.
+Each post in the MOOCPosts dataset was scored across six dimensions -- confusion, sentiment, urgency, question, answer, and opinion -- and subsequently augmented with additional metadata.
 
 
 \subsection{Methodology: Compiling the Dataset}
-Nine judges from oDesk were hired to ...
+We organized the posts into three sets of related courses: Humanities/Sciences, Medicine, and Education, with 10,000, 10,002, and 10,000 entries, respectively. Humanities/Sciences contains two economics courses, two statistics courses, a global health course, and an environmental physiology course; Medicine contains two iterations of the same medical statistics course, a science writing course, and an emergency medicine course; and Education contains a single course titled \emph{How to Learn Math}. 
 
-\subsection{Insights and Discussion}
-We report insights gleaned into the nature of affect, etc. across these courses.
+Each course set was coded by three distinct, independent, paid oDesk coders. That is, three triplets of coders each worked on one set of 10,000 posts. No coder worked on more than one course set. Each coder attempted to code every post for his or her particular set. All posts with malformed or missing scores in at least one coder's spreadsheet were discarded. This elision accounts for the difference between the 29,604 posts in the final set, and the original 30,002 posts.
 
-% TODO: Is this really the right place to present this? Or should this
-% be presented in the Classification Combination Section?
-\subsubsection{Relationship between Variables}
-In this section, we report the pairwise correlations between variables to 1) shed some light into the nature of each and also 2) to motivate a YouEDU design choice.
+Coders were asked to score their posts across six dimensions:
+\begin{itemize}
+\vspace{-15pt}
+       \setlength\itemsep{0.05em}
+       \item Question: Does this post include a question?
+       \item Opinion: Does this post include an opinion, or is its subject matter wholly factual?
+       \item Answer: Does this post appear to be an answer to a learner's quesiton?
+       \item Senitment: What sentiment does this post convey, on a scale of 1 (extremely negative) to 7 (extremely positive)? A score of 4 indicates neutrality.
+       \item Urgency: How urgent is it that an instructor respond to the post, on a scale of 1 (not urgent at all) to 7 (extremely urgent)? A score of 4 indicates that the intsructor should respond only if he or she has spare time.
+       \item Confusion: To what extent does this post express confusion, or the lack thereof, on a scale of 1 (expert knowledge) to 7 (extreme confusion)? A score of 4 indicates neutrality in that the post expresses neither knowledge nor confusion.
+\end{itemize}
+\vspace{-15pt}
+Coders were given examples of posts in each category. The following was an example of an extremely urgent post:
+
+\vspace{-14pt}
+\begin{displayquote}
+The website is down at the moment
+       https:\\//class.stanford.edu/courses/Engineering/\\Networking/Winter2014/courseware
+       seems down and I'm not able to submit the Midterm. Still have
+       the "Final Submit" button on the page, but it doesn't work. Are
+       the servers congested? 
+       thanks anyway
+\end{displayquote}
+\vspace{-14pt}
+
+And
+
+\vspace{-14pt}
+\begin{displayquote}
+Double colons "::"  expand to longest possible 0's  
+       If the longest is 0, will  the address be considered valid ?  (
+       even if it doesn't make sense and there is no room for adding
+       0's) 
+       Can someone please answer ?
+       Thanks in advance
+\end{displayquote}
+\vspace{-14pt}
+
+was given as an example of a post that was both confused (6.0) and urgent (5.0).
+
+We created three gold sets from the coders' scores, on for each course set. We computed inter-rater reliability using Krippendorff's Alpha \cite{hayes2007answering}. For a given post and Likert variable, the post's gold score was computed as an unweighted average of the scores assigned to it by the subset of two coders who expressed the most agreement on that particular variable. Gold scores for binary variables were chosen by majority votes across all three coders. We refer readers to our write-up in \cite{stanfordMOOCPosts} for a more detailed treatment of our procedure and our complete inter-rater reliability results.
+
+
+\subsection{Discussion}
+We found significant correlations between confusion and the other five variables. In the humanities and medicine course sets, confusion and urgency were correlated with a pearson's coefficient of 0.657 and 0.485, respectively. In all three subdivisions of the dataset, confusion and the question variable were positively correlated (0.623, 0.459, and 0.347), while the sentiment, opinion, and answer variables were negatively correlated with confusion. Table \ref{table:correlations} reports the entire set of correlations.
+
+That questions and confusion were positively correlated supports the observation in \cite{wilson1989learning} that confusion is often communicated through questions. The negative correlations make intuitive sense, too. A confused learner might become frustrated and express negative sentiment; as discussed in \cite{liu2013sequences}, confusion and frustration sometimes go hand-in-hand. If a learner is opining on something, then it seems less likely that he or she is discussing a factual topic. And we would hope that learners providing answers to questions are not themselves confused.
+
+\begin{table}
+       \centering
+       \begin{tabular}{|c|c|c|c|}
+       \hline
+          & Humanities & Medicine & Education \\ \hline
+        Urgency   & 0.657                & 0.485              & 0.000* \\ \hline
+        Sentiment & -0.171                & -0.098             & -0.134 \\ \hline
+        Opinion   & -0.193                & -0.097             & -0.297 \\ \hline
+        Answer    & -0.257                & -0.394             & -0.106  \\ \hline
+        Question  & 0.623                & 0.459              & 0.347  \\ \hline
+       \end{tabular}
+       \caption{\textnormal{
+       Correlations with Confusion. The urgency and question variables are strongly correlated with confusion. All correlations, save the one denoted by *, were significant, with p-values < 0.01.
+       }} 
+       \label{table:correlations} % is used to refer this table in the text
+\end{table}
 
 % TODO: Perhaps fold this into the introduction.
 \section{YouEDU: Detect and Recommend}
@@ -186,6 +244,7 @@ The unigram document representation, while simple, pervades text classification 
 The feature vector derived from unigrams is augmented with post metadata, including: 
 \vspace{-15pt}
 \begin{itemize}
+\setlength\itemsep{0.05em}
        \item The number of up-votes accumulated by the post. We rationalized that learners might express interest in posts that voiced confusion that they shared. 
        \item The number of reads garnered by the post's containing thread.
        \item Whether the poster elected to appear anonymous to his or her peers or to the entire population. It has been shown that anonymity in educational discussion forums enables learners to ask questions without fear of judgement \cite{freeman2004student}, and our dataset demonstrates a strong correlation between questions and confusion.
@@ -225,7 +284,7 @@ described in the section 5.1 as the \emph{combined} classifier. In this section,
 We quantify performance primarily using two metrics: $F_{1}$ and Cohen's Kappa. We favor the Kappa over accuracy because the former accounts for chance agreement \cite{cohen1960coefficient}. Unless stated otherwise, reported metrics represent an average over 10 folds of stratified cross-validation. 
 
 \subsubsection{Confusion at the Course-Set Granularity}
-Table \ref{table:confusion_sets} presents the performance of the combined classifier on the humanities and medicine course sets. Both sets are somewhat heterogenous collections of courses. The former contains two economics courses, two statistics courses, a global health course, and an environmental physiology course, totaling to 9,709 posts, while the latter contains two iterations of the same medical statistics course, a science writing course, and an emergency medicine course, totaling to 9,998 posts. In our dataset, not-confused posts outnumber confused ones -- in the humanities course set, but 23\% of posts exhibit confusion, and in the medicine course set, 16\% do. As such, our classifier was naturally better at identifying non-confused posts than confused posts.
+Table \ref{table:confusion_sets} presents the performance of the combined classifier on the humanities and medicine course sets. As mentioned in section 3.1, both sets are somewhat heterogenous collections of courses, with a total nearly 10,000 posts in each set. In our dataset, not-confused posts outnumber confused ones -- in the humanities course set, but 23\% of posts exhibit confusion, and in the medicine course set, 16\% do. As such, our classifier was naturally better at identifying non-confused posts than confused posts.
 
 \subsubsection{The Language of Confusion Across Courses}
 
@@ -277,24 +336,8 @@ The above post was tagged as exhibiting confusion, but the language is much more
 
 Examining the feature weights learned when cross-validating on the humanities and medicine course sets provides us with a more holistic view onto the language of confusion. Domain-specific words take the backseat to words that convey the learning process. For example, in both course sets, ``confused'' was the word with the highest feature weight (odds ratios equal to 3.19 and 2.97 for humanities and medicine, respectively). In the humanities course set, ``?'', ``couldn't'', ``question'', ``haven't'', and ``wondering'' came next, in that order. The importance of question-related features in particular is consistent with \cite{wilson1989learning} and with the correlations in the MOOCPosts dataset. In medicine, the next highest ranked words were ``explain'', ``role'', ``understand'', ``stuck'', and ``struggling''.
 
-\begin{table}[ht!]
-       \centering
-       \begin{tabular}{|c|c|c|}
-       \hline
-       Training Course                & Test Course                    & Kappa \\ \hline
-       Stats. in Medicine (2013)  & Stats. in Medicine (2014)  & 0.629 \\ \hline
-       Stat. Learning           & Stats. 216                 & 0.590 \\ \hline
-       Economics 1                    & Stats. in Medicine (2013)  & 0.267 \\ \hline
-       Stats. in Medicine (2013)  & Women's Health                 & 0.175 \\ \hline
-       \end{tabular}
-       \caption{\textnormal{
-       Nature of Confusion Across Domains. Training and testing on similar courses typically resulted in high performance, especially in the case of technical courses.
-       }} 
-       \label{table:across_courses} % is used to refer this table in the text
-\end{table}
-
 Table \ref{table:informative_features} displays the most informative features for humanities and medicine course sets, as well as \emph{How to Learn Math} and \emph{Managing Emergencies}.
-\begin{table*}
+\begin{table*}[ht!]
        \centering
        \begin{tabular}{|c|c|c|c|}
        \hline
@@ -311,7 +354,7 @@ Table \ref{table:informative_features} displays the most informative features fo
        wondering            (1.83)       & little               (2.09) &  instruction           (1.60)  & meant (1.23) \\ \hline
        \end{tabular}
        \caption{\textnormal{
-       Most Informative Features, Odds Ratios. Features prefixed with ``constituent:'' correspond to the predictions of constituent classifiers, while those prefixed with ``metadata'' correspond to post metadata features. All other features are unigram words.
+       Most Informative Features, Odds Ratios. Features prefixed with ``constituent:'' correspond to constituent predictions, while those prefixed with ``metadata'' correspond to post metadata features. All other features are unigram words.
        }} % title of Table
        \label{table:informative_features} % is used to refer this table in the text
 \end{table*}
@@ -319,37 +362,44 @@ Table \ref{table:informative_features} displays the most informative features fo
 \subsubsection{Training and Testing on Distinct Courses}
 We ran a series of experiments in which we trained the combined classifier on posts from one course and then tested it on posts from another one, without cross-validation. The results of these experiments are tabulated in Table \ref{table:across_courses}. 
 
+\begin{table}[]
+       \centering
+       \begin{tabular}{|c|c|c|}
+       \hline
+       Training Course                & Test Course                    & Kappa \\ \hline
+       Stats. in Medicine (2013)  & Stats. in Medicine (2014)  & 0.629 \\ \hline
+       Stat. Learning           & Stats. 216                 & 0.590 \\ \hline
+       Economics 1                    & Stats. in Medicine (2013)  & 0.267 \\ \hline
+       Stats. in Medicine (2013)  & Women's Health                 & 0.175 \\ \hline
+       \end{tabular}
+       \caption{\textnormal{
+       Nature of Confusion Across Domains. Training and testing on similar courses typically resulted in high performance, especially in the case of technical courses.
+       }} 
+       \label{table:across_courses} % is used to refer this table in the text
+\end{table}
+
+
 Our highest Kappa (0.629) was achieved when training on \emph{Statistics in Medicine 2013} and testing on \emph{Statistics in Medicine 2014}; this makes sense, since they comprise two runs of the same course. Many instructors plan to offer the same MOOC multiple times \cite{hollands2014moocs}. If an instructor could tag but one of those runs, then a classifier like ours deployed in an online setting might be met with success. Even if that tagging process is too expensive, our results when training on \emph{Statistical Learning} and testing on \emph{Statistics 216} suggest that an online classifier might perform well so long as its training data derives from the same domain as the test data. Performance might suffer, however, if the domains of the training and test data are non-overlapping, as is the case in the last two experiments in Table \ref{table:across_courses}.
 
 \subsubsection{Constituent Classifiers and Post Metadata}
-Figure \ref{figure:constituents} illustrates the performance of each constituent classifier when cross-validating on the humanities and medicine course sets, as well as on the education course. The constituent question classifier outperforms all the others by a large margin, likely because the structure of questions is fairly consistent. (Note that the constituent classifiers are not themselves fed by a lower level of classifiers; if we were attempting to predict, say, sentiment instead of confusion, we could try to improve over the performance shown here by creating a sentiment combination function that was informed by its own set of constituent classifiers.)
-
-The combining fuction of our combined classifier consistently determined that the constituent classifiers for the question and urgency variables were particularly indicative of confusion (see Table \ref{table:informative_features}). Table \ref{table:ablative} shows the results of an ablative analysis in which one constituent classifier was removed from the combined classifier at a time, until we were left with a classifier with no constituent classifiers (call it a \emph{flat} classifier). The flat classifier performed worse than the combined classifier in the two course sets and the education course, with the drop in performance most pronounced in the medicine course set. For both course sets, the urgency constituent seemed to be the most helpful of the five constituents -- this makes intuitive sense, since we would expect that instructors would prioritize posts in which learners were struggling to understand the course material. However, the same was not true for \emph{How to Learn Math}, which is consistent with the fact that no significant correlation between confusion and urgency was found (see section 3.2).
-
-The post position metadata feature also contributed positively to the classifier's performance -- removing it from the flat classifier for medicine dropped the Kappa by 0.03. The other metadata features, however, did not appear to consistently or appreciably affect classifier performance, and so we chose to omit them from our ablative analysis.
-
-Table \ref{table:informative_features} shows that the number of question marks was also an informative feature, at least in the \emph{Managing Emergencies} course. 
-
-
-% TODO: Talk about constituent classifier performance
-% TODO: Talk about ablative analysis and why we didn't remove other features
 
 \begin{figure}
-\vspace{-20pt}
+\vspace{-18pt}
        \centering
-       \includegraphics[width=0.5\textwidth]{../classifierEval.pdf}
+       \includegraphics[width=0.5\textwidth]{../Figs/classifierEvalsWithEduAltLayout.pdf}
        \vspace{-30pt}
-       \caption{\textnormal{Constituent Classifier Performance. This figure visualizes the performance of the constituent classifiers, as well as the performance of the combined classifier (confusion(cmb), where ``cmb'' is short for combined). The constituents for answer, opinion, and question are binary classifiers, while those for sentiment and urgency are multiclass, as described in section 5.1.}}
+       \caption{\textnormal{Constituent Classifier Performance. This figure visualizes the performance of the constituent classifiers, as well as the performance of the combined classifier (confusion(cmb), where ``cmb'' is short for combined).}}
       \label{figure:constituents}
 \end{figure}
 
+Figure \ref{figure:constituents} illustrates the performance of each constituent classifier when cross-validating on the humanities and medicine course sets, as well as on the education course. The constituent question classifier outperforms all the others by a large margin, likely because the structure of questions is fairly consistent. (Note that the constituent classifiers are not themselves fed by a lower level of classifiers; if we were attempting to predict, say, sentiment instead of confusion, we could try to improve over the performance shown here by creating a sentiment combination function that was informed by its own set of constituent classifiers.)
+
 \begin{table}
-\vspace{-40pt}
        \centering
        \begin{tabular}{|c|c|c|c|}
        \hline
-                            & Humanities & Medicine & Learn Math \\ \cline{2-4}
-       combined classifier  & 0.621      & 0.564    & 0.359 \\ \hline\hline
+       Course Set           & Humanities & Medicine & Learn Math \\ \hline
+       Combined Classifier  & 0.621      & 0.564    & 0.359 \\ \hline\hline
        Minus Question       & 0.621      & 0.559    & 0.350 \\ \hline
        Minus Answer         & 0.620      & 0.555    & 0.345 \\ \hline
        Minus Opinion        & 0.619      & 0.553    & 0.310 \\ \hline
@@ -358,11 +408,16 @@ Table \ref{table:informative_features} shows that the number of question marks w
        Minus Post Position      & 0.614      & 0.482    & 0.337 \\ \hline
        \end{tabular}
        \caption{\textnormal{
-       Ablative Analysis. This table shows how the removal of the constituent classifiers and the post position feature from the combined classifier affects performance, as measured by the Kappa. Minus question is the combined classifier without the constituent question classifier; minus answer is the minus question classifier without the constituent answer classifier; and so on.
+       Ablative Analysis, Kappas. Minus question is the combined classifier without the constituent question classifier; minus answer is the minus question classifier without the constituent answer classifier; and so on.
        }} % title of Table
        \label{table:ablative} % is used to refer this table in the text
 \end{table}
 
+The combining fuction of our combined classifier consistently determined that the constituent classifiers for the question and urgency variables were particularly indicative of confusion (see Table \ref{table:informative_features}). Table \ref{table:ablative} shows the results of an ablative analysis in which one constituent classifier was removed from the combined classifier at a time, until we were left with a classifier with no constituent classifiers (call it a \emph{flat} classifier). The flat classifier performed worse than the combined classifier in the two course sets and the education course, with the drop in performance most pronounced in the medicine course set. For both course sets, the urgency constituent seemed to be the most helpful of the five constituents -- this makes intuitive sense, since we would expect that instructors would prioritize posts in which learners were struggling to understand the course material. However, the same was not true for \emph{How to Learn Math}, which is consistent with the fact that no significant correlation between confusion and urgency was found (see section 3.2).
+
+The post position metadata feature also contributed positively to the classifier's performance -- removing it from the flat classifier for medicine dropped the Kappa by 0.03. The other metadata features, however, did not appear to consistently or appreciably affect classifier performance, and so we chose to omit them from our ablative analysis.
+
+Table \ref{table:informative_features} shows that the number of question marks was also an informative feature, at least in the \emph{Managing Emergencies} course. 
 
 \section{Phase II: Recommending Clips}
 \subsection{The Recommendation Algorithm}
