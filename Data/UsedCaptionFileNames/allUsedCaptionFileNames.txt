@@ -1,0 +1,113 @@
+/Users/jag/Downloads/Stanford medstats/Basic Math Review.srt
+/Users/jag/Downloads/Stanford medstats/HRP 262 Unit 3 Module 1 Part 1.srt
+/Users/jag/Downloads/Stanford medstats/HRP 262 Unit 3 Module 1 Part 2.srt
+/Users/jag/Downloads/Stanford medstats/HRP 262 Unit 3 Module 2 Part 1.srt
+/Users/jag/Downloads/Stanford medstats/HRP 262 Unit 3 Module 2 Part 2.srt
+/Users/jag/Downloads/Stanford medstats/HRP 262 Unit 4 Module 5.srt
+/Users/jag/Downloads/Stanford medstats/HRP 262 Unit 4 Overview.srt
+/Users/jag/Downloads/Stanford medstats/HRP 262 Unit 5 Module 1 Part 2.srt
+/Users/jag/Downloads/Stanford medstats/HRP 262 Unit 5 Module 2 Part 1.srt
+/Users/jag/Downloads/Stanford medstats/HRP 262 Unit 6 Module 1 Part 1.srt
+/Users/jag/Downloads/Stanford medstats/HRP 262 Unit 6 Module 1 Part 2.srt
+/Users/jag/Downloads/Stanford medstats/HRP 262 Unit 6 Module 2.srt
+/Users/jag/Downloads/Stanford medstats/HRP 262 Unit 7 Module 1.srt
+/Users/jag/Downloads/Stanford medstats/HRP 262 Unit 7 Module 4.srt
+/Users/jag/Downloads/Stanford medstats/HRP 262 Unit 7 Module 5.srt
+/Users/jag/Downloads/Stanford medstats/HRP 262 Unit 7 Module 6.srt
+/Users/jag/Downloads/Stanford medstats/HRP 262 Unit 7 Module 7.srt
+/Users/jag/Downloads/Stanford medstats/HRP 262 Unit 8 Module 1.srt
+/Users/jag/Downloads/Stanford medstats/HRP 262 Unit 8 Module 2.srt
+/Users/jag/Downloads/Stanford medstats/HRP 262 Unit 8 Module 5.srt
+/Users/jag/Downloads/Stanford medstats/HRP 262 Unit 9 Module 1.srt
+/Users/jag/Downloads/Stanford medstats/HRP 262 Unit 9 Module 2.srt
+/Users/jag/Downloads/Stanford medstats/HRP 262 Unit 9 Module 3.srt
+/Users/jag/Downloads/Stanford medstats/HRP261 Unit 7 mod1.srt
+/Users/jag/Downloads/Stanford medstats/HRP261 Unit 7 mod2.srt
+/Users/jag/Downloads/Stanford medstats/HRP261 Unit 8 mod1 Part 2.srt
+/Users/jag/Downloads/Stanford medstats/HRP261 Unit 8 mod3 Part 2.srt
+/Users/jag/Downloads/Stanford medstats/HRP261 Unit 8 mod4.srt
+/Users/jag/Downloads/Stanford medstats/HRP261 Unit 8 mod5.srt
+/Users/jag/Downloads/Stanford medstats/HRP261 Unit 8 overview.srt
+/Users/jag/Downloads/Stanford medstats/HRP261 Unit 9 mod2.srt
+/Users/jag/Downloads/Stanford medstats/HRP261 Unit 9 mod3 Part1.srt
+/Users/jag/Downloads/Stanford medstats/HRP261 Unit 9 mod3 Part2.srt
+/Users/jag/Downloads/Stanford medstats/HRP261 Unit1 Mod1.srt
+/Users/jag/Downloads/Stanford medstats/HRP261 Unit1 Mod2.srt
+/Users/jag/Downloads/Stanford medstats/HRP261 Unit1 Mod3.srt
+/Users/jag/Downloads/Stanford medstats/HRP261 Unit1 Mod4.srt
+/Users/jag/Downloads/Stanford medstats/HRP261 Unit1 Mod5.srt
+/Users/jag/Downloads/Stanford medstats/HRP261 Unit1 Module 0 - Introduction.srt
+/Users/jag/Downloads/Stanford medstats/HRP261 Unit1 Optional.srt
+/Users/jag/Downloads/Stanford medstats/HRP261 Unit2 Mod1.srt
+/Users/jag/Downloads/Stanford medstats/HRP261 Unit2 Mod2.srt
+/Users/jag/Downloads/Stanford medstats/HRP261 Unit2 Mod3.srt
+/Users/jag/Downloads/Stanford medstats/HRP261 Unit2 Mod4.srt
+/Users/jag/Downloads/Stanford medstats/HRP261 Unit2 Mod5.srt
+/Users/jag/Downloads/Stanford medstats/HRP261 Unit3 Mod0 overview.srt
+/Users/jag/Downloads/Stanford medstats/HRP261 Unit3 Mod1 pt1.srt
+/Users/jag/Downloads/Stanford medstats/HRP261 Unit3 Mod1 pt1_2.srt
+/Users/jag/Downloads/Stanford medstats/HRP261 Unit3 Mod2.srt
+/Users/jag/Downloads/Stanford medstats/HRP261 Unit3 Mod3 pt1.srt
+/Users/jag/Downloads/Stanford medstats/HRP261 Unit3 Mod3 pt2.srt
+/Users/jag/Downloads/Stanford medstats/HRP261 Unit3 Mod4.srt
+/Users/jag/Downloads/Stanford medstats/HRP261 Unit4 Mod2.srt
+/Users/jag/Downloads/Stanford medstats/HRP261 Unit4 Mod4 pt1.srt
+/Users/jag/Downloads/Stanford medstats/HRP261 Unit4 Mod4 pt2.srt
+/Users/jag/Downloads/Stanford medstats/HRP261 Unit4 Mod4.srt
+/Users/jag/Downloads/Stanford medstats/HRP261 Unit4 Mod5.srt
+/Users/jag/Downloads/Stanford medstats/HRP261 Unit4 Mod5_2.srt
+/Users/jag/Downloads/Stanford medstats/HRP261 Unit5 Mod3.srt
+/Users/jag/Downloads/Stanford medstats/HRP261 Unit5 Mod5.srt
+/Users/jag/Downloads/Stanford medstats/HRP261 Unit6 Mod3.srt
+/Users/jag/Downloads/Stanford medstats/HRP261 Unit6 Mod6.srt
+/Users/jag/Downloads/Stanford medstats/HRP262 Unit 1 Module 2.srt
+/Users/jag/Downloads/Stanford medstats/HRP262 Unit 1 Module 3 Part 1.srt
+/Users/jag/Downloads/Stanford medstats/HRP262 Unit 1 Module 4.srt
+/Users/jag/Downloads/Stanford medstats/HRP262 Unit 2 Module 1.srt
+/Users/jag/Downloads/Stanford medstats/HRP262 Unit 2 Module 2 Part 1.srt
+/Users/jag/Downloads/Stanford medstats/HRP262 Unit 2 Module 2 Part 2.srt
+/Users/jag/Downloads/Stanford medstats/HRP262 Unit 2 Module 3.srt
+/Users/jag/Downloads/Stanford medstats/HRP262 Unit 2 Module 4 Part 1.srt
+/Users/jag/Downloads/Stanford medstats/HRP262 Unit 2 Module 5.srt
+/Users/jag/Downloads/Stanford medstats/Kaplan Meier Curves 1  How to Draw Them.srt
+/Users/jag/Downloads/Stanford medstats/Kaplan Meier Curves 1 How to Draw Them.srt
+/Users/jag/Downloads/Stanford medstats/Kaplan Meier Curves 2  How to Read Them.srt
+/Users/jag/Downloads/Stanford medstats/MedStatsUnit3_Mod1_Part2.srt
+/Users/jag/Downloads/Stanford medstats/RExercise1 full.srt
+/Users/jag/Downloads/Stanford medstats/RExercise2.srt
+/Users/jag/Downloads/Stanford medstats/RExercise3.srt
+/Users/jag/Downloads/Stanford medstats/Unit 1 Module 5 part 2.srt
+/Users/jag/Downloads/Stanford medstats/Unit 1.srt
+/Users/jag/Downloads/Stanford medstats/Unit 2 Module 4 part 1.srt
+/Users/jag/Downloads/Stanford medstats/Unit 2 Module 4 part 2.srt
+/Users/jag/Downloads/Stanford medstats/Unit 2 Module 4 part 3.srt
+/Users/jag/Downloads/Stanford medstats/Unit 2 Module 6.srt
+/Users/jag/Downloads/Stanford medstats/Unit 4 module 1 part 1.srt
+/Users/jag/Downloads/Stanford medstats/Unit 4 module 1 part 2.srt
+/Users/jag/Downloads/Stanford medstats/Unit 4 module 4 part 2.srt
+/Users/jag/Downloads/Stanford medstats/Unit 4 module 5 part 1.srt
+/Users/jag/Downloads/Stanford medstats/Unit 5 Module 4 part 1.srt
+/Users/jag/Downloads/Stanford medstats/Unit 5 Module 4 part 2.srt
+/Users/jag/Downloads/Stanford medstats/Unit 6 Module 1 part 1.srt
+/Users/jag/Downloads/Stanford medstats/Unit 6 Module 1 part 2.srt
+/Users/jag/Downloads/Stanford medstats/Unit 6 Module 3 part 1.srt
+/Users/jag/Downloads/Stanford medstats/Unit 7 Module 2 part 1.srt
+/Users/jag/Downloads/Stanford medstats/Unit 7 Module 2 part 2.srt
+/Users/jag/Downloads/Stanford medstats/Unit 7 Module 3 part 1.srt
+/Users/jag/Downloads/Stanford medstats/Unit 7 Module 3 part 2.srt
+/Users/jag/Downloads/Stanford medstats/Unit 7 Module 6 part 2.srt
+/Users/jag/Downloads/Stanford medstats/Unit 8 Module 1 part 1.srt
+/Users/jag/Downloads/Stanford medstats/Unit 8 Module 1 part 2.srt
+/Users/jag/Downloads/Stanford medstats/Unit 8 Module 4 part 1.srt
+/Users/jag/Downloads/Stanford medstats/Unit 8 Module 5 part 1.srt
+/Users/jag/Downloads/Stanford medstats/Unit 8 Module 5.srt
+/Users/jag/Downloads/Stanford medstats/Unit 9 Module 0.srt
+/Users/jag/Downloads/Stanford medstats/Unit 9 Module 1 part 1.srt
+/Users/jag/Downloads/Stanford medstats/Unit 9 Module 1 part 2.srt
+/Users/jag/Downloads/Stanford medstats/Unit 9 Module 1.srt
+/Users/jag/Downloads/Stanford medstats/Unit 9 Module 2.srt
+/Users/jag/Downloads/Stanford medstats/Unit 9 Module 4.srt
+/Users/jag/Downloads/Stanford medstats/Unit 9 Module 5.srt
+/Users/jag/Downloads/Stanford medstats/Unit 9 Module 6.srt
+/Users/jag/Downloads/Stanford medstats/Unit 9.srt
+/Users/jag/Downloads/Stanford medstats/Unit3 Module5 pt4.srt
