@@ -114,20 +114,114 @@ detrimentally impacting the learning process and exacerbating attrition. In this
 \section{Introduction}
 \label{sec:intro}
 
-* Proliferation of MOOCs\\
-* Volume of posts high\\
-* Difficult to get a birds-eye view of the course, difficult to address it.\\
+During recent years a number of universities have experimented with
+online delivery of their courses to the public. Hundreds of thousands
+of learners across the world have taken advantage of these
+opportunities.  While teaching techniques and technologies for such
+large numbers will change in the coming years, fundamental challenges
+will remain. 
 
-* Work looking into sentiment thus far is limited by datasets\\
-* Work has been done on confusion, but not so much on MOOCs (save Rosé)\\
-* Work into intelligently intervening + aiding the instructor\\
-* Previous work has found forum to perhaps not be the most useful, even\\
-* We suspect that the forum's perceived lack of usefulness is not instrinsic but rather ~ lack of attention lack of instructor tools + isolation from other parts of the classroom.\\
-* We accordingly set out to adress both of these problems -- mining for affect gives instructors a pulse on the state of the course, and linking to videos marries forum and other course resources.\\
-* Why video snippets as opposed to videos? \cite{Guo:2014:VPA:2556325.2566239} -- in a retrospective study of four edX courses, the maximum median engagement, regardless of video length, was six minutes.
-* open sourced our entire implementation
+For example, learners can get lost in a sense of isolation, as no
+physically accessible peer group accompanies them through the
+sometimes difficult material. Vast diversity in prior studying
+experience disadvantages learners who are unused to systematic, self
+driven work. Instructors, on the other side of the Internet, are
+unable to interact with individual struggling learners as they might
+in traditional settings.
 
-The remainder of this paper is organized as follows. We examine related work in section two, present the Stanford MOOCPosts corpus in section three, sketch the architecture of YouEDU in section four, detail YouEDU's constituent classification and recommendation phases, evaluating both and interpreting results in sections five and six, and propose future work in section seven.
+Free, or very inexpensive online learning opportunities carry the
+potential of enormous public good. But unless these impediments are
+addressed, the significant effort and expense invested in the course
+offerings will not impart their maximum impact.
+
+Two technologies have so far been common to most online teaching:
+instructional videos, and a course-internal communication forum that
+allows learners to interact with each other. Both of these
+technologies exhibit both strengths and weaknesses.
+
+Videos, while old fashioned and maybe not optimal as teaching tools,
+do communicate archivable material, and many such assets are available
+at this point. Yet one of the technology's downsides is that video is
+tyrannically linear in nature. No table of contents or hyperlinks are
+available to access material randomly. With often over a hundred ten
+to fifteen minute videos in a course, learners can easily be
+discouraged when they find a hole in their understanding, and need to
+re-view relevant footage.
+
+Course forum facilities can be powerful reflections of learner mood
+and success. In the best cases learners answer each others' questions,
+furthering a sense of belonging. Instructors could in theory read the
+forum posts, and gather a good sense of what is going well, and where
+learners are struggling. But with 30 thousand posts in one course
+alone, instructors need help.
+
+Our work aims to solve both the described problems in a unified
+approach. We automatically classify forum posts, both in service of
+identifying posts that instructors do need to act on, and to recommend
+relevant sections of course videos. These recommendations are computed
+by using subsets of post contents as queries into close caption
+files. Such files are transcriptions of speech in the videos, and are
+created for compliance with US legislation that ensures equal access
+to learners with disabilities, such as sight impairments.
+
+In particular, we classify the forum posts along several
+dimensions. One classifier attempts to identify posts that are
+evidence of a learner's {\em confusion} about some learning
+goal. Other classifiers determine whether a post was a {\em question},
+an {\em answer}, or an {\em opinion}. Additional classifiers try to
+determine each post's {\em sentiment}, and {\em urgency} for an
+instructor to respond to the post.
+
+These classifications can be put to several uses. For example, posts
+with high urgency can be deployed as filters that allow instructors to
+respond to the most important posts. The {\em answer} class can be
+used to identify learners of possibly high proficiency. Such learners
+can then be encouraged, or directly asked to address some posted
+questions. In this work we focus on the {\em confusion} classifier,
+and link it to the problem of finding post-relevant video snippets at
+one minute resolution. That is we identify confused posts, and produce
+a ranked list of video snippets that are likely to help address the
+confusion.
+
+The fine grained time resolution of recommendations is important for
+several reasons. First, the obvious time savings such resolution
+affords can encourage learner persistence. Second, studies have shown
+that short video segments are more effective for learners, than
+extended footage \cite{Guo:2014:VPA:2556325.2566239}.
+
+While classification technology is well known, two factors have
+prevented our approach up to now. The type of classifiers we require
+are supervised, and therefore need a training set. Second, the feature
+set we employ to advantage include data beyond the forum posts
+themselves. 
+
+Such data has only recently become available. In order to obtain the
+training set for our classifiers we hired paid consultants to tag
+30,000 posts from three categories of large, public Stanford online
+courses: Education, Engineering, and Medicine. The set is available to
+researchers on request \cite{stanfordMOOCPosts}.
+
+In addition to the forum posts, all the online teaching platforms
+Stanford uses to distribute their public courses gather tracking log
+data that now include hundreds of millions of learner actions,
+including homework assignment outcomes. We use a subset of these data
+as features for our confusion classification. Some of these data are
+also available in anonymized form to researchers upon request
+\cite{stanfordDataApps}. Until very recently neither data set has been
+available, preventing the solution approach we chose for this
+work.
+
+This paper explores a number of implementation options for the forum
+classification, and evaluates the effectiveness of the caption file
+text retrieval.
+
+The remainder of this paper is organized as follows. We examine
+related work, present the Stanford MOOCPosts corpus in
+Section~\ref{sec:MOOCPosts}, and sketch the architecture of YouEDU in
+Section~\ref{sec:arch}.  In Sections~\ref{sec:confusionDetection} and
+\ref{sec:clipRecommendation} we detail and evaluate YouEDU's constituent
+classification and recommendation phases. We close with a section on
+future work, and a conclusion.
 
 \section{Related Work}
 \label{sec:relWork}
