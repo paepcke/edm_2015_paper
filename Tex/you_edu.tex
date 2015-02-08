@@ -111,8 +111,6 @@ detrimentally impacting the learning process and exacerbating attrition. In this
 %
 %\terms{Theory}
 
-\keywords{ACM proceedings, \LaTeX, text tagging} % NOT required for Proceedings
-
 \section{Introduction}
 * Proliferation of MOOCs\\
 * Volume of posts high\\
@@ -145,27 +143,31 @@ Each course set was coded by three distinct, independent, paid oDesk coders. Tha
 Coders were asked to score their posts across six dimensions:
 \begin{itemize}
 \vspace{-15pt}
-       \setlength\itemsep{0.1em}
+       \setlength\itemsep{0.05em}
        \item Question: Does this post include a question?
        \item Opinion: Does this post include an opinion, or is its subject matter wholly factual?
        \item Answer: Does this post appear to be an answer to a learner's quesiton?
        \item Senitment: What sentiment does this post convey, on a scale of 1 (extremely negative) to 7 (extremely positive)? A score of 4 indicates neutrality.
        \item Urgency: How urgent is it that an instructor respond to the post, on a scale of 1 (not urgent at all) to 7 (extremely urgent)? A score of 4 indicates that the intsructor should respond only if he or she has spare time.
        \item Confusion: To what extent does this post express confusion, or the lack thereof, on a scale of 1 (expert knowledge) to 7 (extreme confusion)? A score of 4 indicates neutrality in that the post expresses neither knowledge nor confusion.
-
+\end{itemize}
+\vspace{-15pt}
 Coders were given examples of posts in each category. The following was an example of an extremely urgent post:
 
+\vspace{-14pt}
 \begin{displayquote}
 The website is down at the moment
-       https://class.stanford.edu/courses/Engineering/Networking/Winter2014/courseware
+       https:\\//class.stanford.edu/courses/Engineering/\\Networking/Winter2014/courseware
        seems down and I'm not able to submit the Midterm. Still have
        the "Final Submit" button on the page, but it doesn't work. Are
        the servers congested? 
        thanks anyway
 \end{displayquote}
+\vspace{-14pt}
 
 And
 
+\vspace{-14pt}
 \begin{displayquote}
 Double colons "::"  expand to longest possible 0's  
        If the longest is 0, will  the address be considered valid ?  (
@@ -174,12 +176,12 @@ Double colons "::"  expand to longest possible 0's
        Can someone please answer ?
        Thanks in advance
 \end{displayquote}
+\vspace{-14pt}
 
 was given as an example of a post that was both confused (6.0) and urgent (5.0).
 
-We created three gold sets from the coders' scores, on for each course set. We computed inter-rater reliability using Krippendorff's Alpha \cite{hayes2007answering}. For a given post and Likert variable, the post's gold score was computed as an unweighted average of the scores assigned to it by the subset of two coders who expressed the most agreement on that particular variable. Gold scores for binary variables were chosen by majority votes across all three coders. In the interest of space, we refer readers to our write-up in \cite{
+We created three gold sets from the coders' scores, on for each course set. We computed inter-rater reliability using Krippendorff's Alpha \cite{hayes2007answering}. For a given post and Likert variable, the post's gold score was computed as an unweighted average of the scores assigned to it by the subset of two coders who expressed the most agreement on that particular variable. Gold scores for binary variables were chosen by majority votes across all three coders. We refer readers to our write-up in \cite{stanfordMOOCPosts} for a more detailed treatment of our procedure and our complete inter-rater reliability results.
 
-\end{itemize}
 
 \subsection{Discussion}
 We found significant correlations between confusion and the other five variables. In the humanities and medicine course sets, confusion and urgency were correlated with a pearson's coefficient of 0.657 and 0.485, respectively. In all three subdivisions of the dataset, confusion and the question variable were positively correlated (0.623, 0.459, and 0.347), while the sentiment, opinion, and answer variables were negatively correlated with confusion. Table \ref{table:correlations} reports the entire set of correlations.
@@ -188,9 +190,9 @@ That questions and confusion were positively correlated supports the observation
 
 \begin{table}
        \centering
-       \begin{tabular}{|c|c|c|c||}
+       \begin{tabular}{|c|c|c|c|}
        \hline
-          & Humanities & Medicine & Learn Math \\ \hline
+          & Humanities & Medicine & Education \\ \hline
         Urgency   & 0.657                & 0.485              & 0.000* \\ \hline
         Sentiment & -0.171                & -0.098             & -0.134 \\ \hline
         Opinion   & -0.193                & -0.097             & -0.297 \\ \hline
@@ -242,6 +244,7 @@ The unigram document representation, while simple, pervades text classification 
 The feature vector derived from unigrams is augmented with post metadata, including: 
 \vspace{-15pt}
 \begin{itemize}
+\setlength\itemsep{0.05em}
        \item The number of up-votes accumulated by the post. We rationalized that learners might express interest in posts that voiced confusion that they shared. 
        \item The number of reads garnered by the post's containing thread.
        \item Whether the poster elected to appear anonymous to his or her peers or to the entire population. It has been shown that anonymity in educational discussion forums enables learners to ask questions without fear of judgement \cite{freeman2004student}, and our dataset demonstrates a strong correlation between questions and confusion.
@@ -395,8 +398,8 @@ Figure \ref{figure:constituents} illustrates the performance of each constituent
        \centering
        \begin{tabular}{|c|c|c|c|}
        \hline
-                            & Humanities & Medicine & Learn Math \\ \cline{2-4}
-       combined classifier  & 0.621      & 0.564    & 0.359 \\ \hline\hline
+       Course Set           & Humanities & Medicine & Learn Math \\ \hline
+       Combined Classifier  & 0.621      & 0.564    & 0.359 \\ \hline\hline
        Minus Question       & 0.621      & 0.559    & 0.350 \\ \hline
        Minus Answer         & 0.620      & 0.555    & 0.345 \\ \hline
        Minus Opinion        & 0.619      & 0.553    & 0.310 \\ \hline
