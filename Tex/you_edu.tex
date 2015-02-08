@@ -139,13 +139,27 @@ Each post in the MOOCPosts dataset was scored across six dimensions -- confusion
 \subsection{Methodology: Compiling the Dataset}
 Nine judges from oDesk were hired to ...
 
-\subsection{Insights and Discussion}
-We report insights gleaned into the nature of affect, etc. across these courses.
+\subsection{Discussion}
+Dividing the MOOCPosts dataset into the humanities course set, the medicine course set, and \emph{How to Learn Math}, we found significant correlations between confusion and the other five variables. In particular, confusion and urgency were correlated with a pearson's coefficient of 0.657 and 0.485, respectively; no correlation was found between confusion and urgency in \emph{How to Learn Math}, but the high p-value prevents us from interpreting the coefficient meaningfully. In all three subdivisions of the dataset, confusion and the question variable were positively correlated (0.623, 0.459, and 0.347), while the sentiment, opinion, and answer variables were negatively correlated with confusion. Table \ref{table:correlations} reports the entire set of correlations.
 
-% TODO: Is this really the right place to present this? Or should this
-% be presented in the Classification Combination Section?
-\subsubsection{Relationship between Variables}
-In this section, we report the pairwise correlations between variables to 1) shed some light into the nature of each and also 2) to motivate a YouEDU design choice.
+That questions and confusion were positively correlated supports the observation in \cite{wilson1989learning} that confusion is often communicated through questions. The negative correlations make intuitive sense, too. A confused learner might become frustrated and express negative sentiment; as discussed in \cite{liu2013sequences}, confusion and frustration sometimes go hand-in-hand. If a learner is opinionating on something, then it seems less likely that he or she is discussing a factual topic. And we would hope that learners providing answers to questions are not themselves confused.
+
+\begin{table}
+       \centering
+       \begin{tabular}{|c|c|c|c||}
+       \hline
+          & Humanities & Medicine & Learn Math \\ \hline
+        Urgency   & 0.657                & 0.485              & 0.000* \\ \hline
+        Sentiment & -0.171                & -0.098             & -0.134 \\ \hline
+        Opinion   & -0.193                & -0.097             & -0.297 \\ \hline
+        Answer    & -0.257                & -0.394             & -0.106  \\ \hline
+        Question  & 0.623                & 0.459              & 0.347  \\ \hline
+       \end{tabular}
+       \caption{\textnormal{
+       Correlations with Confusion. The urgency and question variables are strongly correlated with confusion. All correlations, save the one denoted by *, were significant, with p-values < 0.01.
+       }} 
+       \label{table:correlations} % is used to refer this table in the text
+\end{table}
 
 % TODO: Perhaps fold this into the introduction.
 \section{YouEDU: Detect and Recommend}
@@ -337,7 +351,7 @@ Table \ref{table:informative_features} shows that the number of question marks w
 \begin{figure}
 \vspace{-20pt}
        \centering
-       \includegraphics[width=0.5\textwidth]{../classifierEval.pdf}
+       \includegraphics[width=0.5\textwidth]{../Figs/classifierEval.pdf}
        \vspace{-30pt}
        \caption{\textnormal{Constituent Classifier Performance. This figure visualizes the performance of the constituent classifiers, as well as the performance of the combined classifier (confusion(cmb), where ``cmb'' is short for combined). The constituents for answer, opinion, and question are binary classifiers, while those for sentiment and urgency are multiclass, as described in section 5.1.}}
       \label{figure:constituents}
