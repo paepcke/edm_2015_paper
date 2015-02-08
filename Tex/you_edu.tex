@@ -200,10 +200,11 @@ For a given train-test partition, let $D_{train}$ be the training set and $D_{te
 
 Let $H_{c}$, a classifier for confusion, be our combination function. Like the constituent classifiers, $H_{c}$ is trained on $D_{train}$ and takes as input bag-of-words and metadata features. Unlike the constituents, $H_{c}$ also treats the ground-truth labels for the question, answer, opinion, sentiment, and urgency variables as features. When testing $H_{c}$ on an example $d \in D_{test}$, the constituent classifiers each output a prediction for $d$. These five predictions are appended to the bag-of-words and metadata features derived from $d$. The resulting vector is given as input to $H_{c}$, which then predicts $d$'s confusion class.
 
-A few subtleties: $H_{s}$ uses an additional metadata feature that the other classifiers do not -- the number of negative words (e.g., ``not'', ``cannot'', ``never'', etc.). $H_{q}$, $H_{a}$, $H_{u}$, and $H_{c}$ treat the number of question marks as an additional feature, given the previously presented correlations; \cite{wen2015confusion} also used question marks in predicting confusion. And while $H_{q}$, $H_{a}$, and $H_{o}$ are by nature binary classifiers, $H_{s}$ and $H_{u}$ are multi-class. The latter three predict values in $\{ 1 + 0.5x \mid x \le 12 \}$. By preserving the full range, we provide $H_{c}$ with granular information about the non-confusion variables.
+A few subtleties: $H_{s}$ uses an additional metadata feature that the other classifiers do not -- the number of negative words (e.g., ``not'', ``cannot'', ``never'', etc.). $H_{q}$, $H_{a}$, $H_{u}$, and $H_{c}$ treat the number of question marks as an additional feature, given the previously presented correlations; \cite{wen2015confusion} also used question marks in predicting confusion. And while $H_{q}$, $H_{a}$, and $H_{o}$ are by nature binary classifiers, $H_{s}$ and $H_{u}$ are multi-class. They predict values corresponding to negative (raw score $< 4$), neutral (raw score $= 4$), and positive (raw score $> 4$), in order to provide $H_{c}$ with somewhat granular information.
 
 \subsection{Evaluation and Discussion}
-For clarity, we refer to the confusion classifier that uses all the features described in the section 5.1 as the \emph{complete} classifier. In this section, we evaluate and interpret the performance of both the complete classifier and confusion classifiers with pared-down feature sets, reporting insights and intuitions gleaned about the nature of confusion in MOOCs along the way. 
+For clarity, we refer to the confusion classifier that uses all the features
+described in the section 5.1 as the \emph{combined} classifier. In this section, we evaluate and interpret the performance of both the combined classifier and confusion classifiers with pared-down feature sets, reporting insights and intuitions gleaned about the nature of confusion in MOOCs along the way. 
 
 \begin{table*}[htp!]
     \centering
@@ -216,7 +217,7 @@ For clarity, we refer to the confusion classifier that uses all the features des
 
     \end{tabular}
     \caption{\textnormal{
-       Complete Confusion Classifier Performance, Course Sets. For each course set listed, this table reports the average performance across 10 folds of stratified cross-validation.
+       Combined Confusion Classifier Performance, Course Sets. For each course set listed, this table reports the average performance across 10 folds of stratified cross-validation.
     }} % title of Table
     \label{table:confusion_sets} % is used to refer this table in the text
 \end{table*}
@@ -224,7 +225,7 @@ For clarity, we refer to the confusion classifier that uses all the features des
 We quantify performance primarily using two metrics: $F_{1}$ and Cohen's Kappa. We favor the Kappa over accuracy because the former accounts for chance agreement \cite{cohen1960coefficient}. Unless stated otherwise, reported metrics represent an average over 10 folds of stratified cross-validation. 
 
 \subsubsection{Confusion at the Course-Set Granularity}
-Table \ref{table:confusion_sets} presents the performance of the complete classifier on the humanities and medicine course sets. Both sets are somewhat heterogenous collections of courses. The former contains two economics courses, two statistics courses, a global health course, and an environmental physiology course, totaling to 9,709 posts, while the latter contains two iterations of the same medical statistics course, a science writing course, and an emergency medicine course, totaling to 9,998 posts. In our dataset, not-confused posts outnumber confused ones -- in the humanities course set, but 23\% of posts exhibit confusion, and in the medicine course set, 16\% do. As such, our classifier was naturally better at identifying non-confused posts than confused posts.
+Table \ref{table:confusion_sets} presents the performance of the combined classifier on the humanities and medicine course sets. Both sets are somewhat heterogenous collections of courses. The former contains two economics courses, two statistics courses, a global health course, and an environmental physiology course, totaling to 9,709 posts, while the latter contains two iterations of the same medical statistics course, a science writing course, and an emergency medicine course, totaling to 9,998 posts. In our dataset, not-confused posts outnumber confused ones -- in the humanities course set, but 23\% of posts exhibit confusion, and in the medicine course set, 16\% do. As such, our classifier was naturally better at identifying non-confused posts than confused posts.
 
 \subsubsection{The Language of Confusion Across Courses}
 
@@ -243,12 +244,12 @@ Table \ref{table:confusion_sets} presents the performance of the complete classi
        How to Learn Math                 & 9,878 (6\%)                        & 0.970                 & 0.383             & 0.359 \\ \hline
        \end{tabular}
        \caption{\textnormal{
-       Complete Confusion Classifier Performance, Individual Courses. Our classifier performed best on courses whose discourse was characterized by technical diction, like statistics or economics. In courses like \emph{How to Learn Math} that facilitated open-ended and somewhat roaming discussions, our model found it more difficult to implicitly define confusion. 
+       Combined Confusion Classifier Performance, Individual Courses. Our classifier performed best on courses whose discourse was characterized by technical diction, like statistics or economics. In courses like \emph{How to Learn Math} that facilitated open-ended and somewhat roaming discussions, our model found it more difficult to implicitly define confusion. 
        }} % title of Table
        \label{table:confusion_courses} % is used to refer this table in the text
 \end{table*}
 
-Table \ref{table:confusion_courses} presents the performance of the complete classifier on select courses, sorted in descending order by Kappa. Our classifier performed best on courses that traded in highly technical language. Take, for example, the following two posts from \emph{Managing Emergencies}:
+Table \ref{table:confusion_courses} presents the performance of the combined classifier on select courses, sorted in descending order by Kappa. Our classifier performed best on courses that traded in highly technical language. Take, for example, the following two posts from \emph{Managing Emergencies}:
 
 \vspace{-10pt}
 \begin{displayquote}
@@ -316,16 +317,16 @@ Table \ref{table:informative_features} displays the most informative features fo
 \end{table*}
 
 \subsubsection{Training and Testing on Distinct Courses}
-We ran a series of experiments in which we trained the complete classifier on posts from one course and then tested it on posts from another one, without cross-validation. The results of these experiments are tabulated in Table \ref{table:across_courses}. 
+We ran a series of experiments in which we trained the combined classifier on posts from one course and then tested it on posts from another one, without cross-validation. The results of these experiments are tabulated in Table \ref{table:across_courses}. 
 
 Our highest Kappa (0.629) was achieved when training on \emph{Statistics in Medicine 2013} and testing on \emph{Statistics in Medicine 2014}; this makes sense, since they comprise two runs of the same course. Many instructors plan to offer the same MOOC multiple times \cite{hollands2014moocs}. If an instructor could tag but one of those runs, then a classifier like ours deployed in an online setting might be met with success. Even if that tagging process is too expensive, our results when training on \emph{Statistical Learning} and testing on \emph{Statistics 216} suggest that an online classifier might perform well so long as its training data derives from the same domain as the test data. Performance might suffer, however, if the domains of the training and test data are non-overlapping, as is the case in the last two experiments in Table \ref{table:across_courses}.
 
 \subsubsection{Constituent Classifiers and Post Metadata}
 Figure \ref{figure:constituents} illustrates the performance of each constituent classifier when cross-validating on the humanities and medicine course sets, as well as on the education course. The constituent question classifier outperforms all the others by a large margin, likely because the structure of questions is fairly consistent. (Note that the constituent classifiers are not themselves fed by a lower level of classifiers; if we were attempting to predict, say, sentiment instead of confusion, we could try to improve over the performance shown here by creating a sentiment combination function that was informed by its own set of constituent classifiers.)
 
-The combining fuction of our complete classifier consistently determined that the constituent classifiers for the question and urgency variables were particularly indicative of confusion (see Table \ref{table:informative_features}). Table \ref{table:ablative} shows the results of an ablative analysis in which one constituent classifier was removed from the complete classifier at a time, until we were left with a classifier with no constituent classifiers (call it a \emph{flat} classifier). The flat classifier performed worse than the complete classifier in the two course sets and the education course, with the drop in performance most pronounced in the medicine course set. For both course sets, the urgency constituent seemed to be the most helpful of the five constituents -- this makes intuitive sense, since we would expect that instructors would prioritize posts in which learners were struggling to understand the course material. However, the same was not true for \emph{How to Learn Math}, which is consistent with the fact that no significant correlation between confusion and urgency was found (see section 3.2).
+The combining fuction of our combined classifier consistently determined that the constituent classifiers for the question and urgency variables were particularly indicative of confusion (see Table \ref{table:informative_features}). Table \ref{table:ablative} shows the results of an ablative analysis in which one constituent classifier was removed from the combined classifier at a time, until we were left with a classifier with no constituent classifiers (call it a \emph{flat} classifier). The flat classifier performed worse than the combined classifier in the two course sets and the education course, with the drop in performance most pronounced in the medicine course set. For both course sets, the urgency constituent seemed to be the most helpful of the five constituents -- this makes intuitive sense, since we would expect that instructors would prioritize posts in which learners were struggling to understand the course material. However, the same was not true for \emph{How to Learn Math}, which is consistent with the fact that no significant correlation between confusion and urgency was found (see section 3.2).
 
-The post position metadata feature also contributed positively to the classifier's performance, as shown in Table \ref{table:ablative} -- removing it from the flat classifier for medicine dropped the Kappa by 0.03. The other metadata features, however, did not appear to consistently or appreciably affect classifier performance, and so we chose to omit them from our ablative analysis.
+The post position metadata feature also contributed positively to the classifier's performance -- removing it from the flat classifier for medicine dropped the Kappa by 0.03. The other metadata features, however, did not appear to consistently or appreciably affect classifier performance, and so we chose to omit them from our ablative analysis.
 
 Table \ref{table:informative_features} shows that the number of question marks was also an informative feature, at least in the \emph{Managing Emergencies} course. 
 
@@ -338,7 +339,7 @@ Table \ref{table:informative_features} shows that the number of question marks w
        \centering
        \includegraphics[width=0.5\textwidth]{../classifierEval.pdf}
        \vspace{-30pt}
-       \caption{\textnormal{Constituent Classifier Performance. This figure visualizes the performance of the constituent classifiers, as well as the performance of the complete classifier (confusion(cmb), where ``cmb'' is short for combined). The constituents for answer, opinion, and question are binary classifiers, while those for sentiment and urgency are multiclass, as described in section 5.1.}}
+       \caption{\textnormal{Constituent Classifier Performance. This figure visualizes the performance of the constituent classifiers, as well as the performance of the combined classifier (confusion(cmb), where ``cmb'' is short for combined). The constituents for answer, opinion, and question are binary classifiers, while those for sentiment and urgency are multiclass, as described in section 5.1.}}
       \label{figure:constituents}
 \end{figure}
 
@@ -348,7 +349,7 @@ Table \ref{table:informative_features} shows that the number of question marks w
        \begin{tabular}{|c|c|c|c|}
        \hline
                             & Humanities & Medicine & Learn Math \\ \cline{2-4}
-       Complete Classifier  & 0.621      & 0.564    & 0.359 \\ \hline\hline
+       combined classifier  & 0.621      & 0.564    & 0.359 \\ \hline\hline
        Minus Question       & 0.621      & 0.559    & 0.350 \\ \hline
        Minus Answer         & 0.620      & 0.555    & 0.345 \\ \hline
        Minus Opinion        & 0.619      & 0.553    & 0.310 \\ \hline
@@ -357,7 +358,7 @@ Table \ref{table:informative_features} shows that the number of question marks w
        Minus Post Position      & 0.614      & 0.482    & 0.337 \\ \hline
        \end{tabular}
        \caption{\textnormal{
-       Ablative Analysis. This table shows how the removal of the constituent classifiers and the post position feature from the complete classifier affects performance, as measured by the Kappa. Minus question is the complete classifier without the constituent question classifier; minus answer is the minus question classifier without the constituent answer classifier; and so on.
+       Ablative Analysis. This table shows how the removal of the constituent classifiers and the post position feature from the combined classifier affects performance, as measured by the Kappa. Minus question is the combined classifier without the constituent question classifier; minus answer is the minus question classifier without the constituent answer classifier; and so on.
        }} % title of Table
        \label{table:ablative} % is used to refer this table in the text
 \end{table}
