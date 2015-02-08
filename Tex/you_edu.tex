@@ -28,6 +28,7 @@
 
 \documentclass{edm_template}
 \usepackage{multirow}
+\usepackage{csquotes}
 \begin{document}
 
 \title{YouEDU: Addressing Confusion in MOOC Discussion Forums by Recommending Instructional Video Clips}
@@ -132,7 +133,7 @@ The remainder of this paper is organized as follows. We examine related work in 
 \section{The Stanford MOOCPosts Corpus}
 A precondition to automatically detecting affect in MOOC discussion forums was manually identifying it; given that no publicly-available corpus of tagged MOOC discussion forum posts existed prior to our research, we set out to create our own. The outcome of our data compilation and curation was the Stanford MOOCPosts dataset: a corpus composed of 29,604 anonymized learner forum posts from eleven Stanford University public online classes. Freely available to academic researchers, the MOOCPosts dataset was designed to enable computational inquiries into the nature of both affect and content in MOOC discussion forums.
 
-Each post in the MOOCPosts dataset was scored across six dimensions -- confusion, sentiment, urgency, question, answer, and opinion -- and subsequently augmented with additional metadata. In this section, we detail the data collection methodology, defining each of the six dimensions along the way, and briefly present some insights gleaned by mining the set.
+Each post in the MOOCPosts dataset was scored across six dimensions -- confusion, sentiment, urgency, question, answer, and opinion -- and subsequently augmented with additional metadata. In this section, we detail the data collection methodology, define each of the six dimensions, and briefly present some insights gleaned by mining the set.
 
 
 \subsection{Methodology: Compiling the Dataset}
@@ -200,12 +201,10 @@ Let $H_{c}$, a classifier for confusion, be our combination function. Like the c
 
 A few subtleties: $H_{s}$ uses an additional metadata feature that the other classifiers do not -- the number of negative words (e.g., ``not'', ``cannot'', ``never'', etc.). $H_{q}$, $H_{a}$, $H_{u}$, and $H_{c}$ treat the number of question marks as an additional feature, given the previously presented correlations; \cite{wen2015confusion} also used question marks in predicting confusion. And while $H_{q}$, $H_{a}$, and $H_{o}$ are by nature binary classifiers, $H_{s}$ and $H_{u}$ are multi-class. The latter three predict values in $\{ 1 + 0.5x \mid x \le 12 \}$. By preserving the full range, we provide $H_{c}$ with granular information about the non-confusion variables.
 
-\subsection{Evaluation}
+\subsection{Evaluation and Discussion}
 For clarity, we refer to the confusion classifier that uses all the features described in the section 5.1 as the \emph{complete} classifier. In this section, we evaluate and interpret the performance of both the complete classifier and confusion classifiers with pared-down feature sets, reporting insights and intuitions gleaned about the nature of confusion in MOOCs along the way. 
 
-The complete classifier was evaluated in three contexts: course sets, individual courses, and across courses. In each context, we attempted the binary classification problem defined in the previous subsection. In the former two contexts, we report the average performance of 10-fold stratified cross validation (the nature of training and testing across courses, explained further below, does not allow for cross validation). We quantify performance using two metrics: $F_{1}$ and Cohen's Kappa. 
-
-\begin{table*}
+\begin{table*}[htp!]
     \centering
     \begin{tabular}{|c|c c c|c c c|c|}
     \hline
@@ -221,19 +220,26 @@ The complete classifier was evaluated in three contexts: course sets, individual
     \label{table:confusion_sets} % is used to refer this table in the text
 \end{table*}
 
+We quantify performance primarily using two metrics: $F_{1}$ and Cohen's Kappa. We favor the Kappa over accuracy because the former accounts for chance agreement \cite{cohen1960coefficient}. Unless stated otherwise, reported metrics represent an average over 10 folds of stratified cross validation. 
+
+\subsubsection{Confusion at the Course-Set Granularity}
+Table \ref{table:confusion_sets} presents the performance of the complete classifier on the humanities and medicine course sets. Both sets are somewhat heterogenous collections of courses. The former contains two economics courses, two statistics courses, a global health course, and an environmental physiology course, totaling to 9,709 posts, while the latter contains two iterations of the same medical statistics course, a science writing course, and an emergency medicine course, totaling to 9,998 posts. In our dataset, not-confused posts outnumber confused ones -- in the humanities course set, but 23\% of posts exhibit confusion, and in the medicine course set, 16\% do. As such, our classifier was naturally better at identifying non-confused posts than confused posts.
+
+\subsubsection{The Language of Confusion Across Courses}
+
 \begin{table*}
        \centering
-       \begin{tabular}{|c|c|c|c|}
+       \begin{tabular}{|c|c|c|c|c|}
        \hline
-       Course                         & $F_{1}$: Not Confused & $F_{1}$: Confused & Kappa \\ \hline
-       Managing Emergencies           & 0.963                 & 0.771             & 0.741 \\ \hline
-       Statistical Learning           & 0.909                 & 0.767             & 0.677 \\ \hline
-       Economics 1                    & 0.933                 & 0.741             & 0.675 \\ \hline
-       Statistics in Medicine (2014)  & 0.908                 & 0.748             & 0.658 \\ \hline
-       Statistics in Medicine (2013)  & 0.916                 & 0.671             & 0.589 \\ \hline
-       Science Writing                & 0.961                 & 0.527             & 0.491 \\ \hline
-       Women's Health                 & 0.933                 & 0.506             & 0.445 \\ \hline
-       How to Learn Math              & 0.970                 & 0.383             & 0.389 \\ \hline
+       Course                         & \# Posts (\% Confused) & $F_{1}$: Not Confused & $F_{1}$: Confused & Kappa \\ \hline
+       Managing Emergencies              & 279 (18\%)                         & 0.963                 & 0.771             & 0.741 \\ \hline
+       Statistical Learning              & 3030 (30\%)                        & 0.909                 & 0.767             & 0.677 \\ \hline
+       Economics 1                       & 1583 (23\%)                     & 0.933                 & 0.741             & 0.675 \\ \hline
+       Statistics in Medicine (2014)     & 1218 (28\%)                        & 0.908                 & 0.748             & 0.658 \\ \hline
+       Statistics in Medicine (2013)     & 3320 (21\%)                         & 0.916                 & 0.671             & 0.589 \\ \hline
+       Science Writing                   & 5181 (10\%)                         & 0.961                 & 0.527             & 0.491 \\ \hline
+       Women's Health                    & 2141 (15\%)                         & 0.933                 & 0.506             & 0.445 \\ \hline
+       How to Learn Math                 & 9878 (6\%)                        & 0.970                 & 0.383             & 0.359 \\ \hline
        \end{tabular}
        \caption{\textnormal{
        Complete Confusion Classifier Performance, Individual Courses. Our classifier performed best on courses whose discourse was characterized by technical diction, like statistics or economics. In courses like \emph{How to Learn Math} that facilitated open-ended and somewhat roaming discussions, our model found it more difficult to implicitly define confusion. 
@@ -241,8 +247,33 @@ The complete classifier was evaluated in three contexts: course sets, individual
        \label{table:confusion_courses} % is used to refer this table in the text
 \end{table*}
 
+Table \ref{table:confusion_courses} presents the performance of the complete classifier on select courses, sorted in descending order by Kappa. Our classifier performed best on courses that traded in highly technical language. Take, for example, the following two posts from \emph{Managing Emergencies}:
 
-\begin{table}
+\vspace{-10pt}
+\begin{displayquote}
+What could have caused the hemoptysis in this patient with pnuemonia?
+\end{displayquote}
+\vspace{-10pt}
+
+\vspace{-5pt}
+\begin{displayquote}
+At what doses is it therapuetic for such a patient because at high doses it causes vasoconstrition through alpha1 interactions, while at low doses it causes dilation of renal veins and splachinic vessels.
+\end{displayquote}
+\vspace{-10pt}
+
+Both of these posts were tagged as exhibiting confusion, and both of them are fairly saturated with medical terms. Incidentally, our classifier achieved its highest performance when cross-validating on this course (Kappa = 0.741). This makes intuitive sense -- a vocabulary so technical and esoteric is likely only used when a learner is discussing or asking a question about a specific course topic. Indeed, an examination of our model's weights revealed that ``system'' was the 11th most indicative feature for confusion (odds ratio = 1.23) and ``defibrillation'' was the 15th (odds ratio = 1.22). Similarly, in \emph{Statistical Learning}, ``solutions'' was the sixth most indicative feature for confusion (odds ratio = 1.75), and``predict'' was the ninth (odds ratio = 1.65).
+
+A glance at Table \ref{table:confusion_courses} suggests that our classifier's performance degrades as the discourse becomes less technical. Posts like the following were typical in \emph{How to Learn Math}, an education course about the pedagogy of mathematics:
+
+\vspace{-10pt}
+\begin{displayquote}
+I am not sure if I agree with tracking or not.  I like teaching children at all levels.  It seems that if you teach kids at the same level then it becomes the Sam ethnic \emph{[sic]} over and over.  ...  In a normal class setting the lower level learners can learn from the higher learners and vice versa.  Although I do find it very hard to find a middle ground. There has to be an easier way.
+\vspace{-10pt}
+\end{displayquote}
+
+The above post was tagged as exhibiting confusion, but the language is much more subtle than that seen in the posts from \emph{Managing Emergencies}. In technical courses, there was a sharp shift in diction between confused posts and not-confused posts. The same could not necessarily be said for non-technical courses, and it is not surprising that we saw our lowest Kappa (0.389) when classifying \emph{How to Learn Math}. Indeed, in the education course, learners tend to voice more confusion about the structure of the class than the content itself -- ``link'', ``videos'', and ``responses'' are the fourth, fifth, and seventh most indicative features for the confusion class, respectively.
+
+\begin{table*}
        \centering
        \begin{tabular}{|c|c|c|}
        \hline
@@ -250,20 +281,50 @@ The complete classifier was evaluated in three contexts: course sets, individual
        Statistics in Medicine (2013)  & Statistics in Medicine (2014)  & 0.629 \\ \hline
        Statistical Learning           & Statistics 216                 & 0.590 \\ \hline
        Economics 1                    & Statistics in Medicine (2013)  & 0.267 \\ \hline
-       Women's Health                 & Statistics in Medicine (2013)  & 0.264 \\ \hline
        Statistics in Medicine (2013)  & Women's Health                 & 0.175 \\ \hline
        \end{tabular}
        \caption{\textnormal{
        Nature of Confusion Across Domains. Training and testing on similar courses typically resulted in high performance, especially in the case of technical courses. The low score associated with training on Statistics in Medicine and testing on Women's Health suggests that the nature of confusion in the former is particularly related to domain concepts.
        }} % title of Table
        \label{table:across_courses} % is used to refer this table in the text
+\end{table*}
+
+% TODO explain across_courses table
+
+Examining the feature weights learned when cross-validating on the humanities and medicine course sets provides us with a more holistic view onto the language of confusion. Domain-specific words take the backseat to words that convey the learning process. For example, in both course sets, ``confused'' was the word with the highest feature weight (odds ratios equal to 3.19 and 2.97 for humanities and medicine, respectively). In the humanities course set, ``?'', ``couldn't'', ``question'', ``haven't'', and ``wondering'' came next, in that order. The importance of question-related features in particular is consistent with \cite{wilson1989learning} and with the correlations in the MOOCPosts dataset. In medicine, the next highest ranked words were ``explain'', ``role'', ``understand'', ``stuck'', and ``struggling''.
+
+\subsubsection{Constiuent Classifiers and Post Metadata: Ablative Analysis}
+
+% TODO: Talk about constiuent classifier performance
+% TODO: Talk about ablative analysis and why we didn't remove other features
+% TODO: Make table for most informative features (humanities, medicine, edu, managing emergencies)
+
+\begin{figure}
+       \centering
+       \includegraphics[width=0.5\textwidth]{../classifierEval.pdf}
+       \caption{\textnormal{Constituent Classifier Performance. This figure visualizes the performance of the constituent classifiers, as well as the performance of the complete classifier (confusion(cmb), where ``cmb'' is short for combined). The constituents for answer, opinion, and question are binary classifiers, while those for sentiment and urgency are multiclass, as described in section 5.1. Note that the constituent classifiers are not themselves fed by a lower level of classifiers; if we were attempting to predict, say, sentiment instead of confusion, we could improve over the performance shown here by creating a sentiment combination function that was informed by its own set of constituent classifiers.}}
+      \label{figure:constituents}
+\end{figure}
+
+\begin{table}
+       \centering
+       \begin{tabular}{|c|c|c|c|}
+       \hline
+                            & Humanities & Medicine & Math \\ \cline{2-4}
+       Complete Classifier  & 0.621      & 0.564    & 0.359 \\ \hline\hline
+       Minus Question       & 0.621      & 0.559    & 0.350 \\ \hline
+       Minus Answer         & 0.620      & 0.555    & 0.345 \\ \hline
+       Minus Opinion        & 0.619      & 0.553    & 0.310 \\ \hline
+       Minus Sentiment      & 0.621      & 0.555    & 0.292 \\ \hline
+       Minus Urgency        & 0.618      & 0.512    & 0.337 \\ \hline
+       Minus Post Type      & 0.614      & 0.482    & 0.337 \\ \hline
+       \end{tabular}
+       \caption{\textnormal{
+       Ablative Analysis. This table shows how the removal of the constituent classifiers and the post type feature from the complete classifier affects performance, as measured by the Kappa. Minus question is the complete classifier without the constituent question classifier; minus answer is the minus question classifier without the constituent answer classifier; and so on.
+       }} % title of Table
+       \label{table:confusion_courses} % is used to refer this table in the text
 \end{table}
 
-
-* educational contexts \\
-* metrics used \\ 
-* results \\
-* implications \\
 
 \section{Phase II: Recommending Clips}
 \subsection{The Recommendation Algorithm}
