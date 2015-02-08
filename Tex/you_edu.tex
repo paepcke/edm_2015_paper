@@ -192,7 +192,7 @@ The feature vector derived from unigrams is augmented with post metadata, includ
 \end{itemize}
 
 \subsubsection{Classifier Combination}
-In section 3.2, we demonstrated that, at least in the humanities and medicine courses, confusion is significantly correlated with questions, answers, urgency, sentiment and opinion. As such, in predicting confusion, we take into account the predictions of five distinct classifiers, one for each of the aforementioned variables. We use a fine-grained method of combining classifiers in which the outputs of several classifiers are fed as input to a \emph{combination function} \cite{bennett2005combination}. In our case, the combination function is itself a classifier.
+In section 3.2, we demonstrated that, at least in the humanities and medicine courses, confusion is significantly correlated with questions, answers, urgency, sentiment and opinion. As such, in predicting confusion, we take into account the predictions of five distinct classifiers, one for each of the aforementioned variables. We use the fine-grained method of combining classifiers in which the outputs of several classifiers are fed as input to a \emph{combination function} \cite{bennett2005combination}. In our case, the combination function is itself a classifier.
 
 For a given train-test partition, let $D_{train}$ be the training set and $D_{test}$ be the test set. In both sets, each example is tagged along the six variables. Let $H_{q}$, $H_{a}$, $H_{o}$, $H_{s}$, and $H_{u}$ be classifiers for the question, answer, opinion, sentiment, and urgency variables, respectively. We call these classifiers \emph{constituent} classifiers. Each constituent is trained on $D_{train}$, taking as input bag-of-words and post metadata features, as described in the previous two subsections. 
 
@@ -201,18 +201,22 @@ Let $H_{c}$, a classifier for confusion, be our combination function. Like the c
 A few subtleties: $H_{s}$ uses an additional metadata feature that the other classifiers do not -- the number of negative words (e.g., ``not'', ``cannot'', ``never'', etc.). $H_{q}$, $H_{a}$, $H_{u}$, and $H_{c}$ treat the number of question marks as an additional feature, given the previously presented correlations; \cite{wen2015confusion} also used question marks in predicting confusion. And while $H_{q}$, $H_{a}$, and $H_{o}$ are by nature binary classifiers, $H_{s}$ and $H_{u}$ are multi-class. The latter three predict values in $\{ 1 + 0.5x \mid x \le 12 \}$. By preserving the full range, we provide $H_{c}$ with granular information about the non-confusion variables.
 
 \subsection{Evaluation}
+For clarity, we refer to the confusion classifier that uses all the features described in the section 5.1 as the \emph{complete} classifier. In this section, we evaluate and interpret the performance of both the complete classifier and confusion classifiers with pared-down feature sets, reporting insights and intuitions gleaned about the nature of confusion in MOOCs along the way. 
+
+The complete classifier was evaluated in three contexts: course sets, individual courses, and across courses. In each context, we attempted the binary classification problem defined in the previous subsection. In the former two contexts, we report the average performance of 10-fold stratified cross validation (the nature of training and testing across courses, explained further below, does not allow for cross validation). We quantify performance using two metrics: $F_{1}$ and Cohen's Kappa. 
 
 \begin{table*}
     \centering
     \begin{tabular}{|c|c c c|c c c|c|}
-    \hline\hline
+    \hline
     \multirow{2}{*}{Course Set} & \multicolumn{3}{c|}{Not Confused} & \multicolumn{3}{c|}{Confused}  & \multirow{2}{*}{Kappa} \\ \cline{2-7}
                                 &  Precision & Recall & $F_{1}$     &  Precision & Recall & $F_{1}$  &       \\ \hline
-    Humanities                  & 0.925      & 0.930    & 0.927     &  0.666     & 0.638  & 0.648    & 0.578  \\ \hline
-    Medicine                    & 0.958      & 0.950  & 0.953       & 0.615      & 0.599  & 0.586    & 0.542  \\ \hline
+    Humanities                  & 0.898      & 0.943    & 0.919     & 0.778      & 0.642  & 0.700    & 0.621  \\ \hline
+    Medicine                    & 0.924      & 0.946    & 0.935     & 0.699      & 0.589  & 0.627    & 0.564  \\ \hline
+
     \end{tabular}
     \caption{\textnormal{
-       Confusion Classifier Performance. For each course set listed, this table reports the average performance across 10 folds of stratified cross validation. The particular classifier tested here included all features enumerated in section 5.1. 
+       Complete Confusion Classifier Performance, Course Sets. For each course set listed, this table reports the average performance across 10 folds of stratified cross validation.
     }} % title of Table
     \label{table:confusion_sets} % is used to refer this table in the text
 \end{table*}
@@ -221,17 +225,18 @@ A few subtleties: $H_{s}$ uses an additional metadata feature that the other cla
        \centering
        \begin{tabular}{|c|c|c|c|}
        \hline
-       Course                         & $F_{1}$: Not Confused & $F_{1}$: Confused & Kappa \\ \hline\hline
-       Economics 1                    & 0.933                 & 0.708             & 0.643 \\ \hline
-       Statistical Learning           & 0.911                 & 0.744             & 0.655 \\ \hline
-       Statistics in Medicine (2014)  & 0.917                 & 0.721             & 0.640 \\ \hline
-       Statistics in Medicine (2013)  & 0.937                 & 0.637             & 0.575 \\ \hline
-       Women's Health                 & 0.969                 & 0.530             & 0.502 \\ \hline
-       Managing Emergencies           & 0.973                 & 0.400             & 0.393 \\ \hline
-       Science Writing                & 0.978                 & 0.407             & 0.388 \\ \hline
+       Course                         & $F_{1}$: Not Confused & $F_{1}$: Confused & Kappa \\ \hline
+       Managing Emergencies           & 0.963                 & 0.771             & 0.741 \\ \hline
+       Statistical Learning           & 0.909                 & 0.767             & 0.677 \\ \hline
+       Economics 1                    & 0.933                 & 0.741             & 0.675 \\ \hline
+       Statistics in Medicine (2014)  & 0.908                 & 0.748             & 0.658 \\ \hline
+       Statistics in Medicine (2013)  & 0.916                 & 0.671             & 0.589 \\ \hline
+       Science Writing                & 0.961                 & 0.527             & 0.491 \\ \hline
+       Women's Health                 & 0.933                 & 0.506             & 0.445 \\ \hline
+       How to Learn Math              & 0.970                 & 0.383             & 0.389 \\ \hline
        \end{tabular}
        \caption{\textnormal{
-       Confusion Classifier Performance, Course Granularity. Our classifier performed best on courses whose discourse was characterized by technical diction, like statistics or economics. In courses that facilitated open-ended and somewhat roaming discussions -- like \emph{Managing Emergencies} or \emph{Science Writing} -- our model found it more difficult to implicitly define confusion. 
+       Complete Confusion Classifier Performance, Individual Courses. Our classifier performed best on courses whose discourse was characterized by technical diction, like statistics or economics. In courses like \emph{How to Learn Math} that facilitated open-ended and somewhat roaming discussions, our model found it more difficult to implicitly define confusion. 
        }} % title of Table
        \label{table:confusion_courses} % is used to refer this table in the text
 \end{table*}
@@ -241,13 +246,12 @@ A few subtleties: $H_{s}$ uses an additional metadata feature that the other cla
        \centering
        \begin{tabular}{|c|c|c|}
        \hline
-       Training Course                & Test Course                    & Kappa \\ \hline\hline
-       Economics 1                    & Economics IV                   & 0.814 \\ \hline
-       Statistical Learning           & Statistics 216                 & 0.692 \\ \hline
-       Statistics in Medicine (2013)  & Statistics in Medicine (2014)  & 0.617 \\ \hline
-       Economics 1                    & Statistics in Medicine (2013)  & 0.359 \\ \hline
-       Women's Health                 & Statistics in Medicine (2013)  & 0.311 \\ \hline
-       Statistics in Medicine (2013)  & Women's Health                 & 0.084 \\ \hline
+       Training Course                & Test Course                    & Kappa \\ \hline
+       Statistics in Medicine (2013)  & Statistics in Medicine (2014)  & 0.629 \\ \hline
+       Statistical Learning           & Statistics 216                 & 0.590 \\ \hline
+       Economics 1                    & Statistics in Medicine (2013)  & 0.267 \\ \hline
+       Women's Health                 & Statistics in Medicine (2013)  & 0.264 \\ \hline
+       Statistics in Medicine (2013)  & Women's Health                 & 0.175 \\ \hline
        \end{tabular}
        \caption{\textnormal{
        Nature of Confusion Across Domains. Training and testing on similar courses typically resulted in high performance, especially in the case of technical courses. The low score associated with training on Statistics in Medicine and testing on Women's Health suggests that the nature of confusion in the former is particularly related to domain concepts.
