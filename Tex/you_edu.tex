@@ -584,33 +584,26 @@ change.
 
 \section{Conclusion}
 \label{sec:conclusion}
-The work we presented here is a first step. Many opportunities
-remain. We are actively investigating whether we can improve our video
-snippet ranking further by considering which video portions learners
-re-visited several times. This analysis will catalog the number of
-views that occurred for each second of each instructional video in a
-course. The hope is that re-visit frequency could further boost our
-recommendation ranking algorithm. 
+We presented our two phase workflow that in its first phase identifies
+confusion-expressing forum posts in very large online classes. In a
+second phase, the workflow uses those post texts to identify related
+excerpts from instructional course videos. These minute resolution
+snippets are then offered as recommendations to the confused learner.
 
-Another thrust of future work will use the question and answer
-classifiers to actively connect learners to each other. The challenge
-to meet in this work is to identify learner expertise by their answer
-posts, and to encourage their participation in answering questions
-related to their expertise. As in this work, auxiliary data, such as
-successful homework completion, will support this line of
-investigation.
+Our approach utilizes new data sets of human tagged forum posts, data
+from learner interactions with online learning platforms, and video
+closed caption files that are produced in concert with the videos for
+vision impaired learners.
 
-A third ongoing project in our group is the development of user
-interfaces for both instructors and learners. Using our classifiers,
-we have been experimenting with interactive visualizations of our
-classifiers' results. The hope is, for example, to have instructors
-see major forum borne evidence of confusion in a single view, and to
-act in response through that same interface.
+We evaluated the classifiers that identify posts from confused
+learners, the effectiveness of subsequent video snippet retrieval, and
+the ranking process that orders those snippets into ranked lists.
 
-As novel online teaching methods are developed, the same underlying
-challenges will need to be met: keeping learners engaged, allowing
-them to feel like members of a community, and maximizing instructor
-effectiveness in the difficult environment of large public classes.
+We also pointed to significant amounts of research work still to be
+accomplished. The challenge of teaching online to very large numbers
+of learners from diverse backgrounds remains formidable. But the
+potential benefits to large underserved populations should encourage
+the required investigative effort.
 
 %\end{document}  % This is where a 'short' article might terminate
 
