@@ -128,8 +128,11 @@ detrimentally impacting the learning process and exacerbating attrition. In this
 The remainder of this paper is organized as follows. We examine related work in section two, present the Stanford MOOCPosts corpus in section three, sketch the architecture of YouEDU in section four, detail YouEDU's constituent classification and recommendation phases, evaluating both and interpreting results in sections five and six, and propose future work in section seven.
 
 \section{Related Work}
+\label{sec:relWork}
 
 \section{The Stanford MOOCPosts Corpus}
+\label{sec:MOOCPosts}
+
 Given that no publicly-available corpus of tagged MOOC discussion forum posts existed prior to our research, we set out to create our own. The outcome of our data compilation and curation was the Stanford MOOCPosts dataset: a corpus composed of 29,604 anonymized learner forum posts from eleven Stanford University public online classes. Freely available to academic researchers, the MOOCPosts dataset was designed to enable computational inquiries into the nature of both affect and content in MOOC discussion forums.
 
 Each post in the MOOCPosts dataset was scored across six dimensions -- confusion, sentiment, urgency, question, answer, and opinion -- and subsequently augmented with additional metadata.
@@ -225,6 +228,8 @@ While YouEDU outputs minute-resolution video clips, it does not necessarily guar
 In the following two sections, we delve further into both phases of YouEDU, describing them in detail and relating the results of empirical evaluations.
 
 \section{Phase I: Detecting Confusion}
+\label{sec:confusionDetection}
+
 % TODO: Cite
 We frame the problem of detecting confusion as a binary one: Given a discussion forum post $p$ with a true label $L$ in \{not confused, confused\}, apply some hypothesis $h$ that correctly divines $L$. Posts with a confusion rating greater than four in the MOOCPosts dataset fall into the ``confused'' class, while all other posts fall into the ``not confused'' class.
 
@@ -420,6 +425,7 @@ The post position metadata feature also contributed positively to the classifier
 Table \ref{table:informative_features} shows that the number of question marks was also an informative feature, at least in the \emph{Managing Emergencies} course. 
 
 \section{Phase II: Recommending Clips}
+\label{sec:clipRecommendation}
 \subsection{The Recommendation Algorithm}
 \subsubsection{Retrieval}
 \subsubsection{Ranking}
@@ -428,11 +434,15 @@ Table \ref{table:informative_features} shows that the number of question marks w
 Two experts were hired ...
 
 \section{Future Work}
+\label{sec:futureWork}
+
 Future work might focus on strengthening the link between the classifiers and the reccomendation system; in particular, it would behoove us to devise a way to filter our set of confused posts to a subset for which recommendation makes sense. Additionally, we might want to make our classifiers better and index back into the previous course to retrieve answers for courses. Deploying this system live is another thing that we might do. 
 
 YouEDU's two phases need not be packaged together; in an online setting, they could operate as independent, complemetary services. The output of Phase I could be presented directly to instructors, many of whom express interest in understanding activity in discussion forums \cite{Stephens-Martinez:2014:MMI:2556325.2566246}. As for Phase II, the recommendation system might live as a search-box of sorts: learner would type natural language queries in which they voiced their confusion, and our system would serve them relevant resources.
 
 \section{Conclusion}
+\label{sec:conclusion}
+
 YouEDU takes an initial step towards building automated confusion intervention ... 
 
 %\end{document}  % This is where a 'short' article might terminate
