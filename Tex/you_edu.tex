@@ -233,13 +233,13 @@ Table \ref{table:confusion_sets} presents the performance of the complete classi
        \hline
        Course                         & \# Posts (\% Confused) & $F_{1}$: Not Confused & $F_{1}$: Confused & Kappa \\ \hline
        Managing Emergencies              & 279 (18\%)                         & 0.963                 & 0.771             & 0.741 \\ \hline
-       Statistical Learning              & 3030 (30\%)                        & 0.909                 & 0.767             & 0.677 \\ \hline
-       Economics 1                       & 1583 (23\%)                     & 0.933                 & 0.741             & 0.675 \\ \hline
-       Statistics in Medicine (2014)     & 1218 (28\%)                        & 0.908                 & 0.748             & 0.658 \\ \hline
-       Statistics in Medicine (2013)     & 3320 (21\%)                         & 0.916                 & 0.671             & 0.589 \\ \hline
-       Science Writing                   & 5181 (10\%)                         & 0.961                 & 0.527             & 0.491 \\ \hline
-       Women's Health                    & 2141 (15\%)                         & 0.933                 & 0.506             & 0.445 \\ \hline
-       How to Learn Math                 & 9878 (6\%)                        & 0.970                 & 0.383             & 0.359 \\ \hline
+       Statistical Learning              & 3,030 (30\%)                        & 0.909                 & 0.767             & 0.677 \\ \hline
+       Economics 1                       & 1,583 (23\%)                     & 0.933                 & 0.741             & 0.675 \\ \hline
+       Statistics in Medicine (2014)     & 1,218 (28\%)                        & 0.908                 & 0.748             & 0.658 \\ \hline
+       Statistics in Medicine (2013)     & 3,320 (21\%)                         & 0.916                 & 0.671             & 0.589 \\ \hline
+       Science Writing                   & 5,181 (10\%)                         & 0.961                 & 0.527             & 0.491 \\ \hline
+       Women's Health                    & 2,141 (15\%)                         & 0.933                 & 0.506             & 0.445 \\ \hline
+       How to Learn Math                 & 9,878 (6\%)                        & 0.970                 & 0.383             & 0.359 \\ \hline
        \end{tabular}
        \caption{\textnormal{
        Complete Confusion Classifier Performance, Individual Courses. Our classifier performed best on courses whose discourse was characterized by technical diction, like statistics or economics. In courses like \emph{How to Learn Math} that facilitated open-ended and somewhat roaming discussions, our model found it more difficult to implicitly define confusion. 
@@ -261,7 +261,7 @@ At what doses is it therapuetic for such a patient because at high doses it caus
 \end{displayquote}
 \vspace{-10pt}
 
-Both of these posts were tagged as exhibiting confusion, and both of them are fairly saturated with medical terms. Incidentally, our classifier achieved its highest performance when cross-validating on this course (Kappa = 0.741). This makes intuitive sense -- a vocabulary so technical and esoteric is likely only used when a learner is discussing or asking a question about a specific course topic. Indeed, an examination of our model's weights revealed that ``system'' was the 11th most indicative feature for confusion (odds ratio = 1.23) and ``defibrillation'' was the 15th (odds ratio = 1.22). Similarly, in \emph{Statistical Learning}, ``solutions'' was the sixth most indicative feature for confusion (odds ratio = 1.75), and``predict'' was the ninth (odds ratio = 1.65).
+Both of these posts were tagged as exhibiting confusion, and both of them are fairly saturated with medical terms. Incidentally, our classifier achieved its highest performance when cross-validating on this course (Kappa = 0.741). This makes intuitive sense -- a vocabulary so technical and esoteric is likely only used when a learner is discussing or asking a question about a specific course topic. Indeed, an examination of our model's weights revealed that ``systematic'' was the 11th most indicative feature for confusion (odds ratio = 1.23) and ``defibrillation'' was the 15th (odds ratio = 1.22). Similarly, in \emph{Statistical Learning}, ``solutions'' was the sixth most indicative feature for confusion (odds ratio = 1.75), and``predict'' was the ninth (odds ratio = 1.65).
 
 A glance at Table \ref{table:confusion_courses} suggests that our classifier's performance degrades as the discourse becomes less technical. Posts like the following were typical in \emph{How to Learn Math}, an education course about the pedagogy of mathematics:
 
@@ -273,31 +273,52 @@ I am not sure if I agree with tracking or not.  I like teaching children at all 
 
 The above post was tagged as exhibiting confusion, but the language is much more subtle than that seen in the posts from \emph{Managing Emergencies}. In technical courses, there was a sharp shift in diction between confused posts and not-confused posts. The same could not necessarily be said for non-technical courses, and it is not surprising that we saw our lowest Kappa (0.389) when classifying \emph{How to Learn Math}. Indeed, in the education course, learners tend to voice more confusion about the structure of the class than the content itself -- ``link'', ``videos'', and ``responses'' are the fourth, fifth, and seventh most indicative features for the confusion class, respectively.
 
-\begin{table*}
+\begin{table}
        \centering
        \begin{tabular}{|c|c|c|}
        \hline
        Training Course                & Test Course                    & Kappa \\ \hline
-       Statistics in Medicine (2013)  & Statistics in Medicine (2014)  & 0.629 \\ \hline
-       Statistical Learning           & Statistics 216                 & 0.590 \\ \hline
-       Economics 1                    & Statistics in Medicine (2013)  & 0.267 \\ \hline
-       Statistics in Medicine (2013)  & Women's Health                 & 0.175 \\ \hline
+       Stats. in Medicine (2013)  & Stats. in Medicine (2014)  & 0.629 \\ \hline
+       Stat. Learning           & Stats. 216                 & 0.590 \\ \hline
+       Economics 1                    & Stats. in Medicine (2013)  & 0.267 \\ \hline
+       Stats. in Medicine (2013)  & Women's Health                 & 0.175 \\ \hline
        \end{tabular}
        \caption{\textnormal{
-       Nature of Confusion Across Domains. Training and testing on similar courses typically resulted in high performance, especially in the case of technical courses. The low score associated with training on Statistics in Medicine and testing on Women's Health suggests that the nature of confusion in the former is particularly related to domain concepts.
-       }} % title of Table
+       Nature of Confusion Across Domains. Training and testing on similar courses typically resulted in high performance, especially in the case of technical courses. The low score associated with training on \emph{Statistics in Medicine} and testing on \emph{Women's Health} suggests that the nature of confusion in the former is particularly related to domain concepts.
+       }} 
        \label{table:across_courses} % is used to refer this table in the text
-\end{table*}
+\end{table}
 
 % TODO explain across_courses table
 
 Examining the feature weights learned when cross-validating on the humanities and medicine course sets provides us with a more holistic view onto the language of confusion. Domain-specific words take the backseat to words that convey the learning process. For example, in both course sets, ``confused'' was the word with the highest feature weight (odds ratios equal to 3.19 and 2.97 for humanities and medicine, respectively). In the humanities course set, ``?'', ``couldn't'', ``question'', ``haven't'', and ``wondering'' came next, in that order. The importance of question-related features in particular is consistent with \cite{wilson1989learning} and with the correlations in the MOOCPosts dataset. In medicine, the next highest ranked words were ``explain'', ``role'', ``understand'', ``stuck'', and ``struggling''.
 
-\subsubsection{Constiuent Classifiers and Post Metadata: Ablative Analysis}
+\begin{table*}
+       \centering
+       \begin{tabular}{|c|c|c|c|}
+       \hline
+       Humanities                  & Medicine              & How to Learn Math         & Managing Emergencies \\ \hline
+       constituent:urgency (6.59)         & constituent:question (4.05) &  constituent:question (6.64)    & constituent:urgency (2.47)  \\ \hline
+       constituent:question (3.47)       & confused             (2.98) &  constituent:urgency   (2.13)   & constituent:question (2.34) \\ \hline
+       confused             (3.20)      & explain               (2.71) &  hoping                (1.94)   & ? (1.73) \\ \hline
+       ?                    (3.14)       & role                 (2.41) &  link                  (1.76)  & metadata:\#? (1.54) \\ \hline
+       couldn't             (2.40)      & understand            (2.36) &  available             (1.63)   & hope (1.40) \\ \hline
+       report               (2.23)       & stuck                (2.27) &  responses             (1.62)   & what (1.31) \\ \hline
+       manual               (1.94)       & struggling           (2.25) &  middle                (1.62)   & understand (1.29) \\ \hline
+       question             (1.91)       & constituent:urgency  (2.25) &  support               (1.60)  & dr (1.24) \\ \hline
+       haven't              (1.84)       & sentence             (2.20) &  discussing            (1.60)   & how (1.24) \\ \hline
+       wondering            (1.83)       & little               (2.09) &  instruction           (1.60)  & meant (1.23) \\ \hline
+       \end{tabular}
+       \caption{\textnormal{
+       Most Informative Features, Odds Ratios. Features prefixed with ``constituent:'' correspond to the prediction of a constituent classifier, while those prefixed with ``metadata'' correspond to a post metadata feature. All other features are unigram words.
+       }} % title of Table
+       \label{table:informative_features} % is used to refer this table in the text
+\end{table*}
 
-% TODO: Talk about constiuent classifier performance
+\subsubsection{Constituent Classifiers and Post Metadata: Ablative Analysis}
+
+% TODO: Talk about constituent classifier performance
 % TODO: Talk about ablative analysis and why we didn't remove other features
-% TODO: Make table for most informative features (humanities, medicine, edu, managing emergencies)
 
 \begin{figure}
        \centering
