@@ -112,6 +112,8 @@ detrimentally impacting the learning process and exacerbating attrition. In this
 %\terms{Theory}
 
 \section{Introduction}
+\label{sec:intro}
+
 * Proliferation of MOOCs\\
 * Volume of posts high\\
 * Difficult to get a birds-eye view of the course, difficult to address it.\\
@@ -210,6 +212,7 @@ That questions and confusion were positively correlated supports the observation
 
 % TODO: Perhaps fold this into the introduction.
 \section{YouEDU: Detect and Recommend}
+\label{sec:detect}
 
 %TODO: Display + Caption
 YouEDU is a personalized intervention system that recommends educational video clips to learners. Figure \ref{figure:architecture} illustrates the key steps that comprise YouEDU. YouEDU takes as input a set $P$ of forum posts, processing them in two distinct phases: (I) detection and (II) recommendation. In the first phase, we apply a classifier to each post in $P$, outputting a subset $P_{c}$ consisting of posts in which the classifier detected confusion. The confusion classifier functions as a \emph{combination} classifier in that it combines the predictions from classifiers trained to predict other post-related qualities.
