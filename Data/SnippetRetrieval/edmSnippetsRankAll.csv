@@ -1,0 +1,435 @@
+query,rank,treatment,minute,captionFileName
+Q1,5,tf,3,HRP261 Unit2 Mod4
+Q1,9,tf,14,HRP261 Unit6 Mod3
+Q1,6,tf,2,Kaplan Meier Curves 1 How to Draw Them
+Q1,7,idf,5,Unit 2 Module 4 part 1
+Q1,2,tf,5,Unit 2 Module 4 part 1
+Q1,4,idf,6,HRP261 Unit 8 mod5
+Q1,4,tf,6,HRP261 Unit 8 mod5
+Q1,14,idf,14,HRP261 Unit1 Mod2
+Q1,3,tf,14,HRP261 Unit1 Mod2
+Q2,6,tf,0,HRP262 Unit 2 Module 4 Part 1
+Q2,1,tf,0,Unit 9 Module 0
+Q2,3,tf,0,HRP261 Unit3 Mod0 overview
+Q2,5,tf,0,HRP 262 Unit 3 Module 1 Part 1
+Q2,2,tf,2,HRP261 Unit1 Module 0 - Introduction
+Q2,4,tf,17,Unit 9 Module 5
+Q3,11,idf,17,HRP261 Unit1 Mod1
+Q3,5,tf,17,HRP261 Unit1 Mod1
+Q3,6,idf,42,Unit 9 Module 1
+Q3,3,tf,42,Unit 9 Module 1
+Q3,6,tf,0,Unit 2 Module 4 part 3
+Q3,2,idf,7,HRP261 Unit 8 mod1 Part 2
+Q3,1,tf,7,HRP261 Unit 8 mod1 Part 2
+Q3,4,tf,0,Unit 6 Module 3 part 1
+Q3,1,idf,20,HRP261 Unit 9 mod2
+Q3,2,tf,20,HRP261 Unit 9 mod2
+Q4,13,idf,22,HRP261 Unit1 Mod1
+Q4,4,tf,22,HRP261 Unit1 Mod1
+Q4,4,idf,1,HRP261 Unit1 Mod2
+Q4,1,tf,1,HRP261 Unit1 Mod2
+Q4,1,idf,2,HRP261 Unit 8 mod5
+Q4,2,tf,2,HRP261 Unit 8 mod5
+Q4,5,idf,2,Unit 2 Module 4 part 3
+Q4,6,tf,2,Unit 2 Module 4 part 3
+Q4,6,idf,0,Unit 2 Module 4 part 2
+Q4,5,tf,0,Unit 2 Module 4 part 2
+Q4,7,idf,2,Unit 2 Module 4 part 2
+Q4,3,tf,2,Unit 2 Module 4 part 2
+Q5,5,tf,0,Unit 5 Module 4 part 2
+Q5,3,tf,1,HRP261 Unit 9 mod3 Part2
+Q5,1,idf,7,Unit 8 Module 1 part 1
+Q5,1,tf,7,Unit 8 Module 1 part 1
+Q5,15,idf,2,Unit 5 Module 4 part 1
+Q5,2,tf,2,Unit 5 Module 4 part 1
+Q5,2,idf,14,Unit 8 Module 1 part 1
+Q5,6,tf,14,Unit 8 Module 1 part 1
+Q5,8,idf,15,Unit 8 Module 1 part 1
+Q5,4,tf,15,Unit 8 Module 1 part 1
+Q6,7,idf,9,Unit 5 Module 4 part 1
+Q6,3,tf,9,Unit 5 Module 4 part 1
+Q6,3,idf,8,Unit 1 Module 5 part 2
+Q6,2,tf,8,Unit 1 Module 5 part 2
+Q6,1,tf,11,HRP261 Unit1 Mod2
+Q6,5,tf,4,HRP 262 Unit 9 Module 2
+Q6,11,idf,6,HRP 262 Unit 9 Module 2
+Q6,7,tf,6,HRP 262 Unit 9 Module 2
+Q6,6,tf,1,HRP261 Unit3 Mod4
+Q7,6,idf,5,Basic Math Review
+Q7,6,tf,5,Basic Math Review
+Q7,1,idf,0,Basic Math Review
+Q7,1,tf,0,Basic Math Review
+Q7,3,idf,2,Basic Math Review
+Q7,3,tf,2,Basic Math Review
+Q7,2,idf,1,Basic Math Review
+Q7,2,tf,1,Basic Math Review
+Q7,5,idf,4,Basic Math Review
+Q7,5,tf,4,Basic Math Review
+Q7,4,idf,3,Basic Math Review
+Q7,4,tf,3,Basic Math Review
+Q8,14,idf,11,Unit 6 Module 1 part 1
+Q8,2,tf,11,Unit 6 Module 1 part 1
+Q8,3,idf,19,RExercise2
+Q8,4,tf,19,RExercise2
+Q8,2,idf,18,RExercise2
+Q8,3,tf,18,RExercise2
+Q8,6,tf,12,HRP261 Unit1 Mod1
+Q8,1,idf,14,HRP261 Unit1 Mod5
+Q8,1,tf,14,HRP261 Unit1 Mod5
+Q8,5,tf,2,Unit 6 Module 1 part 2
+Q9,3,idf,25,HRP261 Unit4 Mod4
+Q9,4,tf,25,HRP261 Unit4 Mod4
+Q9,1,idf,0,HRP261 Unit4 Mod4 pt1
+Q9,1,tf,0,HRP261 Unit4 Mod4 pt1
+Q9,5,idf,9,HRP261 Unit4 Mod4 pt2
+Q9,5,tf,9,HRP261 Unit4 Mod4 pt2
+Q9,4,idf,10,HRP261 Unit4 Mod4 pt2
+Q9,6,tf,10,HRP261 Unit4 Mod4 pt2
+Q9,2,idf,0,HRP261 Unit4 Mod4
+Q9,2,tf,0,HRP261 Unit4 Mod4
+Q9,7,idf,10,Unit 9 Module 6
+Q9,3,tf,10,Unit 9 Module 6
+Q10,7,idf,15,HRP261 Unit4 Mod4
+Q10,5,tf,15,HRP261 Unit4 Mod4
+Q10,5,idf,9,HRP261 Unit4 Mod4 pt2
+Q10,3,tf,9,HRP261 Unit4 Mod4 pt2
+Q10,6,idf,18,HRP261 Unit4 Mod4
+Q10,4,tf,18,HRP261 Unit4 Mod4
+Q10,1,idf,11,Unit 9 Module 6
+Q10,2,tf,11,Unit 9 Module 6
+Q10,4,idf,10,Unit 9 Module 6
+Q10,1,tf,10,Unit 9 Module 6
+Q10,10,idf,24,HRP261 Unit4 Mod4
+Q10,6,tf,24,HRP261 Unit4 Mod4
+Q11,4,tf,20,Unit 9 Module 5
+Q11,7,idf,1,HRP262 Unit 2 Module 2 Part 2
+Q11,6,tf,1,HRP262 Unit 2 Module 2 Part 2
+Q11,5,tf,18,Unit 9 Module 5
+Q11,2,tf,10,HRP262 Unit 2 Module 5
+Q11,3,tf,2,HRP262 Unit 2 Module 2 Part 2
+Q11,2,idf,7,HRP262 Unit 1 Module 2
+Q11,1,tf,7,HRP262 Unit 1 Module 2
+Q12,11,idf,0,Unit 9 Module 1 part 1
+Q12,3,tf,0,Unit 9 Module 1 part 1
+Q12,14,idf,0,HRP261 Unit3 Mod1 pt1_2
+Q12,6,tf,0,HRP261 Unit3 Mod1 pt1_2
+Q12,3,idf,0,HRP261 Unit3 Mod1 pt1
+Q12,1,tf,0,HRP261 Unit3 Mod1 pt1
+Q12,1,idf,3,HRP261 Unit 7 mod2
+Q12,2,tf,3,HRP261 Unit 7 mod2
+Q12,9,idf,0,HRP261 Unit5 Mod3
+Q12,5,tf,0,HRP261 Unit5 Mod3
+Q12,4,tf,1,Unit 9 Module 0
+Q13,4,idf,5,Unit 2 Module 4 part 1
+Q13,2,tf,5,Unit 2 Module 4 part 1
+Q13,3,idf,5,HRP261 Unit6 Mod6
+Q13,7,tf,5,HRP261 Unit6 Mod6
+Q13,2,idf,12,HRP261 Unit 7 mod1
+Q13,5,tf,12,HRP261 Unit 7 mod1
+Q13,5,idf,6,HRP261 Unit 8 mod5
+Q13,3,tf,6,HRP261 Unit 8 mod5
+Q13,10,idf,9,HRP261 Unit1 Mod1
+Q13,6,tf,9,HRP261 Unit1 Mod1
+Q13,8,idf,14,HRP261 Unit1 Mod2
+Q13,4,tf,14,HRP261 Unit1 Mod2
+Q14,7,idf,14,RExercise2
+Q14,6,tf,14,RExercise2
+Q14,3,tf,0,HRP 262 Unit 7 Module 6
+Q14,2,idf,3,Unit 7 Module 2 part 2
+Q14,1,tf,3,Unit 7 Module 2 part 2
+Q14,5,idf,1,HRP 262 Unit 7 Module 1
+Q14,4,tf,1,HRP 262 Unit 7 Module 1
+Q14,6,idf,12,HRP 262 Unit 7 Module 5
+Q14,5,tf,12,HRP 262 Unit 7 Module 5
+Q14,3,idf,4,HRP 262 Unit 6 Module 1 Part 1
+Q14,2,tf,4,HRP 262 Unit 6 Module 1 Part 1
+Q15,8,idf,8,Unit 9 Module 4
+Q15,6,tf,8,Unit 9 Module 4
+Q15,3,idf,7,Unit 9 Module 4
+Q15,2,tf,7,Unit 9 Module 4
+Q15,2,idf,7,HRP261 Unit4 Mod5
+Q15,1,tf,7,HRP261 Unit4 Mod5
+Q15,15,idf,0,HRP 262 Unit 7 Module 7
+Q15,5,tf,0,HRP 262 Unit 7 Module 7
+Q15,1,idf,7,HRP261 Unit4 Mod5_2
+Q15,3,tf,7,HRP261 Unit4 Mod5_2
+Q15,4,tf,1,HRP 262 Unit 9 Module 3
+Q16,5,idf,8,HRP261 Unit 8 mod4
+Q16,6,tf,8,HRP261 Unit 8 mod4
+Q16,2,idf,7,Unit 2 Module 4 part 1
+Q16,4,tf,7,Unit 2 Module 4 part 1
+Q16,3,idf,22,HRP261 Unit1 Optional
+Q16,3,tf,22,HRP261 Unit1 Optional
+Q16,1,idf,9,Unit 2 Module 4 part 1
+Q16,1,tf,9,Unit 2 Module 4 part 1
+Q16,9,idf,18,HRP261 Unit 8 mod3 Part 2
+Q16,5,tf,18,HRP261 Unit 8 mod3 Part 2
+Q16,7,idf,7,HRP262 Unit 1 Module 2
+Q16,2,tf,7,HRP262 Unit 1 Module 2
+Q17,10,idf,7,HRP261 Unit2 Mod1
+Q17,5,tf,7,HRP261 Unit2 Mod1
+Q17,4,idf,3,HRP261 Unit2 Mod1
+Q17,4,tf,3,HRP261 Unit2 Mod1
+Q17,3,idf,2,HRP261 Unit1 Optional
+Q17,2,tf,2,HRP261 Unit1 Optional
+Q17,5,idf,5,HRP261 Unit2 Mod1
+Q17,6,tf,5,HRP261 Unit2 Mod1
+Q17,2,idf,4,HRP261 Unit2 Mod1
+Q17,1,tf,4,HRP261 Unit2 Mod1
+Q17,1,idf,3,HRP261 Unit1 Optional
+Q17,3,tf,3,HRP261 Unit1 Optional
+Q18,5,idf,3,HRP261 Unit 7 mod2
+Q18,2,tf,3,HRP261 Unit 7 mod2
+Q18,1,idf,6,Unit 8 Module 5 part 1
+Q18,3,tf,6,Unit 8 Module 5 part 1
+Q18,2,idf,6,Unit 8 Module 5
+Q18,4,tf,6,Unit 8 Module 5
+Q18,3,idf,15,Unit 9 Module 5
+Q18,1,tf,15,Unit 9 Module 5
+Q18,9,idf,2,HRP261 Unit4 Mod1_2
+Q18,6,tf,2,HRP261 Unit4 Mod1_2
+Q18,6,idf,2,Unit 9 Module 3
+Q18,5,tf,2,Unit 9 Module 3
+Q19,1,tf,1,HRP261 Unit 9 mod3 Part2
+Q19,6,tf,10,HRP261 Unit 9 mod3 Part1
+Q19,4,tf,2,Unit 5 Module 4 part 1
+Q19,12,idf,6,Unit 8 Module 1 part 1
+Q19,5,tf,6,Unit 8 Module 1 part 1
+Q19,3,tf,15,Unit 8 Module 1 part 1
+Q19,14,idf,11,HRP261 Unit 9 mod3 Part1
+Q19,2,tf,11,HRP261 Unit 9 mod3 Part1
+Q20,9,idf,15,Unit 6 Module 3 part 1
+Q20,2,tf,15,Unit 6 Module 3 part 1
+Q20,4,tf,15,Unit 8 Module 1 part 1
+Q20,5,tf,10,HRP261 Unit 9 mod3 Part1
+Q20,6,idf,10,Unit 8 Module 1 part 2
+Q20,6,tf,10,Unit 8 Module 1 part 2
+Q20,4,idf,1,HRP261 Unit 9 mod3 Part2
+Q20,1,tf,1,HRP261 Unit 9 mod3 Part2
+Q20,3,tf,2,Unit 5 Module 4 part 1
+Q21,6,tf,20,Unit 6 Module 3 part 1
+Q21,1,tf,11,HRP261 Unit1 Mod2
+Q21,10,idf,9,Unit 5 Module 4 part 1
+Q21,4,tf,9,Unit 5 Module 4 part 1
+Q21,9,idf,1,HRP261 Unit3 Mod4
+Q21,3,tf,1,HRP261 Unit3 Mod4
+Q21,2,idf,8,Unit 1 Module 5 part 2
+Q21,2,tf,8,Unit 1 Module 5 part 2
+Q21,5,tf,8,Unit 6 Module 1 part 1
+Q1,8,idf,9,HRP261 Unit1 Mod1
+Q1,13,tf,9,HRP261 Unit1 Mod1
+Q1,3,idf,2,Unit 6 quizzes plus answers
+Q1,7,tf,2,Unit 6 quizzes plus answers
+Q1,9,idf,8,HRP261 Unit1 Mod1
+Q1,10,idf,8,Unit 8 Module 1 part 2
+Q1,12,tf,8,Unit 8 Module 1 part 2
+Q1,7,idf,5,Unit 2 Module 4 part 1
+Q1,2,tf,5,Unit 2 Module 4 part 1
+Q1,4,idf,6,HRP261 Unit 8 mod5
+Q1,4,tf,6,HRP261 Unit 8 mod5
+Q2,4,idf,0,Unit 9 Module 1
+Q2,7,tf,0,Unit 9 Module 1
+Q2,6,idf,0,Unit 9 Module 1 part 1
+Q2,11,tf,0,Unit 9 Module 1 part 1
+Q2,5,idf,22,HRP261 Unit2 Mod4
+Q2,2,idf,26,HRP261 Unit 9 mod2
+Q2,1,idf,0,HRP 262 Unit 6 Module 2
+Q2,3,idf,3,HRP261 Unit 9 mod2
+Q3,5,idf,7,MedStatsUnit3_Mod1_Part2
+Q3,1,idf,20,HRP261 Unit 9 mod2
+Q3,2,tf,20,HRP261 Unit 9 mod2
+Q3,2,idf,7,HRP261 Unit 8 mod1 Part 2
+Q3,1,tf,7,HRP261 Unit 8 mod1 Part 2
+Q3,3,idf,7,Unit 2 Module 4 part 1
+Q3,4,idf,2,Unit 7 Module 6 part 2
+Q3,6,idf,42,Unit 9 Module 1
+Q3,3,tf,42,Unit 9 Module 1
+Q4,6,idf,0,Unit 2 Module 4 part 2
+Q4,5,tf,0,Unit 2 Module 4 part 2
+Q4,3,idf,3,HRP261 Unit3 Mod1 pt1
+Q4,10,tf,3,HRP261 Unit3 Mod1 pt1
+Q4,5,idf,2,Unit 2 Module 4 part 3
+Q4,6,tf,2,Unit 2 Module 4 part 3
+Q4,1,idf,2,HRP261 Unit 8 mod5
+Q4,2,tf,2,HRP261 Unit 8 mod5
+Q4,2,idf,4,HRP 262 Unit 3 Module 1 Part 2
+Q4,7,tf,4,HRP 262 Unit 3 Module 1 Part 2
+Q4,4,idf,1,HRP261 Unit1 Mod2
+Q4,1,tf,1,HRP261 Unit1 Mod2
+Q5,4,idf,4,HRP 262 Unit 9 Module 1
+Q5,1,idf,7,Unit 8 Module 1 part 1
+Q5,1,tf,7,Unit 8 Module 1 part 1
+Q5,2,idf,14,Unit 8 Module 1 part 1
+Q5,6,tf,14,Unit 8 Module 1 part 1
+Q5,7,idf,5,RExercise3
+Q5,3,idf,12,Unit 8 Module 1 part 1
+Q5,12,tf,12,Unit 8 Module 1 part 1
+Q5,5,idf,13,HRP 262 Unit 9 Module 1
+Q6,1,idf,2,HRP261 Unit 9 mod3 Part2
+Q6,7,idf,9,Unit 5 Module 4 part 1
+Q6,3,tf,9,Unit 5 Module 4 part 1
+Q6,6,idf,17,HRP 262 Unit 8 Module 1
+Q6,3,idf,8,Unit 1 Module 5 part 2
+Q6,2,tf,8,Unit 1 Module 5 part 2
+Q6,2,idf,11,HRP261 Unit 9 mod3 Part2
+Q6,4,idf,7,HRP261 Unit 9 mod3 Part2
+Q7,1,idf,0,Basic Math Review
+Q7,1,tf,0,Basic Math Review
+Q7,2,idf,1,Basic Math Review
+Q7,2,tf,1,Basic Math Review
+Q7,6,idf,5,Basic Math Review
+Q7,6,tf,5,Basic Math Review
+Q7,5,idf,4,Basic Math Review
+Q7,5,tf,4,Basic Math Review
+Q7,3,idf,2,Basic Math Review
+Q7,3,tf,2,Basic Math Review
+Q7,4,idf,3,Basic Math Review
+Q7,4,tf,3,Basic Math Review
+Q8,3,idf,19,RExercise2
+Q8,4,tf,19,RExercise2
+Q8,5,idf,4,HRP261 Unit1 Mod4
+Q8,6,idf,14,HRP261 Unit2 Mod5
+Q8,2,idf,18,RExercise2
+Q8,3,tf,18,RExercise2
+Q8,1,idf,14,HRP261 Unit1 Mod5
+Q8,1,tf,14,HRP261 Unit1 Mod5
+Q8,4,idf,4,HRP262 Unit 1 Module 4
+Q8,8,tf,4,HRP262 Unit 1 Module 4
+Q9,6,idf,18,Unit 6 Module 3 part 1
+Q9,11,tf,18,Unit 6 Module 3 part 1
+Q9,2,idf,0,HRP261 Unit4 Mod4
+Q9,2,tf,0,HRP261 Unit4 Mod4
+Q9,5,idf,9,HRP261 Unit4 Mod4 pt2
+Q9,5,tf,9,HRP261 Unit4 Mod4 pt2
+Q9,1,idf,0,HRP261 Unit4 Mod4 pt1
+Q9,1,tf,0,HRP261 Unit4 Mod4 pt1
+Q9,4,idf,10,HRP261 Unit4 Mod4 pt2
+Q9,6,tf,10,HRP261 Unit4 Mod4 pt2
+Q9,3,idf,25,HRP261 Unit4 Mod4
+Q9,4,tf,25,HRP261 Unit4 Mod4
+Q10,3,idf,0,HRP261 Unit4 Mod4 pt2
+Q10,8,tf,0,HRP261 Unit4 Mod4 pt2
+Q10,5,idf,9,HRP261 Unit4 Mod4 pt2
+Q10,3,tf,9,HRP261 Unit4 Mod4 pt2
+Q10,6,idf,18,HRP261 Unit4 Mod4
+Q10,4,tf,18,HRP261 Unit4 Mod4
+Q10,2,idf,10,HRP261 Unit4 Mod4 pt2
+Q10,7,tf,10,HRP261 Unit4 Mod4 pt2
+Q10,1,idf,11,Unit 9 Module 6
+Q10,2,tf,11,Unit 9 Module 6
+Q10,4,idf,10,Unit 9 Module 6
+Q10,1,tf,10,Unit 9 Module 6
+Q11,3,idf,4,Unit 2 Module 6
+Q11,11,tf,4,Unit 2 Module 6
+Q11,7,idf,1,HRP262 Unit 2 Module 2 Part 2
+Q11,6,tf,1,HRP262 Unit 2 Module 2 Part 2
+Q11,6,idf,2,HRP 262 Unit 3 Module 1 Part 2
+Q11,2,idf,7,HRP262 Unit 1 Module 2
+Q11,1,tf,7,HRP262 Unit 1 Module 2
+Q11,1,idf,5,HRP262 Unit 2 Module 2 Part 1
+Q11,5,idf,0,HRP262 Unit 1 Module 2
+Q11,7,tf,0,HRP262 Unit 1 Module 2
+Q12,2,idf,0,Unit6 Module5
+Q12,10,tf,0,Unit6 Module5
+Q12,1,idf,3,HRP261 Unit 7 mod2
+Q12,2,tf,3,HRP261 Unit 7 mod2
+Q12,4,idf,4,HRP261 Unit5 Unit 4 part1 retake
+Q12,9,tf,4,HRP261 Unit5 Unit 4 part1 retake
+Q12,6,idf,7,HRP261 Unit6 Mod2
+Q12,5,idf,2,HRP261 Unit6 Mod2
+Q12,3,idf,0,HRP261 Unit3 Mod1 pt1
+Q12,1,tf,0,HRP261 Unit3 Mod1 pt1
+Q13,4,idf,5,Unit 2 Module 4 part 1
+Q13,2,tf,5,Unit 2 Module 4 part 1
+Q13,2,idf,12,HRP261 Unit 7 mod1
+Q13,5,tf,12,HRP261 Unit 7 mod1
+Q13,7,idf,1,HRP261 Unit 7 mod1
+Q13,5,idf,6,HRP261 Unit 8 mod5
+Q13,3,tf,6,HRP261 Unit 8 mod5
+Q13,3,idf,5,HRP261 Unit6 Mod6
+Q13,7,tf,5,HRP261 Unit6 Mod6
+Q13,8,idf,14,HRP261 Unit1 Mod2
+Q13,4,tf,14,HRP261 Unit1 Mod2
+Q14,2,idf,3,Unit 7 Module 2 part 2
+Q14,1,tf,3,Unit 7 Module 2 part 2
+Q14,5,idf,1,HRP 262 Unit 7 Module 1
+Q14,4,tf,1,HRP 262 Unit 7 Module 1
+Q14,4,idf,12,Unit 7 Module 2 part 1
+Q14,3,idf,4,HRP 262 Unit 6 Module 1 Part 1
+Q14,2,tf,4,HRP 262 Unit 6 Module 1 Part 1
+Q14,1,idf,15,RExercise2
+Q14,8,tf,15,RExercise2
+Q14,6,idf,12,HRP 262 Unit 7 Module 5
+Q14,5,tf,12,HRP 262 Unit 7 Module 5
+Q15,2,idf,7,HRP261 Unit4 Mod5
+Q15,1,tf,7,HRP261 Unit4 Mod5
+Q15,3,idf,7,Unit 9 Module 4
+Q15,2,tf,7,Unit 9 Module 4
+Q15,6,idf,8,HRP261 Unit4 Mod5_2
+Q15,12,tf,8,HRP261 Unit4 Mod5_2
+Q15,5,idf,5,HRP261 Unit4 Mod5_2
+Q15,14,tf,5,HRP261 Unit4 Mod5_2
+Q15,1,idf,7,HRP261 Unit4 Mod5_2
+Q15,3,tf,7,HRP261 Unit4 Mod5_2
+Q15,4,idf,5,HRP261 Unit4 Mod5
+Q15,13,tf,5,HRP261 Unit4 Mod5
+Q16,1,idf,9,Unit 2 Module 4 part 1
+Q16,1,tf,9,Unit 2 Module 4 part 1
+Q16,5,idf,8,HRP261 Unit 8 mod4
+Q16,6,tf,8,HRP261 Unit 8 mod4
+Q16,6,idf,6,Unit 2 Module 4 part 1
+Q16,7,tf,6,Unit 2 Module 4 part 1
+Q16,2,idf,7,Unit 2 Module 4 part 1
+Q16,4,tf,7,Unit 2 Module 4 part 1
+Q16,3,idf,22,HRP261 Unit1 Optional
+Q16,3,tf,22,HRP261 Unit1 Optional
+Q16,4,idf,8,Unit 2 Module 4 part 1
+Q17,6,idf,6,HRP261 Unit1 Optional
+Q17,7,tf,6,HRP261 Unit1 Optional
+Q17,1,idf,3,HRP261 Unit1 Optional
+Q17,3,tf,3,HRP261 Unit1 Optional
+Q17,3,idf,2,HRP261 Unit1 Optional
+Q17,2,tf,2,HRP261 Unit1 Optional
+Q17,2,idf,4,HRP261 Unit2 Mod1
+Q17,1,tf,4,HRP261 Unit2 Mod1
+Q17,5,idf,5,HRP261 Unit2 Mod1
+Q17,6,tf,5,HRP261 Unit2 Mod1
+Q17,4,idf,3,HRP261 Unit2 Mod1
+Q17,4,tf,3,HRP261 Unit2 Mod1
+Q18,3,idf,15,Unit 9 Module 5
+Q18,1,tf,15,Unit 9 Module 5
+Q18,5,idf,3,HRP261 Unit 7 mod2
+Q18,2,tf,3,HRP261 Unit 7 mod2
+Q18,6,idf,2,Unit 9 Module 3
+Q18,5,tf,2,Unit 9 Module 3
+Q18,2,idf,6,Unit 8 Module 5
+Q18,4,tf,6,Unit 8 Module 5
+Q18,4,idf,0,HRP261 Unit4 Mod4 pt2
+Q18,12,tf,0,HRP261 Unit4 Mod4 pt2
+Q18,1,idf,6,Unit 8 Module 5 part 1
+Q18,3,tf,6,Unit 8 Module 5 part 1
+Q19,5,idf,11,Unit 6 Module 3 part 1
+Q19,3,idf,5,HRP261 Unit1 Mod5
+Q19,4,idf,10,Unit 6 Module 3 part 1
+Q19,7,idf,10,RExercise1 full
+Q19,2,idf,3,HRP261 Unit1 Mod5
+Q19,11,tf,3,HRP261 Unit1 Mod5
+Q19,6,idf,8,HRP261 Unit1 Mod5
+Q20,5,idf,5,HRP262 Unit 2 Module 1
+Q20,1,idf,1,Unit 6 quizzes plus answers
+Q20,4,idf,1,HRP261 Unit 9 mod3 Part2
+Q20,1,tf,1,HRP261 Unit 9 mod3 Part2
+Q20,3,idf,14,Unit 6 Module 3 part 1
+Q20,14,tf,14,Unit 6 Module 3 part 1
+Q20,6,idf,10,Unit 8 Module 1 part 2
+Q20,6,tf,10,Unit 8 Module 1 part 2
+Q20,2,idf,4,HRP 262 Unit 8 Module 1
+Q21,1,idf,2,HRP261 Unit 9 mod3 Part2
+Q21,10,tf,2,HRP261 Unit 9 mod3 Part2
+Q21,3,idf,11,HRP261 Unit 9 mod3 Part2
+Q21,14,tf,11,HRP261 Unit 9 mod3 Part2
+Q21,6,idf,6,HRP 262 Unit 8 Module 5
+Q21,2,idf,8,Unit 1 Module 5 part 2
+Q21,2,tf,8,Unit 1 Module 5 part 2
+Q21,7,idf,17,HRP 262 Unit 8 Module 1
+Q21,5,idf,7,HRP261 Unit 9 mod3 Part2
