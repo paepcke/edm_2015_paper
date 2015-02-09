@@ -219,7 +219,7 @@ The remainder of this paper is organized as follows. We examine
 related work, present the Stanford MOOCPosts corpus in
 Section~\ref{sec:MOOCPosts}, and sketch the architecture of YouEDU in
 Section~\ref{sec:arch}.  In Sections~\ref{sec:confusionDetection} and
-\ref{sec:clipRecommendation} we detail and evaluate YouEDU's constituent
+\ref{sec:clipRecommendation} we detail, evaluate, and discuss YouEDU's 
 classification and recommendation phases. We close with a section on
 future work, and a conclusion.
 
@@ -373,7 +373,7 @@ A few subtleties: $H_{s}$ uses an additional metadata feature that the other cla
 
 \subsection{Evaluation and Discussion}
 For clarity, we refer to the confusion classifier that uses all the features
-described in the section 5.1 as the \emph{combined} classifier. In this section, we evaluate and interpret the performance of both the combined classifier and confusion classifiers with pared-down feature sets, reporting insights and intuitions gleaned about the nature of confusion in MOOCs along the way. 
+described in the previous subsection as the \emph{combined} classifier. In this section, we evaluate and interpret the performance of both the combined classifier and confusion classifiers with pared-down feature sets, reporting insights and intuitions gleaned about the nature of confusion in MOOCs along the way. 
 
 \begin{table*}[htp!]
     \centering
@@ -394,7 +394,7 @@ described in the section 5.1 as the \emph{combined} classifier. In this section,
 We quantify performance primarily using two metrics: $F_{1}$ and Cohen's Kappa. We favor the Kappa over accuracy because the former accounts for chance agreement \cite{cohen1960coefficient}. Unless stated otherwise, reported metrics represent an average over 10 folds of stratified cross-validation. 
 
 \subsubsection{Confusion at the Course-Set Granularity}
-Table \ref{table:confusion_sets} presents the performance of the combined classifier on the humanities and medicine course sets. As mentioned in section 3.1, both sets are somewhat heterogenous collections of courses, with a total nearly 10,000 posts in each set. In our dataset, not-confused posts outnumber confused ones -- in the humanities course set, but 23\% of posts exhibit confusion, and in the medicine course set, 16\% do. As such, our classifier was naturally better at identifying non-confused posts than confused posts.
+Table \ref{table:confusion_sets} presents the performance of the combined classifier on the humanities and medicine course sets. As mentioned in Section~\ref{sec:MOOCPosts}, both sets are somewhat heterogenous collections of courses, with a total nearly 10,000 posts in each set. In our dataset, not-confused posts outnumber confused ones -- in the humanities course set, but 23\% of posts exhibit confusion, and in the medicine course set, 16\% do. As such, our classifier was naturally better at identifying non-confused posts than confused posts.
 
 \subsubsection{The Language of Confusion Across Courses}
 
@@ -523,7 +523,7 @@ Figure \ref{figure:constituents} illustrates the performance of each constituent
        \label{table:ablative} % is used to refer this table in the text
 \end{table}
 
-The combining fuction of our combined classifier consistently determined that the constituent classifiers for the question and urgency variables were particularly indicative of confusion (see Table \ref{table:informative_features}). Table \ref{table:ablative} shows the results of an ablative analysis in which one constituent classifier was removed from the combined classifier at a time, until we were left with a classifier with no constituent classifiers (call it a \emph{flat} classifier). The flat classifier performed worse than the combined classifier in the two course sets and the education course, with the drop in performance most pronounced in the medicine course set. For both course sets, the urgency constituent seemed to be the most helpful of the five constituents -- this makes intuitive sense, since we would expect that instructors would prioritize posts in which learners were struggling to understand the course material. However, the same was not true for \emph{How to Learn Math}, which is consistent with the fact that no significant correlation between confusion and urgency was found (see section 3.2).
+The combining fuction of our combined classifier consistently determined that the constituent classifiers for the question and urgency variables were particularly indicative of confusion (see Table \ref{table:informative_features}). Table \ref{table:ablative} shows the results of an ablative analysis in which one constituent classifier was removed from the combined classifier at a time, until we were left with a classifier with no constituent classifiers (call it a \emph{flat} classifier). The flat classifier performed worse than the combined classifier in the two course sets and the education course, with the drop in performance most pronounced in the medicine course set. For both course sets, the urgency constituent seemed to be the most helpful of the five constituents -- this makes intuitive sense, since we would expect that instructors would prioritize posts in which learners were struggling to understand the course material. However, the same was not true for \emph{How to Learn Math}, which is consistent with the fact that no significant correlation between confusion and urgency was found (see Section~\ref{sec:MOOCPosts}).
 
 The post position metadata feature also contributed positively to the classifier's performance -- removing it from the flat classifier for medicine dropped the Kappa by 0.03. The other metadata features, however, did not appear to consistently or appreciably affect classifier performance, and so we chose to omit them from our ablative analysis.
 
