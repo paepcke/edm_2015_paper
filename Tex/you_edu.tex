@@ -42,6 +42,31 @@
 \setlength{\textfloatsep}{2pt}
 \setlength{\intextsep}{2pt}
 
+\newcommand{\squishlist}{
+ \begin{list}{$\bullet$}
+ {
+  \setlength{\itemsep}{0pt}
+  \setlength{\parsep}{3pt}
+  \setlength{\topsep}{3pt}
+  \setlength{\partopsep}{0pt}
+  \setlength{\leftmargin}{1.5em}
+  \setlength{\labelwidth}{1em}
+  \setlength{\labelsep}{0.5em} } }
+
+\newcommand{\squishlisttwo}{
+ \begin{list}{$\bullet$}
+ {
+  \setlength{\itemsep}{0pt}
+  \setlength{\parsep}{0pt}
+  \setlength{\topsep}{0pt}
+  \setlength{\partopsep}{0pt}
+  \setlength{\leftmargin}{2em}
+  \setlength{\labelwidth}{1.5em}
+  \setlength{\labelsep}{0.5em} } }
+
+\newcommand{\squishend}{
+  \end{list}  }
+
 \begin{document}
 
 \title{YouEDU: Addressing Confusion in MOOC Discussion Forums by Recommending Instructional Video Clips}
@@ -172,7 +197,8 @@ We organized the posts into three sets of related courses: Humanities/Sciences, 
 Each course set was coded by three independent, paid oDesk coders. That is, three triplets of coders each worked on one set of 10,000 posts. No coder worked on more than one course set. Each coder attempted to code every post for his or her particular set. All posts with malformed or missing scores in at least one coder's spreadsheet were discarded. This elision accounts for the difference between the 29,604 posts in the final set, and the original 30,002 posts.
 
 Coders were asked to score their posts across six dimensions:
-\begin{itemize}
+%\begin{itemize}
+\squishlist
 \vspace{-15pt}
        \setlength\itemsep{0.05em}
        \item Question: Does this post include a question?
@@ -181,7 +207,8 @@ Coders were asked to score their posts across six dimensions:
        \item Sentiment: What sentiment does this post convey, on a scale of 1 (extremely negative) to 7 (extremely positive)? A score of 4 indicates neutrality.
        \item Urgency: How urgent is it that an instructor respond to the post, on a scale of 1 (not urgent at all) to 7 (extremely urgent)? A score of 4 indicates that instructors should respond only if they have spare time.
        \item Confusion: To what extent does this post express confusion, or the lack thereof, on a scale of 1 (expert knowledge) to 7 (extreme confusion)? A score of 4 indicates neither knowledge nor confusion.
-\end{itemize}
+%\end{itemize}
+\squishend
 \vspace{-15pt}
 Coders were given examples of posts in each category. The following was an example of an extremely urgent post:
 
@@ -263,6 +290,7 @@ We frame the problem of detecting confusion as a binary one. Posts with a confus
 \subsection{Feature Space and Model Design}
 Our feature space is composed of three types of inputs, those derived from the post body, post metadata, and other classifiers. The confusion classifier we train functions as a combining layer that folds in the predictions of other classifiers; these classifiers are trained to predict variables correlated with confusion. We expand upon each type of input here.
 
+\vspace{-0.4cm}
 \subsubsection{Bag-of-Words}
 We take the bag-of-words approach in representing documents, or forum posts. The unigram representation, while simple, pervades text classification and often achieves high performance \cite{boulis2005text}. We employ $l_{2}$ regularization to prevent overfitting, a risk that is aggravated when the dimension of the feature space exceeds the training set size \cite{Ng:2004:FSL:1015330.1015435}.
 
@@ -270,18 +298,22 @@ Each document is represented in part as a vector of indicator variables, one for
 
 Documents are pre-processed before they are mapped to vectors. We prune out stop words, using a subset of the stop word list published by the Information Retrieval Group at the University of Glasgow \cite{glasgow}. Removed words include, but are not limited to, interrogatives, words that identify the self (``I'', ``my''), verbs indicating ability or the lack thereof, negative words (``never'', ``not''), and certain conjunctions (``yet'', ``but''). We ignore alphabetic case and lemmatize numbers, \LaTeX\ equations, and URLs.
 
+\vspace{-0.4cm}
 \subsubsection{Post Metadata}
 The feature vector derived from unigrams is augmented with post metadata, including: 
 \vspace{-15pt}
-\begin{itemize}
+%\begin{itemize}
+\squishlist
 \setlength\itemsep{0.05em}
        \item The number of up-votes accumulated by the post. We rationalized that learners might express interest in posts that voiced confusion that they shared. 
        \item The number of reads garnered by the post's thread.
        \item Whether the poster elected to appear anonymous to his or her peers or to the entire population. It has been shown that anonymity in educational discussion forums enables learners to ask questions without fear of judgement \cite{freeman2004student}, and our dataset demonstrates a strong correlation between questions and confusion.
        \item The poster's grade in the class at the time of post submission, where ``grade'' is defined as the number of points earned by the learner (e.g., by correctly answering quiz questions) divided by the number of points possible. The lower the grade, we hypothesized, the more likely the learner might be confused about a topic.
        \item The post position---most likely, we hypothesized, learners seeking help will create new threads.
-\end{itemize}
+%\end{itemize}
+\squishend
 
+\vspace{-0.4cm}
 \subsubsection{Classifier Combination}
 In Section~\ref{sec:MOOCPosts}, we demonstrated that confusion is significantly correlated with questions, answers, urgency, sentiment and opinion. As such, in predicting confusion, we take into account the predictions of five distinct classifiers, one for each of the aforementioned variables. We use the fine-grained method of combining classifiers in which the outputs of several classifiers are fed as input to a \emph{combination function} \cite{bennett2005combination}. In our case, the combination function is itself a classifier.
 
@@ -315,6 +347,7 @@ We quantify performance primarily using two metrics: $F_{1}$ and Cohen's Kappa. 
 
 Table \ref{table:confusion_sets} presents the performance of the combined classifier on the humanities and medicine course sets. As mentioned in Section~\ref{sec:MOOCPosts}, both sets are somewhat heterogeneous collections of courses, with a total of nearly 10,000 posts in each set. In our dataset, not-confused posts (that is, posts with a confusion score of at most 4) outnumber confused ones---only 23\% of posts exhibit confusion in the humanities course set, while 16\% exhibit confusion in the medicine course set.
 
+\vspace{-0.4cm}
 \subsubsection{The Language of Confusion Across Courses}
 
 \begin{table*}
@@ -375,6 +408,7 @@ Table \ref{table:informative_features} displays the most informative features fo
        }} % title of Table
        \label{table:informative_features} % is used to refer this table in the text
 \end{table*}
+\vspace{-0.4cm}
 \subsubsection{Training and Testing on Distinct Courses}
 
 \begin{table}[h!]
@@ -396,7 +430,7 @@ Table \ref{table:informative_features} displays the most informative features fo
 We ran a series of experiments in which we trained the combined classifier on posts from one course and then tested it on posts from another one, without cross-validation. The results of these experiments are tabulated in Table \ref{table:across_courses}. 
 
 Our highest Kappa (0.629) was achieved when training on \emph{Statistics in Medicine 2013} and testing on \emph{Statistics in Medicine 2014}; this makes sense, since they comprise two runs of the same course. Many instructors plan to offer the same MOOC multiple times \cite{hollands2014moocs}. Ideally, an instructor would tag but one of those runs. Then a classifier would truly shine. Yet even if such tagging were infeasible, our experience learning and testing on similar courses, such as two different statistics courses, suggests that an online classifier might well exhibit good performance. Performance might suffer, however, if the domains of the training and test data are non-overlapping, as is the case in the last two experiments in Table \ref{table:across_courses}.
-
+\vspace{-0.4cm}
 \subsubsection{Constituent Classifiers and Post Metadata}
 
 Figure \ref{figure:constituents} illustrates the performance of each constituent classifier when cross-validating on the humanities and medicine course sets, as well as on the education course. The constituent question classifier outperforms all the others by a large margin, likely because the structure of questions is fairly consistent. (Note that the constituent classifiers are not themselves fed by a lower level of classifiers; if we were attempting to predict, say, sentiment instead of confusion, we could try to improve over the performance shown here by creating a sentiment combination function that was informed by its own set of constituent classifiers.)
@@ -408,26 +442,36 @@ Figure \ref{figure:constituents} illustrates the performance of each constituent
       \label{figure:constituents}
 \end{figure}
 
-The combining function of our combined classifier consistently determined that the constituent classifiers for the question and urgency variables were particularly indicative of confusion (see Table \ref{table:informative_features}). Table \ref{table:ablative} shows the results of an ablative analysis in which one constituent classifier was removed from the combined classifier at a time, until we were left with a classifier with no constituent classifiers (call it a \emph{flat} classifier). The flat classifier performed worse than the combined classifier in the two course sets and the education course. For both course sets, the urgency constituent seemed to be the most helpful of the five constituents---we would expect that instructors would prioritize posts in which learners were struggling to understand the course material. However, the same was not true for \emph{How to Learn Math}, which is consistent with the fact that no significant correlation between confusion and urgency was found (see Section~\ref{sec:MOOCPosts}).
+The combining function of our combined classifier consistently determined that the constituent classifiers for the question and urgency variables were particularly indicative of confusion (see Table \ref{table:informative_features}). Figure~\ref{fig:ablative} shows the results of an ablative analysis in which one constituent classifier was removed from the combined classifier at a time, until we were left with a classifier with no constituent classifiers (call it a \emph{flat} classifier). The flat classifier performed worse than the combined classifier in the two course sets and the education course. For both course sets, the urgency constituent seemed to be the most helpful of the five constituents---we would expect that instructors would prioritize posts in which learners were struggling to understand the course material. However, the same was not true for \emph{How to Learn Math}, which is consistent with the fact that no significant correlation between confusion and urgency was found (see Section~\ref{sec:MOOCPosts}).
 
-\begin{table}[t]
+%% \begin{table}[t]
+%%        \centering
+%%        \begin{tabular}{|c|c|c|c|}
+%%        \hline
+%%        Course Set           & Humanities & Medicine & Learn Math \\ \hline
+%%        Combined Classifier  & 0.621      & 0.564    & 0.359 \\ \hline\hline
+%%        Minus Question       & 0.621      & 0.559    & 0.350 \\ \hline
+%%        Minus Answer         & 0.620      & 0.555    & 0.345 \\ \hline
+%%        Minus Opinion        & 0.619      & 0.553    & 0.310 \\ \hline
+%%        Minus Sentiment      & 0.621      & 0.555    & 0.292 \\ \hline
+%%        Minus Urgency        & 0.618      & 0.512    & 0.337 \\ \hline
+%%        Minus Post Position      & 0.614      & 0.482    & 0.337 \\ \hline
+%%        \end{tabular}
+%%        \caption{\textnormal{
+%%        Ablative Analysis, Kappas. Minus question is the combined classifier without the question constituent; minus answer is minus question without the answer constituent; and so on. 
+%%        }} % title of Table
+%%        \label{table:ablative} % is used to refer this table in the text
+%% \end{table}
+
+\begin{figure}[htp]
        \centering
-       \begin{tabular}{|c|c|c|c|}
-       \hline
-       Course Set           & Humanities & Medicine & Learn Math \\ \hline
-       Combined Classifier  & 0.621      & 0.564    & 0.359 \\ \hline\hline
-       Minus Question       & 0.621      & 0.559    & 0.350 \\ \hline
-       Minus Answer         & 0.620      & 0.555    & 0.345 \\ \hline
-       Minus Opinion        & 0.619      & 0.553    & 0.310 \\ \hline
-       Minus Sentiment      & 0.621      & 0.555    & 0.292 \\ \hline
-       Minus Urgency        & 0.618      & 0.512    & 0.337 \\ \hline
-       Minus Post Position      & 0.614      & 0.482    & 0.337 \\ \hline
-       \end{tabular}
-       \caption{\textnormal{
-       Ablative Analysis, Kappas. Minus question is the combined classifier without the question constituent; minus answer is minus question without the answer constituent; and so on. 
-       }} % title of Table
-       \label{table:ablative} % is used to refer this table in the text
-\end{table}
+       \includegraphics[width=1.0\textwidth]{../Figs/ablativeAnalysisCropped.pdf}
+       \caption{\textnormal{Ablative Analysis, Kappas. Minus question
+           is the combined classifier without the question
+           constituent; minus answer is minus question without the
+           answer constituent; and so on.}}
+       \label{fig:ablative}
+\end{figure}
 
 The post position metadata feature also contributed positively to the classifier's performance---removing it from the flat classifier for medicine dropped the Kappa by 0.03. The other metadata features, however, did not appear to consistently or appreciably affect classifier performance, and so we chose to omit them from our ablative analysis. (Though Table \ref{table:informative_features} shows that the number of question marks was  an informative feature in the \emph{Managing Emergencies} course.)
 
@@ -442,12 +486,12 @@ has been labelled as \textit{confused} by Phase I. Every course can be thought o
 Phase II of YouEDU is divided into an offline indexing phase and an online retrieval phase.
 We define a \textit {bin} as a time-indexed section of a video. Each bin \textit{b\textsubscript{i}} can be thought of as the transcribed text content of the video
 at time interval \textit{i}. We define \textit{binscore(w, b)} of a word \textit{w} and bin \textit{b} as the number of times word \textit{w} appears in bin \textit{b}. Our approach formulates video recommendation to learners as a classical information retrieval problem. In classical IR, the goal is to retrieve the top documents that match a user's query. In our case, the query corresponds to a confused post, and the document corresponds to a bin. We want to retrieve a ranked list of bins that addresses the content of the confused post.
-
+\vspace{-0.4cm}
 \subsubsection{Offline---Indexing Pipeline}
 In the indexing pipeline, we first divide each video into bins. We then use a part-of-speech tagger \cite{nltk} to pre-process each bin. Nouns and noun-phrases tend to produce key-words that typically express what the content is about \cite{hulth2003improved}. Hence, we represent a bin as a triple (\textit{video \textunderscore id}, \textit{start \textunderscore min}, \textit{noun \textunderscore phrase \textunderscore list)} where \textit{noun \textunderscore phrase \textunderscore list} is a collection of only the nouns and noun-phrases in the bin.
 
 We scan through each of the pre-processed bins and build an index from each word to the corresponding bin that the word appears in. This index would enable us to retrieve the list of bins \textit{B\textsubscript{w}}, that corresponds to time epochs in the entire course when the word \textit{w} was discussed. We also maintain a data structure that keeps track of \textit{bin\textunderscore score(w,b)} for every word and bin. The constructed index and data structures are serialized to disk and are used by the retrieval phase.
-
+\vspace{-0.4cm}
 \subsubsection{Online---Retrieval and Ranking:}
 In the online phase, we take as input confused posts. We then use a part-of-speech tagger \cite{nltk} to pre-process each confused post. Similar to the technique we used for bins, we represent each post as a list of its constituent nouns and noun-phrases. Scanning through each of the words in the pre-processed post, we add bin \textit{b} to the candidate set of retrieved bins if at least one term in the pre-processed post was talked about in \textit{b}. Since we have the index constructed offline, we can use it to prune candidates from a large number of available videos (and hence, bins) in the corpus.
 
@@ -459,12 +503,25 @@ For each candidate bin \textit{C\textsubscript i} in the list of candidates \tex
 
 \subsection{Evaluation}
 
-We evaluated our ranking system on the 2013 run of the ``Statistics in Medicine'' MOOC, offered at Stanford University, which had 24,943 learners. We chose a random sample of queries from our MOOCPosts dataset for that course. We ran each of those posts through Phase I of YouEDU and chose 20 random posts from the posts that were labeled as confused. For each of those confused posts we obtained a list of six ranked video recommendations (that is, six bins, or one-minute snippets). We then requested  three domain experts in statistics at Stanford to rank and assess the quality of the recommendations with respect to each confused post. The rating scale is described below:
+We evaluated our ranking system on the 2013 run of the ``Statistics in
+Medicine'' MOOC, offered at Stanford University, which had 24,943
+learners. We chose a random sample of queries from our MOOCPosts
+dataset for that course. We ran each of those posts through Phase I of
+YouEDU and chose 20 random posts from the posts that were labeled as
+confused. For each of those confused posts our algorithm produced a
+list of six ranked video recommendations (that is, six bins, or
+one-minute snippets). We then randomized the order within each group
+of six, obscuring the algorithm's ranking decisions. Three domain
+experts in statistics at Stanford independently evaluated the
+relevance of each snippet to its respective post. This process induced
+a human-generated ranking, which we then compared to the algorithm's
+rank order. The rating scale available to the raters is described
+below:
 
 \textit{2:} {\bf Relevant}. The recommended snippet precisely address the learner's confusion.\\
 \textit{1:} {\bf Somewhat relevant}. The recommended snippet is somewhat useful in addressing the learner's confusion.\\
 \textit{0:} {\bf Not Relevant}: The recommended snippet does not address the learner's confusion.
-
+\vspace{-0.4cm}
 \subsubsection{Metrics}
 We used two metrics to evaluate the relevancy of our recommendations: NDCG and k-precision.
 
@@ -475,7 +532,7 @@ If \textit{rel\textsubscript i} is the gain associated with the document at posi
 \begin{equation}
 DCG(i) =
 \begin{cases}
-rel \textsubscript i & i \le b  \\
+rel \textsubscript i & i < b  \\
 \ DCG(i-1) + \frac{rel_i}{\log_b{i}} & otherwise \\
 \end{cases}
 \end{equation}
@@ -488,7 +545,7 @@ If there are $n$ recommended documents, then we report\\NDCG(n) as \emph{NDCG}, 
 
 \textit{Precision at top k:}
 We define the precision of a ranking \textit{R} with \textit{n} recommendations as the fraction of the recommendations that are relevant. The precision at \textit{k} of a ranking \textit{R} is defined as the value of the precision considering only the top \textit{k} recommendations in R. 
-
+\vspace{-0.4cm}
 \subsubsection{Results}
 \begin{table}
     \begin{tabular}{|l|l|l|l|l|}
