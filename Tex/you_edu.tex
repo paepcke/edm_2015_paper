@@ -179,7 +179,7 @@ Coders were asked to score their posts across six dimensions:
        \item Opinion: Does this post include an opinion, or is its subject matter wholly factual?
        \item Answer: Is this post an answer to a learner's question?
        \item Sentiment: What sentiment does this post convey, on a scale of 1 (extremely negative) to 7 (extremely positive)? A score of 4 indicates neutrality.
-       \item Urgency: How urgent is it that an instructor respond to the post, on a scale of 1 (not urgent at all) to 7 (extremely urgent)? A score of 4 indicates that intsructors should respond only if they have spare time.
+       \item Urgency: How urgent is it that an instructor respond to the post, on a scale of 1 (not urgent at all) to 7 (extremely urgent)? A score of 4 indicates that instructors should respond only if they have spare time.
        \item Confusion: To what extent does this post express confusion, or the lack thereof, on a scale of 1 (expert knowledge) to 7 (extreme confusion)? A score of 4 indicates neither knowledge nor confusion.
 \end{itemize}
 \vspace{-15pt}
@@ -215,7 +215,7 @@ We created three gold sets from the coders' scores, one for each course set. We 
 
 
 \subsection{Discussion}
-We found significant correlations between confusion and the other five variables. In the humanities and medicine course sets, confusion and urgency were correlated with a pearson's coefficient of 0.657 and 0.485, respectively. In all three subdivisions of the dataset, confusion and the question variable were positively correlated (0.623, 0.459, and 0.347), while the sentiment, opinion, and answer variables were negatively correlated with confusion. Table \ref{table:correlations} reports the entire set of correlations.
+We found significant correlations between confusion and the other five variables. In the humanities and medicine course sets, confusion and urgency were correlated with a Pearson's coefficient of 0.657 and 0.485, respectively. In all three subdivisions of the dataset, confusion and the question variable were positively correlated (0.623, 0.459, and 0.347), while the sentiment, opinion, and answer variables were negatively correlated with confusion. Table \ref{table:correlations} reports the entire set of correlations.
 
 That questions and confusion were positively correlated supports the finding in \cite{wilson1989learning} that confusion is often communicated through questions. The negative correlations can be understood intuitively. Confusion might turn into frustration and negative sentiment; as discussed in \cite{liu2013sequences}, confusion and frustration sometimes go hand-in-hand. If a learner is opining on something, then it seems less likely that he or she is discussing course content. And we would hope that learners providing answers are not themselves confused.
 
@@ -261,7 +261,7 @@ The second phase takes $P_{c}$ as input and, for each confused post in $p \in P_
 We frame the problem of detecting confusion as a binary one. Posts with a confusion rating greater than four in the MOOCPosts dataset fall into the ``confused'' class, while all other posts fall into the ``not confused'' class. We craft a rich feature space that fully utilizes the data available in our MOOCPosts dataset, choosing logistic regression with $l_{2}$ regularization as our model.
 
 \subsection{Feature Space and Model Design}
-Our feature space is composed of three types of inputs, those derived from the post body, post metadata, and other classifiers. The confusion classifer we train functions as a combining layer that folds in the predictions of other classifiers; these classifiers are trained to predict variables correlated with confusion. We expand upon each type of input here.
+Our feature space is composed of three types of inputs, those derived from the post body, post metadata, and other classifiers. The confusion classifier we train functions as a combining layer that folds in the predictions of other classifiers; these classifiers are trained to predict variables correlated with confusion. We expand upon each type of input here.
 
 \subsubsection{Bag-of-Words}
 We take the bag-of-words approach in representing documents, or forum posts. The unigram representation, while simple, pervades text classification and often achieves high performance \cite{boulis2005text}. We employ $l_{2}$ regularization to prevent overfitting, a risk that is aggravated when the dimension of the feature space exceeds the training set size \cite{Ng:2004:FSL:1015330.1015435}.
@@ -278,7 +278,7 @@ The feature vector derived from unigrams is augmented with post metadata, includ
        \item The number of up-votes accumulated by the post. We rationalized that learners might express interest in posts that voiced confusion that they shared. 
        \item The number of reads garnered by the post's thread.
        \item Whether the poster elected to appear anonymous to his or her peers or to the entire population. It has been shown that anonymity in educational discussion forums enables learners to ask questions without fear of judgement \cite{freeman2004student}, and our dataset demonstrates a strong correlation between questions and confusion.
-       \item The poster's grade in the class at the time of post submission, where ``grade'' is defined as the numer of points earned by the learner (e.g., by correctly answering quiz questions) divided by the number of points possible. The lower the grade, we hypothesized, the more likely the learner might be confused about a topic.
+       \item The poster's grade in the class at the time of post submission, where ``grade'' is defined as the number of points earned by the learner (e.g., by correctly answering quiz questions) divided by the number of points possible. The lower the grade, we hypothesized, the more likely the learner might be confused about a topic.
        \item The post position---most likely, we hypothesized, learners seeking help will create new threads.
 \end{itemize}
 
@@ -408,7 +408,7 @@ Figure \ref{figure:constituents} illustrates the performance of each constituent
       \label{figure:constituents}
 \end{figure}
 
-The combining fuction of our combined classifier consistently determined that the constituent classifiers for the question and urgency variables were particularly indicative of confusion (see Table \ref{table:informative_features}). Table \ref{table:ablative} shows the results of an ablative analysis in which one constituent classifier was removed from the combined classifier at a time, until we were left with a classifier with no constituent classifiers (call it a \emph{flat} classifier). The flat classifier performed worse than the combined classifier in the two course sets and the education course. For both course sets, the urgency constituent seemed to be the most helpful of the five constituents---we would expect that instructors would prioritize posts in which learners were struggling to understand the course material. However, the same was not true for \emph{How to Learn Math}, which is consistent with the fact that no significant correlation between confusion and urgency was found (see Section~\ref{sec:MOOCPosts}).
+The combining function of our combined classifier consistently determined that the constituent classifiers for the question and urgency variables were particularly indicative of confusion (see Table \ref{table:informative_features}). Table \ref{table:ablative} shows the results of an ablative analysis in which one constituent classifier was removed from the combined classifier at a time, until we were left with a classifier with no constituent classifiers (call it a \emph{flat} classifier). The flat classifier performed worse than the combined classifier in the two course sets and the education course. For both course sets, the urgency constituent seemed to be the most helpful of the five constituents---we would expect that instructors would prioritize posts in which learners were struggling to understand the course material. However, the same was not true for \emph{How to Learn Math}, which is consistent with the fact that no significant correlation between confusion and urgency was found (see Section~\ref{sec:MOOCPosts}).
 
 \begin{table}[t]
        \centering
@@ -468,7 +468,7 @@ We evaluated our ranking system on the 2013 run of the ``Statistics in Medicine'
 \subsubsection{Metrics}
 We used two metrics to evaluate the relevancy of our recommendations: NDCG and k-precision.
 
-\textit{Normalized Discounted Cummulative Gain (NDCG):}
+\textit{Normalized Discounted Cumulative Gain (NDCG):}
 NDCG measures ranking quality as the sum of the relevance scores (gains) of each recommendation. However, the gain is discounted proportional to how far down the document is in the ranking. The underlying intuition is that the gain due to an extremely relevant document (say, relevance score of 2) appearing as the last result must be penalized more than if it appeared at the first result. Hence, the DCG metric applies a logarithmic discounting function that progressively reduces a document's gain as its position in the ranked list increases \cite{ndcgcite}. The base \textit{b} of the logarithm determines how sharp the applied discount is.
 
 If \textit{rel\textsubscript i} is the gain associated with the document at position i, the DCG at a position i is defined recursively as
