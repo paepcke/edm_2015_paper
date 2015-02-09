@@ -29,7 +29,10 @@
 \documentclass{edm_template}
 \usepackage{multirow}
 \usepackage{csquotes}
+\usepackage{listings}
+\usepackage{fixltx2e}
 \usepackage{url}
+
 \begin{document}
 
 \title{YouEDU: Addressing Confusion in MOOC Discussion Forums by Recommending Instructional Video Clips}
@@ -536,12 +539,119 @@ Table \ref{table:informative_features} shows that the number of question marks w
 
 \section{Phase II: Recommending Clips}
 \label{sec:clipRecommendation}
+\section{Phase II: Recommending Clips}
+\vspace{1mm}
+\label{sec:clipRecommendation}
 \subsection{The Recommendation Algorithm}
-\subsubsection{Retrieval}
-\subsubsection{Ranking}
+\vspace{1mm}
+In this section, we describe how YouEDU recommends instructional material for a forum post that
+has been labelled as \textit{confused} by Phase I. Every course can be thought of as a collection several video lectures. Each video lecture on an average is about 12-14 minutes long. We focus on the problem of identifying a ranked list of snippets, \textit{S} for each \textit{confused} post. Each snippet \textit{s\textsubscript i} in \textit{S} is a tuple \textit{(video\textunderscore id, seek\textunderscore minute)} where \textit{video\textunderscore id} is an identifier for the recommended video and \textit{seek\textunderscore minute} is the time in the video to which the student must scroll and start playing the video. Since a concept is covered at multiple places in a video, we did not find it necessary to recommend an \textit{end\textunderscore minute}. Furthermore, students could end the video by themselves if they feel they adequately understood the particular concept.
+
+Phase II of YouEDU is divided into an offline indexing phase and an online retrieval phase.
+We define a \textit {bin} as a time-indexed section of a video. Each bin \textit{b\textsubscript{i}} can be thought of as the transcribed text content of the video
+at time interval \textit{i}. We define \textit{bin\textunderscore score(w, b)} of a word \textit{w} and bin \textit{b} as the number of times word \textit{w} appears in bin \textit{b}. Our approach formulates video recommendation to learners as a classical Information Retrieval problem. In a classical IR task, the intent is to retrieve the top documents that match a user's query. In our case, the query corresponds to a confused post, and the document corresponds to a bin. We want to retrieve a ranked list of bins that express the content of the confused post. We describe the steps in Phase II of YouEDU in the following subsections.
+\subsubsection{Offline - Indexing Pipeline}
+
+Here are the steps involved in our indexing pipeline.
+\begin{lstlisting}[frame=single]
+def build_index():
+  bins = get_bins(course)
+  for bin in bins:
+  nouns = extract_nouns(bin)
+  for noun in nouns:
+   add (noun, bin) to the index
+   term_weight[noun,bin]+=1
+\end{lstlisting}
+\textit{Binning:}
+We hired translators to accurately transcribe the content of each video lecture into sub-title files. Each video has one corresponding sub-title file. In the indexing phase, \textit{get\textunderscore bins()} divides each video by time into several bins.
+
+\textit{Pre-processing Bins:}
+We use a part-of-speech tagger \cite{nltk} to pre-process each bin. Nouns and noun-phrases tend to produce better key-words that typically express what the content is about \cite{hulth2003improved}. Hence, we represent a bin as a triple (\textit{video \textunderscore id}, \textit{start \textunderscore min}, \textit{noun \textunderscore phrase \textunderscore list)} where \textit{noun \textunderscore phrase \textunderscore list} is a collection of only the nouns and noun-phrases in the bin.
+
+\textit{Indexing Bins:}
+We scan through each of the pre-processed bins, and build an index from each word to the corresponding bin that the word appears in. This index would enable us to retrieve the list of bins \textit{B\textsubscript{w}}, that corresponds to time epochs in the entire course the word \textit{w} was discussed. We also maintain a data structure that keeps track of \textit{bin\textunderscore score(w,b)} for every word and bin. The constructed index and data structures are serialized to disk and is used by the retrieval phase which is done online.
+\subsubsection{Online - Retrieval and Ranking:}
+Here are the steps involved in our online retrieval phase.
+
+\begin{lstlisting}[frame=single]
+def recommend(post):
+ class = classify(post)
+ if (class == confused):
+  p = extract_nouns(post)
+  candidate_bins = retrieve_candidates(post)
+  for candidate in candidate_bins:
+   b = vectorize(candidate)
+   p = vectorize(post)
+   sim_score = cosinesim(b,p)
+  rank candidate_bins by sim_score
+\end{lstlisting}
+
+\textit{Pre-processing of forum post:} 
+We use a part-of-speech tagger \cite{nltk} to pre-process each confused post. Similar to the technique we used for bins, we represent each post as a list of its constituent nouns and noun-phrases. 
+
+\textit{Candidate bin retrieval:}
+We scan through each of the words in the pre-processed post. We add bin \textit{b} to the candidate set, if atleast one term in the pre-processed post was talked about in bin \textit{b}. Since, we have the index constructed offline, we could use it to prune candidates from a large number of available videos (and hence, bins) in the corpus .
+
+\textit{Candidate Ranking:}
+We convert each post and bin into a V dimensional vector, where \textit{V} is the size of the vocabulary computed over all words used in all lectures of the course. \textit{vectorize(bin)} converts a bin into a V dimensional vector such that the value on the dimension corresponding to word  \textit{w\textsubscript i} is \textit{binscore(wi,bin)}. We define \textit{simscore(P,B)} as the cosine similarity of the post and the bin.
+\begin{equation}
+simscore(P,B) = \frac{P.B}{\sqrt{\sum\limits_{i=1}^V P_i ^2} \sqrt{\sum\limits_{i=1}^V B_i ^2}  }
+\end{equation}
+For each candidate bin, \textit{C\textsubscript i} in the list of candidates \textit{C} , we compute \textit{simscore(C\textsubscript i, post)}. We rank all bins in C by their \textit{simscore} values and return the ranking.
 
 \subsection{Evaluation}
-Two experts were hired ...
+
+We implemented our ranking system on a MOOC on 'Statistics in Medicine' offered here at Stanford University that had 24943 learners. Our classifier to detect confusion in forum posts was trained on one run of the course and tested on the other run. We chose a random sample of queries from our MOOCPosts dataset for that course. We ran each of those posts through Phase I of YouEDU. We chose 20 random posts from the posts that were labeled as confused. For each of those \textit{confused} posts we obtained a list of six ranked video recommendations. We then requested  three domain experts (in statistics) at Stanford to rank and assess the quality of the recommendations with respect to each confused post.
+
+The rating scale is described below
+
+\textit{Type1:} Relevant (the recommended snippet is exactly relevant to the question in the forum post and addresses the content of the post precisely)
+
+\textit{Type2:} Somewhat relevant (the recommended snippet is relevant to the post and is useful to address the learner's question in the post) 
+
+\textit{Type3:} Not Relevant (the recommended snippet does not address the specific question in the forum-post).
+
+We describe the two metrics that we use for evaluating how relevant our recommendations are and how much they agree with the gold-set.
+
+\textit{Normalized Discounted Cummulative Gain (NDCG):}
+NDCG measures ranking quality as the sum of the relevance scores (gains) of each recommendation. However, the gain is discounted proportional to how below the document is in the ranking. The underlying intuition is that the gain due to an extremely relevant document (say, relevance score of 2) appearing as the last result must be penalized more than if it appeared at the first result. Hence, the DCG metric applies a logarithmic discounting function that progressively reduces a document's relevance score (gain) as it's position in the ranked list increases \cite{ndcgcite}. The base \textit{b} of the logarithm measures how sharp the applied discount is.
+
+If \textit{rel\textsubscript i} is the gain associated with document at position i, The DCG at a position i is defined recursively as
+\begin{equation}
+DCG(i) =
+\begin{cases}
+rel \textsubscript i & i \le b  \\
+\ DCG(i-1) + \frac{rel_i}{\log_b{i}} & otherwise \\
+\end{cases}
+\end{equation}
+
+Since we want a smoother discounting function, we set b to 2. We used a graded relevance scale of 0, 1 and 2 (2 corresponding to most relevant and 0 corresponding to irrelevant) and computed the DCG for the ranked recommendations we obtained for each confused post. The Ideal value of DCG (IDCG) is defined as the DCG based on the ideal ranking calculated by the raters. To obtain the IDCG, we sort the rankings given by the raters in decreasing order of relevance scores and compute the DCG of the sorted ranking. This corresponds to the maximum theoretically possible DCG in any ranking of recommendations for that post. We normalize the DCG for our ranking by the IDCG to get the Normalized Discounted Cummulative Gain (NDCG).
+\begin{equation}
+NDCG(i) = \frac{DCG(i)}{IDCG(i)}
+\end{equation}
+
+\textit{Precision at top k:}
+We define Precision of a ranking R with \textit{n} recommendations as the fraction of the recommendations that are relevant.
+\begin{equation}
+Precision(R) = \frac{\text{\# of Relevant Recommendations}}{n}
+\end{equation}
+The Precision at \textit{k} of a ranking \textit{R} is defined as the value of the precision considering only the top \textit{k} recommendations in R. 
+
+
+\begin{table}
+    \begin{tabular}{|l|l|l|l|l|}
+    \hline
+    Rater  & NDCG & k-precision k=1 & k=2  & k=3  \\ \hline
+    Rater1 & 0.66 & 0.66            & 0.61 & 0.62 \\ \hline
+    Rater2 & 0.90 & 1.0             & 0.97 & 0.97 \\ \hline
+    Rater3 & 0.82 & 0.55            & 0.52 & 0.52 \\ \hline
+    Avg    & 0.79 & 0.74            & 0.70 & 0.70 \\ \hline
+    \end{tabular}
+    \caption {NDCG and k-Precision for recommendations}
+\label{table:ndcg}
+\end{table}
+
+Our results across the raters are summarized in Table \ref{table:ndcg}. Our average precision at k=1, is 0.74. This intuitively means that on about 74\% of the cases, the first video that we suggest to a learner (as a recommendation for his confused post), is a relevant video. We think this is a remarkable precision for a completely automated intervention system. Our precision values for k=2 and k=3 are also encouraging. Our NDCG numbers are high indicating that we perform relatively well to the theoretically maximum possible DCG (ie, DCG of a ranking computed by a human domain expert). We don't consider recall into our evaluation as there are only very few available videos for most confused post. So, the problem of missing out on videos does not arise.
 
 \section{Future Work}
 \label{sec:futureWork}
