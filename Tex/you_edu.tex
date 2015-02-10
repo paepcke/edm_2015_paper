@@ -192,7 +192,7 @@ Each post in the MOOCPosts dataset was scored across six dimensions---confusion,
 
 
 \subsection{Methodology: Compiling the Dataset}
-We organized the posts into three sets of related courses: Humanities/Sciences, Medicine, and Education, with 10,000, 10,002, and 10,000 entries, respectively. Humanities/Sciences contains two economics courses, two statistics courses, a global health course, and an environmental physiology course; Medicine contains two runs of a medical statistics course, a science writing course, and an emergency medicine course; Education contains a single course, \emph{How to Learn Math}. 
+We organized the posts by course type into three groups: Humanities/Sciences, Medicine, and Education, with 10,000, 10,002, and 10,000 entries, respectively. Humanities/Sciences contains two economics courses, two statistics courses, a global health course, and an environmental physiology course; Medicine contains two runs of a medical statistics course, a science writing course, and an emergency medicine course; Education contains a single course, \emph{How to Learn Math}. 
 
 Each course set was coded by three independent, paid oDesk coders. That is, three triplets of coders each worked on one set of 10,000 posts. No coder worked on more than one course set. Each coder attempted to code every post for his or her particular set. All posts with malformed or missing scores in at least one coder's spreadsheet were discarded. This elision accounts for the difference between the 29,604 posts in the final set, and the original 30,002 posts.
 
@@ -257,6 +257,7 @@ That questions and confusion were positively correlated supports the finding in 
         Answer    & -0.257                & -0.394             & -0.106  \\ \hline
         Question  & 0.623                & 0.459              & 0.347  \\ \hline
        \end{tabular}
+       \vspace{-5pt}
        \caption{\textnormal{
        Correlations with Confusion. The urgency and question variables are strongly correlated with confusion. All correlations, save the one denoted by *, were significant, with p-values < 0.01.
        }} 
@@ -273,7 +274,7 @@ YouEDU\footnote{Our entire implementation is open-source.} is an intervention sy
 The second phase takes $P_{c}$ as input and, for each confused post in $p \in P_{c}$, outputs a ranked list of educational video snippets that address the object of confusion expressed in $p$. In particular, for a given post, the recommender produces a ranking across a number of one-minute video clips by computing a similarity metric between the post and closed caption sections. In an online system, of course, learners may choose to watch beyond the end of the one-minute snippet---the snippets effectively function as a video index.
 \begin{figure}[htp]
        \centering
-       \includegraphics[width=0.8\textwidth]{../Figs/youEduArch.png}
+       \includegraphics[width=1.0\textwidth]{../Figs/youEduArch.png}
        \caption{\textnormal{YouEDU Architecture. YouEDU 
            consists of two phases: post classification and video
            snippet recommendation. The dotted-line module is under
@@ -290,15 +291,15 @@ We frame the problem of detecting confusion as a binary one. Posts with a confus
 \subsection{Feature Space and Model Design}
 Our feature space is composed of three types of inputs, those derived from the post body, post metadata, and other classifiers. The confusion classifier we train functions as a combining layer that folds in the predictions of other classifiers; these classifiers are trained to predict variables correlated with confusion. We expand upon each type of input here.
 
-\vspace{-0.3cm}
+
 \subsubsection{Bag-of-Words}
 We take the bag-of-words approach in representing documents, or forum posts. The unigram representation, while simple, pervades text classification and often achieves high performance \cite{boulis2005text}. We employ $l_{2}$ regularization to prevent overfitting, a risk that is aggravated when the dimension of the feature space exceeds the training set size \cite{Ng:2004:FSL:1015330.1015435}.
 
-Each document is represented in part as a vector of indicator variables, one for each word that appears in the training data---the $i$-th indicator is one if the $i$-th word in the vocabulary is present in the document, zero otherwise. A word is defined as either a sequence of one or more alphanumeric characters or a single punctuation character (one of \{. , ; ! ?\}). 
+Each document is represented in part as a vector of indicator variables, one for each word that appears in the training data---the $i$-th indicator is 1 if the $i$-th word in the vocabulary is present in the document, otherwise. A word is defined as either a sequence of one or more alphanumeric characters or a single punctuation character (one of \{. , ; ! ?\}). 
 
-Documents are pre-processed before they are mapped to vectors. We prune out stop words, using a subset of the stop word list published by the Information Retrieval Group at the University of Glasgow \cite{glasgow}. Removed words include, but are not limited to, interrogatives, words that identify the self (``I'', ``my''), verbs indicating ability or the lack thereof, negative words (``never'', ``not''), and certain conjunctions (``yet'', ``but''). We ignore alphabetic case and lemmatize numbers, \LaTeX\ equations, and URLs.
+Documents are pre-processed before they are mapped to vectors. We prune out stop words, using a subset of the stop word list published by the Information Retrieval Group at the University of Glasgow \cite{glasgow}. Removed words include, but are not limited to, interrogatives, words that identify the self (``I'', ``my''), verbs indicating ability or the lack thereof, negative words (``never'', ``not''), and certain conjunctions (``yet'', ``but''). We ignore alphabetic case and collapse numbers, \LaTeX\ equations, and URLs into three unique words.
 
-\vspace{-0.3cm}
+
 \subsubsection{Post Metadata}
 The feature vector derived from unigrams is augmented with post metadata, including: 
 \vspace{-15pt}
@@ -313,7 +314,7 @@ The feature vector derived from unigrams is augmented with post metadata, includ
 \end{itemize}
 %\squishend
 
-\vspace{-0.3cm}
+
 \subsubsection{Classifier Combination}
 In Section~\ref{sec:MOOCPosts}, we demonstrated that confusion is significantly correlated with questions, answers, urgency, sentiment and opinion. As such, in predicting confusion, we take into account the predictions of five distinct classifiers, one for each of the aforementioned variables. We use the fine-grained method of combining classifiers in which the outputs of several classifiers are fed as input to a \emph{combination function} \cite{bennett2005combination}. In our case, the combination function is itself a classifier.
 
@@ -321,11 +322,11 @@ For a given train-test partition, let $D_{train}$ be the training set and $D_{te
 
 Let $H_{c}$, a classifier for confusion, be our combination function. Like the constituent classifiers, $H_{c}$ is trained on $D_{train}$ and takes as input bag-of-words and metadata features. Unlike the constituents, $H_{c}$ also treats the ground-truth labels for the question, answer, opinion, sentiment, and urgency variables as features. When testing $H_{c}$ on an example $d \in D_{test}$, the constituent classifiers each output a prediction for $d$. These five predictions---and not the ground-truth values---are appended to the bag-of-words and metadata features derived from $d$. The resulting vector is given as input to $H_{c}$, which then predicts $d$'s confusion class.
 
-A few subtleties: $H_{s}$ uses an additional metadata feature that the other classifiers do not---the number of negative words (e.g., ``not'', ``cannot'', ``never'', etc.). $H_{q}$, $H_{a}$, $H_{u}$, and $H_{c}$ treat the number of question marks as an additional feature, given the previously presented correlations; \cite{wen2015confusion} also used question marks in predicting confusion. And while $H_{q}$, $H_{a}$, and $H_{o}$ are by nature binary classifiers, $H_{s}$ and $H_{u}$ are multi-class. They predict values corresponding to negative (score $< 4$), neutral (score $= 4$), and positive (score $> 4$), providing $H_{c}$ with somewhat granular information.
+A few subtleties: $H_{s}$ uses an additional metadata feature that the other classifiers do not---the number of negative words (e.g., ``not'', ``cannot'', ``never'', etc.). $H_{q}$, $H_{a}$, $H_{u}$, and $H_{c}$ treat the number of question marks as an additional feature, given the previously presented correlations; \cite{wen2015confusion} also used question marks in predicting confusion. And while $H_{q}$, $H_{a}$, and $H_{o}$ are by nature binary classifiers, $H_{s}$ and $H_{u}$ are multi-class. They predict values corresponding to negative (score $< 4$), neutral (score $= 4$), and positive (score $> 4$), providing $H_{c}$ with somewhat granular information. Going forward, we refer to the confusion classifier that uses all the features
+described in this section as the \emph{combined} classifier. 
 
 \subsection{Evaluation and Discussion}
-For clarity, we refer to the confusion classifier that uses all the features
-described in the previous subsection as the \emph{combined} classifier. In this section, we evaluate and interpret the performance of the combined classifier in contrast to confusion classifiers with pared-down feature sets, reporting insights gleaned about the nature of confusion in MOOCs along the way. 
+In this section, we evaluate and interpret the performance of the combined classifier in contrast to confusion classifiers with pared-down feature sets, reporting insights gleaned about the nature of confusion in MOOCs along the way. 
 
 \begin{table*}[htp!]
     \centering
@@ -337,6 +338,7 @@ described in the previous subsection as the \emph{combined} classifier. In this 
     Medicine                    & 0.924      & 0.946    & 0.935     & 0.699      & 0.589  & 0.627    & 0.564  \\ \hline
 
     \end{tabular}
+    \vspace{-5pt}
     \caption{\textnormal{
        Combined Confusion Classifier Performance, Course Sets.
     }} % title of Table
@@ -347,7 +349,7 @@ We quantify performance primarily using two metrics: $F_{1}$ and Cohen's Kappa. 
 
 Table \ref{table:confusion_sets} presents the performance of the combined classifier on the humanities and medicine course sets. As mentioned in Section~\ref{sec:MOOCPosts}, both sets are somewhat heterogeneous collections of courses, with a total of nearly 10,000 posts in each set. In our dataset, not-confused posts (that is, posts with a confusion score of at most 4) outnumber confused ones---only 23\% of posts exhibit confusion in the humanities course set, while 16\% exhibit confusion in the medicine course set.
 
-\vspace{-0.3cm}
+
 \subsubsection{The Language of Confusion Across Courses}
 
 \begin{table*}
@@ -362,6 +364,7 @@ Table \ref{table:confusion_sets} presents the performance of the combined classi
        Women's Health                    & 2,141 (15\%)                         & 0.933                 & 0.506             & 0.445 \\ \hline
        How to Learn Math                 & 9,878 (6\%)                        & 0.970                 & 0.383             & 0.359 \\ \hline
        \end{tabular}
+       \vspace{-5pt}
        \caption{\textnormal{
        Combined Confusion Classifier Performance, Individual Courses. Our classifier performed best on courses whose discourse was characterized by technical diction, like statistics or economics. In courses like \emph{How to Learn Math} that facilitated open-ended and somewhat roaming discussions, our model found it more difficult to implicitly define confusion. 
        }} % title of Table
@@ -388,9 +391,7 @@ I am not sure if I agree with tracking or not.  I like teaching children at all 
 
 The above post was tagged as conveying confusion. The language is more subtle than that seen in the posts from \emph{Managing Emergencies}, and it is not surprising that we saw our lowest Kappa (0.359) when classifying \emph{How to Learn Math}. In this course, learners tended to voice more confusion about the structure of the class than the content itself---``link'', ``videos'', and ``responses'' were the fourth, fifth, and seventh most indicative features, respectively.
 
-Examining the feature weights learned from the humanities and medicine course sets provides us with a more holistic view onto the language of confusion. Domain-specific words take the backseat to words that convey the learning process. For example, in both course sets, ``confused'' was the word with the highest feature weight (odds ratios equal to 3.19 and 2.97 for humanities and medicine, respectively). In the humanities course set, ``?'', ``couldn't'', ``question'', ``haven't'', and ``wondering'' came next, in that order. The importance of question-related features in particular is consistent with \cite{wilson1989learning} and with the correlations in the MOOCPosts dataset. In medicine, the next highest ranked words were ``explain'', ``role'', ``understand'', ``stuck'', and ``struggling''.
-
-Table \ref{table:informative_features} displays the most informative features for humanities and medicine course sets, as well as \emph{How to Learn Math} and \emph{Managing Emergencies}.
+Examining the feature weights learned from the humanities and medicine course sets provides us with a more holistic view onto the language of confusion. Domain-specific words take the backseat to words that convey the learning process. For example, in both course sets, ``confused'' was the word with the highest feature weight (odds ratios equal to 3.19 and 2.97 for humanities and medicine, respectively). In the humanities course set, ``?'', ``couldn't'', ``question'', ``haven't'', and ``wondering'' came next, in that order. The importance of question-related features in particular is consistent with \cite{wilson1989learning} and with the correlations in the MOOCPosts dataset. In medicine, the next highest ranked words were ``explain'', ``role'', ``understand'', ``stuck'', and ``struggling''. Table \ref{table:informative_features} displays the most informative features for the humanities and medicine course sets, as well as \emph{How to Learn Math} and \emph{Managing Emergencies}.
 \begin{table*}[ht!]
        \centering
        \begin{tabular}{|c|c|c|c|}
@@ -403,12 +404,13 @@ Table \ref{table:informative_features} displays the most informative features fo
        couldn't             (2.40)      & understand            (2.36) &  available             (1.63)   & hope (1.40) \\ \hline
        report               (2.23)       & stuck                (2.27) &  responses             (1.62)   & what (1.31) \\ \hline
        \end{tabular}
+       \vspace{-5pt}
        \caption{\textnormal{
        Most Informative Features, Odds Ratios. Features prefixed with ``constituent:'' correspond to constituent predictions, while those prefixed with ``metadata'' correspond to post metadata features. All other features are unigram words.
        }} % title of Table
        \label{table:informative_features} % is used to refer this table in the text
 \end{table*}
-\vspace{-0.3cm}
+
 \subsubsection{Training and Testing on Distinct Courses}
 
 \begin{table}[h!]
@@ -421,6 +423,7 @@ Table \ref{table:informative_features} displays the most informative features fo
        Economics 1                    & Stats. in Med. (2013)  & 0.267 \\ \hline
        Stats. in Med. (2013)  & Women's Health                 & 0.175 \\ \hline
        \end{tabular}
+       \vspace{-5pt}
        \caption{\textnormal{
        Nature of Confusion Across Domains. Training and testing on similar courses typically resulted in high performance.
        }} 
@@ -430,15 +433,15 @@ Table \ref{table:informative_features} displays the most informative features fo
 We ran a series of experiments in which we trained the combined classifier on posts from one course and then tested it on posts from another one, without cross-validation. The results of these experiments are tabulated in Table \ref{table:across_courses}. 
 
 Our highest Kappa (0.629) was achieved when training on \emph{Statistics in Medicine 2013} and testing on \emph{Statistics in Medicine 2014}; this makes sense, since they comprise two runs of the same course. Many instructors plan to offer the same MOOC multiple times \cite{hollands2014moocs}. Ideally, an instructor would tag but one of those runs. Then a classifier would truly shine. Yet even if such tagging were infeasible, our experience learning and testing on similar courses, such as two different statistics courses, suggests that an online classifier might well exhibit good performance. Performance might suffer, however, if the domains of the training and test data are non-overlapping, as is the case in the last two experiments in Table \ref{table:across_courses}.
-\vspace{-0.3cm}
+
 \subsubsection{Constituent Classifiers and Post Metadata}
 
-Figure \ref{figure:constituents} illustrates the performance of each constituent classifier when cross-validating on the humanities and medicine course sets, as well as on the education course. The constituent question classifier outperforms all the others by a large margin, likely because the structure of questions is fairly consistent. (Note that the constituent classifiers are not themselves fed by a lower level of classifiers; if we were attempting to predict, say, sentiment instead of confusion, we could try to improve over the performance shown here by creating a sentiment combination function that was informed by its own set of constituent classifiers.)
+Figure \ref{figure:constituents} illustrates the performance of each constituent classifier when cross-validating on the humanities and medicine course sets, as well as on the education course. The constituent question classifier outperformed all the others by a large margin, likely because the structure of questions is fairly consistent. Note that the constituent classifiers were not themselves fed by a lower level of classifiers; if we were attempting to predict, say, sentiment instead of confusion, we could try to improve over the performance shown here by creating a sentiment combination function that was in- formed by its own set of constituent classifiers
 
 \begin{figure}[]
        \centering
-       \includegraphics[width=0.8\textwidth]{../Figs/classifierEvalsWithEdu.pdf}
-       \caption{\textnormal{Constituent Classifier Performance. ``Confusion(cmb)'' is the combined classifier.}}
+       \includegraphics[width=1.0\textwidth]{../Figs/classifierEvalsWithEdu.pdf}
+       \caption{\textnormal{Constituent Classifier Performance. Confusion(cmb) is the combined classifier.}}
       \label{figure:constituents}
 \end{figure}
 
@@ -465,10 +468,10 @@ The combining function of our combined classifier consistently determined that t
 
 \begin{figure}[htp]
        \centering
-       \includegraphics[width=1.0\textwidth]{../Figs/ablativeAnalysisCropped.pdf}
-       \caption{\textnormal{Ablative Analysis, Kappas. Minus question
+       \includegraphics[width=1.0\textwidth]{../Figs/ablativeAnalysisCropped.png}
+       \caption{\textnormal{Ablative Analysis, Kappas. No Question
            is the combined classifier without the question
-           constituent; minus answer is minus question without the
+           constituent; No Answer is No Question without the
            answer constituent; and so on.}}
        \label{fig:ablative}
 \end{figure}
@@ -485,13 +488,13 @@ has been labelled as \textit{confused} by Phase I. Every course can be thought o
 
 Phase II of YouEDU is divided into an offline indexing phase and an online retrieval phase.
 We define a \textit {bin} as a time-indexed section of a video. Each bin \textit{b\textsubscript{i}} can be thought of as the transcribed text content of the video
-at time interval \textit{i}. We define \textit{binscore(w, b)} of a word \textit{w} and bin \textit{b} as the number of times word \textit{w} appears in bin \textit{b}. Our approach formulates video recommendation to learners as a classical information retrieval problem. In classical IR, the goal is to retrieve the top documents that match a user's query. In our case, the query corresponds to a confused post, and the document corresponds to a bin. We want to retrieve a ranked list of bins that addresses the content of the confused post.
-\vspace{-0.3cm}
+at time interval \textit{i}. We define \textit{binscore(w, b)} of a word \textit{w} and bin \textit{b} as the number of times word \textit{w} appears in bin \textit{b}. We formulate video recommendation to learners as a classical information retrieval problem. In classical IR, the goal is to retrieve the top documents that match a user's query. In our case, the query corresponds to a confused post, and the document corresponds to a bin. We want to retrieve a ranked list of bins that addresses the content of the confused post.
+
 \subsubsection{Offline---Indexing Pipeline}
 In the indexing pipeline, we first divide each video into bins. We then use a part-of-speech tagger \cite{nltk} to pre-process each bin. Nouns and noun-phrases tend to produce key-words that typically express what the content is about \cite{hulth2003improved}. Hence, we represent a bin as a triple (\textit{video \textunderscore id}, \textit{start \textunderscore min}, \textit{noun \textunderscore phrase \textunderscore list)} where \textit{noun \textunderscore phrase \textunderscore list} is a collection of only the nouns and noun-phrases in the bin.
 
 We scan through each of the pre-processed bins and build an index from each word to the corresponding bin that the word appears in. This index would enable us to retrieve the list of bins \textit{B\textsubscript{w}}, that corresponds to time epochs in the entire course when the word \textit{w} was discussed. We also maintain a data structure that keeps track of \textit{bin\textunderscore score(w,b)} for every word and bin. The constructed index and data structures are serialized to disk and are used by the retrieval phase.
-\vspace{-0.3cm}
+
 \subsubsection{Online---Retrieval and Ranking:}
 In the online phase, we take as input confused posts. We then use a part-of-speech tagger \cite{nltk} to pre-process each confused post. Similar to the technique we used for bins, we represent each post as a list of its constituent nouns and noun-phrases. Scanning through each of the words in the pre-processed post, we add bin \textit{b} to the candidate set of retrieved bins if at least one term in the pre-processed post was talked about in \textit{b}. Since we have the index constructed offline, we can use it to prune candidates from a large number of available videos (and hence, bins) in the corpus.
 
@@ -521,7 +524,7 @@ below:
 \textit{2:} {\bf Relevant}. The recommended snippet precisely address the learner's confusion.\\
 \textit{1:} {\bf Somewhat relevant}. The recommended snippet is somewhat useful in addressing the learner's confusion.\\
 \textit{0:} {\bf Not Relevant}: The recommended snippet does not address the learner's confusion.
-\vspace{-0.3cm}
+
 \subsubsection{Metrics}
 We used two metrics to evaluate the relevancy of our recommendations: NDCG and k-precision.
 
@@ -545,7 +548,7 @@ If there are $n$ recommended documents, then we report\\NDCG(n) as \emph{NDCG}, 
 
 \textit{Precision at top k:}
 We define the precision of a ranking \textit{R} with \textit{n} recommendations as the fraction of the recommendations that are relevant. The precision at \textit{k} of a ranking \textit{R} is defined as the value of the precision considering only the top \textit{k} recommendations in R. 
-\vspace{-0.3cm}
+
 \subsubsection{Results}
 \begin{table}
     \begin{tabular}{|l|l|l|l|l|}
@@ -556,6 +559,7 @@ We define the precision of a ranking \textit{R} with \textit{n} recommendations 
     Rater3 & 0.82 & 0.55            & 0.52 & 0.52 \\ \hline
     Avg    & 0.79 & 0.74            & 0.70 & 0.70 \\ \hline
     \end{tabular}
+    \vspace{-5pt}
     \caption {NDCG and k-Precision for recommendations}
 \label{table:ndcg}
 \end{table}
@@ -617,7 +621,7 @@ the investigative effort required for further research efforts.
 
 \section{Acknowledgments}
 We sincerely thank Alex Kindl, Petr Johanes, MJ Cho, and Kesler Tannen
-for slogging through the snippet evaluations!
+for slogging through the snippet evaluations.
 
 %\end{document}  % This is where a 'short' article might terminate
 
@@ -741,7 +745,7 @@ A.~Y. Ng.
 
 \bibitem{shaniedurank}
 G.~Shani and B.~Shapira.
-\newblock Edurank: A collaborative filtering approach to personalization in
+\newblock EduRank: A collaborative filtering approach to personalization in
   e-learning.
 
 \bibitem{song2007opinion}
@@ -765,7 +769,7 @@ J.~H. Tomkin and D.~Charlevoix.
 
 \bibitem{stanfordDataApps}
 S.~University.
-\newblock How to access the stanford online learning data.
+\newblock How to access the Stanford Online Learning data.
 \newblock {\url{http://vpol.stanford.edu/research}}, 2012+.
 
 \bibitem{Wactlar:1996:IAD:619007.620445}
