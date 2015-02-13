@@ -38,9 +38,9 @@
 \makeatletter
 \def\@copyrightspace{\relax}
 \makeatother
-\setlength{\floatsep}{2pt}
-\setlength{\textfloatsep}{2pt}
-\setlength{\intextsep}{2pt}
+\setlength{\floatsep}{5pt}
+\setlength{\textfloatsep}{4pt}
+\setlength{\intextsep}{5pt}
 
 \newcommand{\squishlist}{
  \begin{list}{$\bullet$}
@@ -140,7 +140,7 @@
 \begin{abstract}
 In Massive Open Online Courses (MOOCs), struggling learners often seek help by
 posting questions in discussion forums. Unfortunately, given the large volume of discussion in MOOCs, instructors may overlook these learners' posts,
-detrimentally impacting the learning process and exacerbating attrition. In this paper, we present YouEDU, an instructional aid that automatically detects and addresses confusion in forum posts. Leveraging our Stanford MOOCPosts corpus, we train a heterogeneous set of classifiers to classify forum posts across multiple dimensions. In particular, classifiers that target sentiment, urgency, and other descriptive variables inform a single classifier that detects confusion. We then employ information retrieval techniques to map confused posts to minute-resolution clips from course videos; the ranking over these clips accounts for textual similarity between posts and closed captions. We measure the performance of our classification model in multiple educational contexts, exploring the nature of confusion within each; we also evaluate the relevancy of materials returned by our ranking algorithm. Experimental results demonstrate that YouEDU achieves both its goals, paving the way for intelligent intervention systems in MOOC discussion forums.
+detrimentally impacting the learning process and exacerbating attrition. In this paper, we present YouEDU, an instructional aid that automatically detects and addresses confusion in forum posts. Leveraging our Stanford MOOCPosts corpus, we train a set of classifiers to classify forum posts across multiple dimensions. In particular, classifiers that target sentiment, urgency, and other descriptive variables inform a single classifier that detects confusion. We then employ information retrieval techniques to map confused posts to minute-resolution clips from course videos; the ranking over these clips accounts for textual similarity between posts and closed captions. We measure the performance of our classification model in multiple educational contexts, exploring the nature of confusion within each; we also evaluate the relevancy of materials returned by our ranking algorithm. Experimental results demonstrate that YouEDU achieves both its goals, paving the way for intelligent intervention systems in MOOC discussion forums.
 \end{abstract}
 
 %% A category with the (minimum) three required fields
@@ -153,9 +153,9 @@ detrimentally impacting the learning process and exacerbating attrition. In this
 \section{Introduction}
 \label{sec:intro}
 
-During recent years, many universities have experimented with online delivery of their courses to the public. Hundreds of thousands of learners across the world have taken advantage of these Massive Open Online Courses (MOOCs). While MOOCs are certainly more accessible than physical classes, the virtual domain brings its own set of challenges.
+During recent years, many universities have experimented with online delivery of their courses to the public. Hundreds of thousands of learners across the world have taken advantage of these Massive Open Online Courses (MOOCs). While MOOCs are certainly more accessible than physical classes, the virtual domain brings with it its own challenges.
 
-Lacking physical access to teachers and peer groups, learners resort to discussion forums in order to both build a sense of belonging and to better understand the subject matter at hand. Indeed, these forums could in theory be rich reflections of learner affect and academic progress. But, with MOOC enrollments so high, forums can seem unstructured and might even inhibit, rather than promote, community \cite{community}. It becomes intractable for instructors to effectively monitor and moderate the forums. Learners seeking to clarify concepts might not get the attention that they need, as the greater sea of discussion drowns out their posts. The lack of responsiveness in forums might even push learners to drop courses altogether \cite{wen2015confusion}.
+Lacking physical access to teachers and peer groups, learners resort to discussion forums in order to both build a sense of belonging and to better understand the subject matter at hand. Indeed, these forums could in theory be rich reflections of learner affect and academic progress. But, with MOOC enrollments so high, forums can seem unstructured and might even inhibit, rather than promote, community \cite{community}. It becomes intractable for instructors to effectively monitor and moderate the forums. Learners seeking to clarify concepts might not get the attention that they need, as the greater sea of discussion drowns out their posts. The lack of responsiveness in forums might even push learners to drop out of courses altogether \cite{wen2015confusion}.
 
 The unattended, confused learner might revisit instructional videos in order to solidify his or her understanding. Yet video, a staple of MOOCs, is tyrannically linear. No table of contents or hyperlinks are available to access material in an organized fashion. Often presented with more than one hundred ten-to-fifteen-minute videos, learners might become discouraged when they realize that they will have to re-view footage to patch holes in their knowledge.
 
@@ -176,7 +176,7 @@ future work, and a conclusion.
 \section{Related Work}
 \label{sec:relWork}
 
-Stephens-Martinez, et al. \cite{Stephens-Martinez:2014:MMI:2556325.2566246} find that MOOC instructors highly value understanding the activity in their discussion forums. The role of instructors in discussion forums is investigated in \cite{Tomkin:2014:PMU:2556325.2566245}, which finds that learners' experiences are not appreciably affected by the presence or absence of (sparse) instructor intervention. The study did not, however, allow for instructors to provide individual feedback to learners. Instructors interviewed in \cite{hollands2014moocs} stress the need for better ways to navigate MOOC forums, and one instructor emphasizes in particular the benefits to be reaped by using natural language processing to reorganize forums. 
+Stephens-Martinez, et al. \cite{Stephens-Martinez:2014:MMI:2556325.2566246} find that MOOC instructors highly value understanding the activity in their discussion forums. The role of instructors in discussion forums is investigated in \cite{Tomkin:2014:PMU:2556325.2566245}, which finds that learners' experiences are not appreciably affected by the presence or absence of (sparse) instructor intervention. The study did not, however, allow for instructors to regularly provide individual feedback to learners. Instructors interviewed in \cite{hollands2014moocs} stress the need for better ways to navigate MOOC forums, and one instructor emphasizes in particular the benefits to be reaped by using natural language processing to reorganize forums. 
 
 Wen, et al. \cite{wen2014sentiment} explore the relationship between attrition and sentiment, using a sentiment lexicon derived from movie reviews. Yang, et al. \cite{wen2015confusion} conduct an investigation into the relationship between attrition and confusion. While \cite{wen2015confusion} also presents a classifier for confusion, our classification approach differs from theirs in that it operates on a larger dataset and uses a different set of features, including those generated by other classifiers. Chaturvedi, et al. \cite{chaturvedipredicting} predict instructor intervention patterns in forums. Our work is subtly different in that we predict posts that coders---who carefully read every post in a set of courses---deemed to be urgent, rather than learning from posts that the instructors themselves had responded to. The classification of documents by opinion and sentiment is treated in \cite{song2007opinion} and \cite{binali2009new}. 
 
@@ -186,7 +186,7 @@ Yang, et al. \cite{yang2014forum} propose a recommendation system that matches l
 \section{The Stanford MOOCPosts Corpus}
 \label{sec:MOOCPosts}
 
-Given that no requestable corpus of tagged MOOC discussion forum posts existed prior to our research, we set out to create our own. The outcome of our data compilation and curation was the Stanford MOOCPosts dataset: a corpus composed of 29,604 anonymized learner forum posts from eleven Stanford University public online classes. Available on request to academic researchers, the MOOCPosts dataset was designed to enable computational inquiries into MOOC discussion forums.
+Given that no requestable corpus of tagged MOOC discussion forum posts existed prior to our research, we set out to create our own. The outcome of our data compilation and curation was the Stanford MOOCPosts Dataset: a corpus composed of 29,604 anonymized learner forum posts from eleven Stanford University public online classes. Available on request to academic researchers, the MOOCPosts dataset was designed to enable computational inquiries into MOOC discussion forums.
 
 Each post in the MOOCPosts dataset was scored across six dimensions---confusion, sentiment, urgency, question, answer, and opinion---and subsequently augmented with additional metadata.
 
@@ -205,7 +205,7 @@ Coders were asked to score their posts across six dimensions:
        \item Opinion: Does this post include an opinion, or is its subject matter wholly factual?
        \item Answer: Is this post an answer to a learner's question?
        \item Sentiment: What sentiment does this post convey, on a scale of 1 (extremely negative) to 7 (extremely positive)? A score of 4 indicates neutrality.
-       \item Urgency: How urgent is it that an instructor respond to the post, on a scale of 1 (not urgent at all) to 7 (extremely urgent)? A score of 4 indicates that instructors should respond only if they have spare time.
+       \item Urgency: How urgent is it that an instructor respond to this post, on a scale of 1 (not urgent at all) to 7 (extremely urgent)? A score of 4 indicates that instructors should respond only if they have spare time.
        \item Confusion: To what extent does this post express confusion, or the lack thereof, on a scale of 1 (expert knowledge) to 7 (extreme confusion)? A score of 4 indicates neither knowledge nor confusion.
 \end{itemize}
 %\squishend
@@ -214,12 +214,12 @@ Coders were given examples of posts in each category. The following was an examp
 
 \vspace{-14pt}
 \begin{displayquote}
-The website is down at the moment
+\emph{The website is down at the moment
        https:\\//class.stanford.edu/courses/Engineering/\\Networking/Winter2014/courseware
        seems down and I'm not able to submit the Midterm. Still have
        the "Final Submit" button on the page, but it doesn't work. Are
        the servers congested? 
-       thanks anyway
+       thanks anyway}
 \end{displayquote}
 \vspace{-14pt}
 
@@ -227,22 +227,22 @@ And
 
 \vspace{-14pt}
 \begin{displayquote}
-Double colons "::"  expand to longest possible 0's  
+\emph{Double colons "::"  expand to longest possible 0's  
        If the longest is 0, will  the address be considered valid ?  (
        even if it doesn't make sense and there is no room for adding
        0's) 
        Can someone please answer ?
-       Thanks in advance
+       Thanks in advance}
 \end{displayquote}
 \vspace{-14pt}
 
 was given as an example of a post that was both confused (6.0) and urgent (5.0).
 
-We created three gold sets from the coders' scores, one for each course set. We computed inter-rater reliability using Krippendorff's Alpha \cite{hayes2007answering}. For a given post and Likert variable, the post's gold score was computed as an unweighted average of the scores assigned to it by the subset of two coders who expressed the most agreement on that particular variable. Gold scores for binary variables were chosen by majority votes across all three coders. We refer readers to our write-up in \cite{stanfordMOOCPosts} for a more detailed treatment of our procedure and the complete inter-rater reliability results.
+We created three gold sets from the coders' scores, one for each course type. We computed inter-rater reliability using Krippendorff's Alpha \cite{hayes2007answering}. For a given post and Likert variable, the post's gold score was computed as an unweighted average of the scores assigned to it by the subset of two coders who expressed the most agreement on that particular variable. Gold scores for binary variables were chosen by majority votes across all three coders. We refer readers to our write-up in \cite{stanfordMOOCPosts} for a more detailed treatment of our procedure and the complete inter-rater reliability results.
 
 
 \subsection{Discussion}
-We found significant correlations between confusion and the other five variables. In the humanities and medicine course sets, confusion and urgency were correlated with a Pearson's coefficient of 0.657 and 0.485, respectively. In all three subdivisions of the dataset, confusion and the question variable were positively correlated (0.623, 0.459, and 0.347), while the sentiment, opinion, and answer variables were negatively correlated with confusion. Table \ref{table:correlations} reports the entire set of correlations.
+We found significant correlations between confusion and the other five variables. In the humanities and medicine course sets, confusion and urgency were correlated with a Pearson's correlation coefficient of 0.657 and 0.485, respectively. In all three subdivisions of the dataset, confusion and the question variable were positively correlated (0.623, 0.459, and 0.347), while the sentiment, opinion, and answer variables were negatively correlated with confusion. Table \ref{table:correlations} reports the entire set of correlations.
 
 That questions and confusion were positively correlated supports the finding in \cite{wilson1989learning} that confusion is often communicated through questions. The negative correlations can be understood intuitively. Confusion might turn into frustration and negative sentiment; as discussed in \cite{liu2013sequences}, confusion and frustration sometimes go hand-in-hand. If a learner is opining on something, then it seems less likely that he or she is discussing course content. And we would hope that learners providing answers are not themselves confused.
 
@@ -269,9 +269,9 @@ That questions and confusion were positively correlated supports the finding in 
 \section{YouEDU: Detect and Recommend}
 \label{sec:arch}
 
-YouEDU\footnote{Our entire implementation is open-source.} is an intervention system that recommends educational video clips to learners. Figure \ref{figure:architecture} illustrates the key steps that comprise YouEDU. YouEDU takes as input a set $P$ of forum posts, processing them in two distinct phases: (I) detection and (II) recommendation. In the first phase, we apply a classifier to each post in $P$, outputting a subset $P_{c}$ consisting of posts in which the classifier detected confusion. The confusion classifier functions as a \emph{combination} classifier in that it combines the predictions from classifiers trained to predict other post-related qualities, along with additional features (Section~\ref{sec:confusionDetection}).
+YouEDU\footnote{Our entire implementation is open-source.} is an intervention system that recommends educational video clips to learners. Figure \ref{figure:architecture} illustrates the key steps that comprise YouEDU. YouEDU takes as input a set $P$ of forum posts, processing them in two distinct phases: (I) detection and (II) recommendation. In the first phase, we apply a classifier to each post in $P$, outputting a subset $P_{c}$ consisting of posts in which the classifier detected confusion. The confusion classifier functions as a \emph{combination} classifier in that it combines the predictions from classifiers trained to predict other post-related qualities (Section~\ref{sec:confusionDetection}).
 
-The second phase takes $P_{c}$ as input and, for each confused post in $p \in P_{c}$, outputs a ranked list of educational video snippets that address the object of confusion expressed in $p$. In particular, for a given post, the recommender produces a ranking across a number of one-minute video clips by computing a similarity metric between the post and closed caption sections. In an online system, of course, learners may choose to watch beyond the end of the one-minute snippet---the snippets effectively function as a video index.
+The second phase takes $P_{c}$ as input and, for each confused post $P_{m} \in P_{c}$, outputs a ranked list of educational video snippets that address the object of confusion expressed in $P_{m}$. In particular, for a given post, the recommender produces a ranking across a number of one-minute video clips by computing a similarity metric between the post and closed caption sections. In an online system, of course, learners may choose to watch beyond the end of the one-minute snippet---the snippets effectively function as a video index.
 \begin{figure}[htp]
        \centering
        \includegraphics[width=1.0\textwidth]{../Figs/youEduArch.png}
@@ -309,7 +309,7 @@ The feature vector derived from unigrams is augmented with post metadata, includ
        \item The number of up-votes accumulated by the post. We rationalized that learners might express interest in posts that voiced confusion that they shared. 
        \item The number of reads garnered by the post's thread.
        \item Whether the poster elected to appear anonymous to his or her peers or to the entire population. It has been shown that anonymity in educational discussion forums enables learners to ask questions without fear of judgement \cite{freeman2004student}, and our dataset demonstrates a strong correlation between questions and confusion.
-       \item The poster's grade in the class at the time of post submission, where ``grade'' is defined as the number of points earned by the learner (e.g., by correctly answering quiz questions) divided by the number of points possible. The lower the grade, we hypothesized, the more likely the learner might be confused about a topic.
+       \item The poster's grade in the class at the time of post submission, where ``grade'' is defined as the number of points earned by the learner (e.g., by correctly answering quiz questions) divided by the number of points possible. The lower the grade, we hypothesized, the more likely the learner might be confused.
        \item The post position---most likely, we hypothesized, learners seeking help will create new threads.
 \end{itemize}
 %\squishend
@@ -375,7 +375,7 @@ Table \ref{table:confusion_courses} presents the performance of the combined cla
 
 \vspace{-10pt}
 \begin{displayquote}
-At what doses is it therapuetic for such a patient because at high doses it causes vasoconstrition through alpha1 interactions, while at low doses it causes dilation of renal veins and splachinic vessels.
+\emph{At what doses is it therapuetic for such a patient because at high doses it causes vasoconstrition through alpha1 interactions, while at low doses it causes dilation of renal veins and splachinic vessels.}
 \end{displayquote}
 \vspace{-10pt}
 
@@ -385,13 +385,13 @@ A glance at Table \ref{table:confusion_courses} suggests that our classifier's p
 
 \vspace{-10pt}
 \begin{displayquote}
-I am not sure if I agree with tracking or not.  I like teaching children at all levels ...  In a normal class setting the lower level learners can learn from the higher learners and vice versa.  Although I do find it very hard to find a middle ground. There has to be an easier way.
+\emph{I am not sure if I agree with tracking or not.  I like teaching children at all levels ...  In a normal class setting the lower level learners can learn from the higher learners and vice versa.  Although I do find it very hard to find a middle ground. There has to be an easier way.}
 \vspace{-10pt}
 \end{displayquote}
 
 The above post was tagged as conveying confusion. The language is more subtle than that seen in the posts from \emph{Managing Emergencies}, and it is not surprising that we saw our lowest Kappa (0.359) when classifying \emph{How to Learn Math}. In this course, learners tended to voice more confusion about the structure of the class than the content itself---``link'', ``videos'', and ``responses'' were the fourth, fifth, and seventh most indicative features, respectively.
 
-Examining the feature weights learned from the humanities and medicine course sets provides us with a more holistic view onto the language of confusion. Domain-specific words take the backseat to words that convey the learning process. For example, in both course sets, ``confused'' was the word with the highest feature weight (odds ratios equal to 3.19 and 2.97 for humanities and medicine, respectively). In the humanities course set, ``?'', ``couldn't'', ``question'', ``haven't'', and ``wondering'' came next, in that order. The importance of question-related features in particular is consistent with \cite{wilson1989learning} and with the correlations in the MOOCPosts dataset. In medicine, the next highest ranked words were ``explain'', ``role'', ``understand'', ``stuck'', and ``struggling''. Table \ref{table:informative_features} displays the most informative features for the humanities and medicine course sets, as well as \emph{How to Learn Math} and \emph{Managing Emergencies}.
+Examining the feature weights learned from the humanities and medicine course sets provides us with a more holistic view onto the language of confusion. Domain-specific words take the backseat to words that convey the learning process. For example, in both course sets, ``confused'' was the word with the highest feature weight (odds ratios equal to 3.19 and 2.97 for humanities and medicine, respectively). In the humanities course set, ``?'', ``couldn't'', ``report'', ``question'', ``haven't'', and ``wondering'' came next, in that order. The importance of question-related features in particular is consistent with \cite{wilson1989learning} and with the correlations in the MOOCPosts dataset. In medicine, the next highest ranked words were ``explain'', ``role'', ``understand'', ``stuck'', and ``struggling''. Table \ref{table:informative_features} displays the most informative features for the humanities and medicine course sets, as well as \emph{How to Learn Math} and \emph{Managing Emergencies}.
 \begin{table*}[ht!]
        \centering
        \begin{tabular}{|c|c|c|c|}
@@ -432,7 +432,7 @@ Examining the feature weights learned from the humanities and medicine course se
 
 We ran a series of experiments in which we trained the combined classifier on posts from one course and then tested it on posts from another one, without cross-validation. The results of these experiments are tabulated in Table \ref{table:across_courses}. 
 
-Our highest Kappa (0.629) was achieved when training on \emph{Statistics in Medicine 2013} and testing on \emph{Statistics in Medicine 2014}; this makes sense, since they comprise two runs of the same course. Many instructors plan to offer the same MOOC multiple times \cite{hollands2014moocs}. Ideally, an instructor would tag but one of those runs. Then a classifier would truly shine. Yet even if such tagging were infeasible, our experience learning and testing on similar courses, such as two different statistics courses, suggests that an online classifier might well exhibit good performance. Performance might suffer, however, if the domains of the training and test data are non-overlapping, as is the case in the last two experiments in Table \ref{table:across_courses}.
+Our highest Kappa (0.629) was achieved when training on \emph{Statistics in Medicine 2013} and testing on \emph{Statistics in Medicine 2014}; this makes sense, since they comprise two runs of the same course. Many instructors plan to offer the same MOOC multiple times \cite{hollands2014moocs}. Ideally, an instructor would tag but one of those runs, allowing an online classifier to truly shine. Yet even if such tagging were infeasible, our experience learning and testing on similar courses, such as two different statistics courses, suggests that an online classifier might well exhibit good performance. Performance might suffer, however, if the domains of the training and test data are non-overlapping, as is the case in the last two experiments in Table \ref{table:across_courses}.
 
 \subsubsection{Constituent Classifiers and Post Metadata}
 
@@ -484,16 +484,16 @@ The post position metadata feature also contributed positively to the classifier
 \subsection{The Recommendation Algorithm}
 \vspace{1mm}
 In this section, we describe how YouEDU recommends instructional material for a forum post that
-has been labelled as \textit{confused} by Phase I. Every course can be thought of as a collection of several video lectures. Each video lecture on average is about 12-14 minutes long. We focus on the problem of identifying a ranked list of snippets, \textit{S} for each \textit{confused} post. Each snippet \textit{s\textsubscript i} in \textit{S} is a tuple \textit{(video\textunderscore id, seek\textunderscore minute)} where \textit{video\textunderscore id} is an identifier for the recommended video and \textit{seek\textunderscore minute} is the time in the video to which the learner must scroll and start playing the video. We would not necessarily need to recommend an \textit{end\textunderscore minute} in a deployed setting (learners could choose when to stop watching).
+has been labelled as \textit{confused} by Phase I. Every course can be thought of as a collection of several video lectures. Each video lecture on average is about 12-14 minutes long. We focus on the problem of identifying a ranked list of snippets, \textit{S}, for each \textit{confused} post. Each snippet \textit{s\textsubscript i} in \textit{S} is a tuple \textit{(video\textunderscore id, seek\textunderscore minute)} where \textit{video\textunderscore id} is an identifier for the recommended video and \textit{seek\textunderscore minute} is the time in the video to which the learner must seek and start playing the video. We would not necessarily need to recommend an \textit{end\textunderscore minute} in a deployed setting (learners could choose when to stop watching).
 
 Phase II of YouEDU is divided into an offline indexing phase and an online retrieval phase.
-We define a \textit {bin} as a time-indexed section of a video. Each bin \textit{b\textsubscript{i}} can be thought of as the transcribed text content of the video
-at time interval \textit{i}. We define \textit{binscore(w, b)} of a word \textit{w} and bin \textit{b} as the number of times word \textit{w} appears in bin \textit{b}. We formulate video recommendation to learners as a classical information retrieval problem. In classical IR, the goal is to retrieve the top documents that match a user's query. In our case, the query corresponds to a confused post, and the document corresponds to a bin. We want to retrieve a ranked list of bins that addresses the content of the confused post.
+We define a \textit {bin} as a time-indexed section of a video. Each bin \textit{b\textsubscript{i}} contains the transcribed text content of the video
+at a minute-long time interval \textit{i}. We define \textit{binscore(w, b)} of a word \textit{w} and bin \textit{b} as the number of times word \textit{w} appears in bin \textit{b}. We formulate video recommendation to learners as a classical information retrieval problem. In classical IR, the goal is to retrieve the top documents that match a user's query. In our case, the query corresponds to a confused post, and the document corresponds to a bin. We want to retrieve a ranked list of bins that addresses the content of the confused post.
 
 \subsubsection{Offline---Indexing Pipeline}
 In the indexing pipeline, we first divide each video into bins. We then use a part-of-speech tagger \cite{nltk} to pre-process each bin. Nouns and noun-phrases tend to produce key-words that typically express what the content is about \cite{hulth2003improved}. Hence, we represent a bin as a triple (\textit{video \textunderscore id}, \textit{start \textunderscore min}, \textit{noun \textunderscore phrase \textunderscore list)} where \textit{noun \textunderscore phrase \textunderscore list} is a collection of only the nouns and noun-phrases in the bin.
 
-We scan through each of the pre-processed bins and build an index from each word to the corresponding bin that the word appears in. This index would enable us to retrieve the list of bins \textit{B\textsubscript{w}}, that corresponds to time epochs in the entire course when the word \textit{w} was discussed. We also maintain a data structure that keeps track of \textit{bin\textunderscore score(w,b)} for every word and bin. The constructed index and data structures are serialized to disk and are used by the retrieval phase.
+We scan through each of the pre-processed bins and build an index from each word to the corresponding bin that the word appears in. This index would enable us to retrieve the list of bins \textit{B\textsubscript{w}}, that corresponds to time epochs in the entire course when the word \textit{w} was discussed. We also maintain a data structure that keeps track of \textit{binscore(w,b)} for every word and bin. The constructed index and data structures are serialized to disk and are used by the retrieval phase.
 
 \subsubsection{Online---Retrieval and Ranking:}
 In the online phase, we take as input confused posts. We then use a part-of-speech tagger \cite{nltk} to pre-process each confused post. Similar to the technique we used for bins, we represent each post as a list of its constituent nouns and noun-phrases. Scanning through each of the words in the pre-processed post, we add bin \textit{b} to the candidate set of retrieved bins if at least one term in the pre-processed post was talked about in \textit{b}. Since we have the index constructed offline, we can use it to prune candidates from a large number of available videos (and hence, bins) in the corpus.
@@ -506,8 +506,8 @@ For each candidate bin \textit{C\textsubscript i} in the list of candidates \tex
 
 \subsection{Evaluation}
 
-We evaluated our ranking system on the 2013 run of the ``Statistics in
-Medicine'' MOOC, offered at Stanford University, which had 24,943
+We evaluated our ranking system on the 2013 run of the \emph{Statistics in
+Medicine} MOOC, offered at Stanford University, which had 24,943
 learners. We chose a random sample of queries from our MOOCPosts
 dataset for that course. We ran each of those posts through Phase I of
 YouEDU and chose 20 random posts from the posts that were labeled as
@@ -518,7 +518,7 @@ of six, obscuring the algorithm's ranking decisions. Three domain
 experts in statistics at Stanford independently evaluated the
 relevance of each snippet to its respective post. This process induced
 a human-generated ranking, which we then compared to the algorithm's
-rank order. The rating scale available to the raters is described
+rank order. The rating scale given to the raters is described
 below:
 
 \textit{2:} {\bf Relevant}. The recommended snippet precisely address the learner's confusion.\\
@@ -529,7 +529,7 @@ below:
 We used two metrics to evaluate the relevancy of our recommendations: NDCG and k-precision.
 
 \textit{Normalized Discounted Cumulative Gain (NDCG):}
-NDCG measures ranking quality as the sum of the relevance scores (gains) of each recommendation. However, the gain is discounted proportional to how far down the document is in the ranking. The underlying intuition is that the gain due to an extremely relevant document (say, relevance score of 2) appearing as the last result must be penalized more than if it appeared at the first result. Hence, the DCG metric applies a logarithmic discounting function that progressively reduces a document's gain as its position in the ranked list increases \cite{ndcgcite}. The base \textit{b} of the logarithm determines how sharp the applied discount is.
+NDCG measures ranking quality as the sum of the relevance scores (gains) of each recommendation. However, the gain is discounted proportional to how far down the document is in the ranking. The underlying intuition is that the gain due to a relevant document (say, relevance score of 2) that appears as the last result should be penalized more than it would be if it appeared as the first result. Hence, the DCG metric applies a logarithmic discounting function that progressively reduces a document's gain as its position in the ranked list increases \cite{ndcgcite}. The base \textit{b} of the logarithm determines how sharp the applied discount is.
 
 If \textit{rel\textsubscript i} is the gain associated with the document at position i, the DCG at a position i is defined recursively as
 \begin{equation}
@@ -540,14 +540,14 @@ rel \textsubscript i & i < b  \\
 \end{cases}
 \end{equation}
 
-Since we want a smooth discounting function, we set b to 2. We use a graded relevance scale of 0, 1 and 2, corresponding to the types listed above, and computed the DCG for the ranked recommendations we obtained for each confused post. The ideal value of DCG (IDCG) is defined as the DCG based on the ideal ranking as judged by the raters. To obtain the IDCG, we sort the rankings given by the raters in decreasing order of relevance scores and compute the DCG of the sorted ranking. This corresponds to the maximum theoretically possible DCG in any ranking of recommendations for that post. We normalize the DCG for our ranking by the IDCG to get the Normalized DCG (NDCG):
+Since we want a smooth discounting function, we set b to 2. We use a graded relevance scale of 0, 1 and 2, corresponding to the types listed above, and computed the DCG for the ranked recommendations we obtained for each confused post. The ideal value of DCG (IDCG) is defined as the DCG based on the ideal ranking as judged by the raters. To obtain the IDCG, we sort the rankings given by the raters in decreasing order of relevance scores and compute the DCG of the sorted ranking. This corresponds to the maximum theoretically possible DCG in any ranking of the recommendations for that post. We normalize the DCG for our ranking by the IDCG to get the Normalized DCG (NDCG):
 \begin{equation}
 NDCG(i) = \frac{DCG(i)}{IDCG(i)}
 \end{equation}
 If there are $n$ recommended documents, then we report\\NDCG(n) as \emph{NDCG}, the overall rating for the ranking. 
 
 \textit{Precision at top k:}
-We define the precision of a ranking \textit{R} with \textit{n} recommendations as the fraction of the recommendations that are relevant. The precision at \textit{k} of a ranking \textit{R} is defined as the value of the precision considering only the top \textit{k} recommendations in R. 
+We define the precision of a ranking \textit{R} with \textit{n} recommendations as the fraction of the recommendations that are relevant. The precision at \textit{k} of a ranking \textit{R} is defined as the precision of \textit{R} restricted to its first \textit{k} recommendations. 
 
 \subsubsection{Results}
 \begin{table}
@@ -564,13 +564,13 @@ We define the precision of a ranking \textit{R} with \textit{n} recommendations 
 \label{table:ndcg}
 \end{table}
 
-Our results across the raters are summarized in Table \ref{table:ndcg}. Our average precision at k=1 is 0.74. This intuitively means that on about 74\% of the cases, the first video that we suggest to a learner (as a recommendation for his or her confused post) is a relevant video. The values at k=2 and k=3, at 0.70, are encouraging as well. Our NDCG numbers are high, indicating that we perform relatively well compared to the IDCG. Since we did not tag every single bin from every video in \emph{Statistics in Medicine}, we cannot consider recall---we do not know the entire set of relevant videos.
+Our results across the raters are summarized in Table \ref{table:ndcg}. Our average precision at k=1 is 0.74. This intuitively means that on 74\% of cases, the first video that we suggest to a learner (as a recommendation for his or her confused post) is a relevant video. The values at k=2 and k=3, at 0.70, are encouraging as well. Our NDCG numbers are high, indicating that we perform relatively well compared to the IDCG.
 
 \section{Future Work}
 \label{sec:futureWork}
 
 The work we presented here is a first step; many opportunities for
-future work remain. We are investigating whether we can
+future work remain. We are actively investigating whether we can
 strengthen our video snippet ranking further by considering which
 video portions learners re-visited several times. This analysis
 catalogs the number of views that occurred for each second of each
@@ -580,7 +580,7 @@ Another thrust of future work will use the question and answer
 classifiers to connect learners to each other. The challenge
 to meet in this work is to identify learner expertise by their answer
 posts, and to encourage their participation in answering questions
-related to their expertise. As in this work, auxiliary data, such as
+related to their expertise. As in YouEDU, auxiliary data, such as
 successful homework completion, will support this line of
 investigation.
 
@@ -588,14 +588,14 @@ A third ongoing project in our group is the development of user
 interfaces for both instructors and learners. Using our classifiers,
 we have been experimenting with interactive visualizations of our
 classifiers' results. The hope is, for example, to have instructors
-see major forum borne evidence of confusion in a single view, and to
+see major forum-borne evidence of confusion in a single view, and to
 act in response through that same interface.
 
 Video recommendations are not the only source of help for confused
 learners. Many online courses are repeated during multiple
 quarters. It should therefore be possible for our system to search
 forum posts of past course runs for answers to questions in current
-posts.  Also, not all confusion is resolvable through the videos. For
+posts.  Also, not all confusion is resolvable through videos. For
 example, difficulties in operating the video player is unlikely to
 have been covered in the course videos. Distinguishing such posts is
 an additional challenge.
@@ -608,7 +608,7 @@ second phase, the workflow recommends excerpts from instructional course
 videos to the confused authors of these posts. Our approach utilizes new datasets
 of human tagged forum posts, data from learner interactions with online learning
 platforms, and video closed caption files that are produced in concert with the
-videos for vision impaired learners. Evaluations of our classifiers and recommendations show that both phases of YouEDU perform well, and provide insight into the
+videos for hearing-impaired learners. Evaluations of our classifiers and recommendations show that both phases of YouEDU perform well, and provide insight into the
 manifestations of confusion.
 
 As novel online teaching methods are developed, the same underlying
