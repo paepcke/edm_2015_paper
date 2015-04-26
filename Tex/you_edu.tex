@@ -293,9 +293,9 @@ Our feature space is composed of three types of inputs, those derived from the p
 
 
 \subsubsection{Bag-of-Words}
-We take the bag-of-words approach in representing documents, or forum posts. The unigram representation, while simple, pervades text classification and often achieves high performance \cite{boulis2005text}. We employ $l_{2}$ regularization to prevent overfitting, a risk that is aggravated when the dimension of the feature space exceeds the training set size \cite{Ng:2004:FSL:1015330.1015435}. Each document is represented in part as a vector of indicator variables, one for each word that appears in the training data. A word is a sequence of one or more alphanumeric characters or a single punctuation mark (one of \{. , ; ! ?\}). 
+We take the bag-of-words approach in representing documents, or forum posts. The unigram representation, while simple, pervades text classification and often achieves high performance \cite{boulis2005text}; we employ $l_{2}$ regularization to prevent overfitting \cite{Ng:2004:FSL:1015330.1015435}. Each document is represented in part as a vector of indicator variables, one for each word that appears in the training data. A word is a sequence of one or more alphanumeric characters or a single punctuation mark (one of \{. , ; ! ?\}). 
 
-Documents are pre-processed before they are mapped to vectors. We use a subset of the stop words published by the Information Retrieval Group at the University of Glasgow \cite{glasgow}. Words ommitted from the stop word list include, but are not limited to, interrogatives, words that identify the self (``I'', ``my''), verbs indicating ability or the lack thereof, negative words (``never'', ``not''), and certain conjunctions (``yet'', ``but''). We ignore alphabetic case and collapse numbers, \LaTeX\ equations, and URLs into three unique words.
+Documents are pre-processed before they are mapped to vectors. We use a subset of the stop words published by the Information Retrieval Group at the University of Glasgow \cite{glasgow}. Words omitted from the stop word list include, but are not limited to, interrogatives, words that identify the self (``I'', ``my''), verbs indicating ability or the lack thereof, negative words (``never'', ``not''), and certain conjunctions (``yet'', ``but''). We ignore alphabetic case and collapse numbers, \LaTeX\ equations, and URLs into three unique words.
 
 
 \subsubsection{Post Metadata}
@@ -314,11 +314,11 @@ The feature vector derived from unigrams is augmented with post metadata, includ
 
 
 \subsubsection{Classifier Combination}
-In Section~\ref{sec:MOOCPosts}, we demonstrated that confusion is significantly correlated with questions, answers, urgency, sentiment and opinion. As such, in predicting confusion, we take into account the predictions of five distinct classifiers, one for each of the aforementioned variables. We use the fine-grained method of combining classifiers in which the outputs of several classifiers are fed as input to a \emph{combination function} \cite{bennett2005combination}. In our case, the combination function is itself a classifier.
+In Section~\ref{sec:MOOCPosts}, we demonstrated that confusion is significantly correlated with questions, answers, urgency, sentiment and opinion. As such, in predicting confusion, we take into account the predictions of five distinct classifiers, one for each of the correlates. The outputs of these five classifiers are fed as input to a \emph{combination function} \cite{bennett2005combination}---that is, a classifier for confusion---that determines the confusion class for posts.
 
 For a given train-test partition, let $D_{train}$ be the training set and $D_{test}$ be the test set. Let $H_{q}$, $H_{a}$, $H_{o}$, $H_{s}$, and $H_{u}$ be classifiers for the question, answer, opinion, sentiment, and urgency variables, respectively. We call these classifiers \emph{constituent} classifiers. Each constituent is trained on $D_{train}$, taking as input bag-of-words and post metadata features.
 
-Let $H_{c}$, a binary classifier for confusion, be our combination function. Like the constituent classifiers, $H_{c}$ is trained on $D_{train}$ and takes as input bag-of-words and metadata features. Unlike the constituents, $H_{c}$ also treats the ground-truth labels for the question, answer, opinion, sentiment, and urgency variables as features. When testing $H_{c}$ on an example $d \in D_{test}$, the constituent classifiers each output a prediction for $d$. These five predictions---and not the ground-truth values---are appended to the bag-of-words and metadata features derived from $d$. The resulting vector is given as input to $H_{c}$, which then predicts $d$'s confusion class.
+Let $H_{c}$, a binary classifier for confusion, be our combination function. Like the constituent classifiers, $H_{c}$ is trained on $D_{train}$ and takes as input bag-of-words and metadata features. Unlike the constituents, when training, $H_{c}$ also treats the ground-truth labels for the question, answer, opinion, sentiment, and urgency variables as features. When testing $H_{c}$ on an example $d \in D_{test}$, the constituent classifiers each output a prediction for $d$. These five predictions---and not the ground-truth values---are appended to the vector $v$ of bag-of-words and metadata features derived from $d$. In particular, if $v_{h}$ is a vector of length five encoding the predictions of the constituent classifiers, then the concatenation of $v$ and $v_{h}$ is the final feature vector for $H_{c}.$
 
 A few subtleties: $H_{s}$ uses an additional metadata feature that the other classifiers do not---the number of negative words (e.g., ``not'', ``cannot'', ``never'', etc.). $H_{q}$, $H_{a}$, $H_{u}$, and $H_{c}$ treat the number of question marks as an additional feature, given the previously presented correlations; \cite{wen2015confusion} also used question marks in predicting confusion. And while $H_{q}$, $H_{a}$, and $H_{o}$ are by nature binary classifiers, $H_{s}$ and $H_{u}$ are multi-class. They predict values corresponding to negative (score $< 4$), neutral (score $= 4$), and positive (score $> 4$), providing $H_{c}$ with somewhat granular information. Going forward, we refer to the confusion classifier that uses all the features
 described in this section as the \emph{combined} classifier. 
@@ -512,9 +512,9 @@ YouEDU and chose 20 random posts from the posts that were labeled as
 confused. For each of those confused posts our algorithm produced a
 list of six ranked video recommendations (that is, six bins, or
 one-minute snippets). We then randomized the order within each group
-of six, obscuring the algorithm's ranking decisions. Three domain
+of six, obscuring the algorithm's ranking decisions. Four domain
 experts in statistics at Stanford independently evaluated the
-relevance of each snippet to its respective post. This process induced
+relevance of each snippet to its respective post; the ratings of one expert were unfortunately lost due to technical difficulties. This process induced
 a human-generated ranking, which we then compared to the algorithm's
 rank order. The rating scale given to the raters is described
 below:
@@ -569,7 +569,7 @@ Our results across the raters are summarized in Table \ref{table:ndcg}. Our aver
 
 The work we presented here is a first step; many opportunities for
 future work remain. We are actively investigating whether we can
-strengthen our video snippet ranking further by considering which
+strengthen our snippet ranking further by considering which
 video portions learners re-visited several times. This analysis
 catalogs the number of views that occurred for each second of each
 instructional video in a course.
@@ -595,7 +595,7 @@ quarters. It should therefore be possible for our system to search
 forum posts of past course runs for answers to questions in current
 posts.  Also, not all confusion is resolvable through videos. For
 example, difficulty in operating the video player is unlikely to
-have been covered in the course videos. Distinguishing such posts is
+have been covered in the course videos. Identifying such posts is
 an additional challenge.
 
 \section{Conclusion}
@@ -642,7 +642,7 @@ for slogging through the snippet evaluations.
 \begin{thebibliography}{10}
 
 \bibitem{stanfordDataApps}
-How to access the stanford online learning data.
+How to access the Stanford online learning data.
 \newblock {\url{http://vpol.stanford.edu/research}}, 2012+.
 
 \bibitem{stanfordMOOCPosts}
@@ -650,12 +650,6 @@ A.~Agrawal and A.~Paepcke.
 \newblock The {Stanford} {MOOCP}osts {Dataset}.
 \newblock {\url{http://datastage.stanford.edu/StanfordMoocPosts/}}, December
   2014.
-
-\bibitem{glasgow}
-I.~R.~G. at~University~of Glasgow.
-\newblock Stop word list.
-\newblock \url{http://ir.dcs.gla.ac.uk/resources/linguistic_utils/stop_words}.
-\newblock Accessed: 2015-02-05.
 
 \bibitem{bennett2005combination}
 P.~N. Bennett, S.~T. Dumais, and E.~Horvitz.
@@ -719,6 +713,12 @@ A.~Hulth.
 \newblock In {\em Proceedings of the 2003 conference on Empirical methods in
   natural language processing}, pages 216--223. Association for Computational
   Linguistics, 2003.
+
+\bibitem{glasgow}
+{Information Retrieval Group at University of Glasgow}.
+\newblock Stop word list.
+\newblock \url{http://ir.dcs.gla.ac.uk/resources/linguistic_utils/stop_words}.
+\newblock Accessed: 2015-02-05.
 
 \bibitem{ndcgcite}
 K.~J{\"a}rvelin and J.~Kek{\"a}l{\"a}inen.
@@ -799,6 +799,4 @@ D.~Yang, M.~Wen, I.~Howley, R.~Kraut, and C.~Ros{\'e}.
   Conference}, L@S '15, New York, NY, USA, 2015. ACM.
 
 \end{thebibliography}
-\balancecolumns
-% That's all folks!
 \end{document}
